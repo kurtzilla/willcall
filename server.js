@@ -1,5 +1,4 @@
-var dotenv = require('dotenv');
-dotenv.load();
+require('dotenv').config();
 
 var express = require('express');
 var path = require('path');
