@@ -1,0 +1,49 @@
+
+  <div class="panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Brochure Add Form</h3>
+    </div>
+    <div class="panel-body">
+      <div ng-if="errors" role="alert" class="alert alert-danger">
+        <div ng-repeat="error in errors">{{error}}</div>
+      </div>
+      <form name="postForm"
+            novalidate
+            ng-submit="submitBrochure(postForm);">
+        <div class="input-controls">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   name="title"
+                   placeholder="Title"
+                   ng-model="postForm.brochure.title">
+          </div>
+          <div class="form-group">
+            <label for="abstract">Abstract</label>
+            <input type="text"
+                   class="form-control"
+                   id="abstract"
+                   name="abstract"
+                   placeholder="Abstract"
+                   ng-model="postForm.brochure.abstract">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control"
+                      id="description"
+                      name="description"
+                      placeholder="Description"
+                      ng-model="postForm.brochure.description"></textarea>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">Add Brochure</button>
+        </div>
+      </form>
+      <div>
+        <button ng-click="cancel();" class="btn btn-primary">Cancel</button>
+      </div>
+    </div>
+  </div>

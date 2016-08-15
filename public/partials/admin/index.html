@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Admin stuff</h3>
+        </div>
+        <div class="panel-body">
+            <div ng-if="messages.error" role="alert" class="alert alert-danger">
+                <div ng-repeat="error in messages.error">{{error.msg}}</div>
+            </div>
+            <div ng-if="messages.success" role="alert" class="alert alert-success">
+                <div ng-repeat="success in messages.success">{{success.msg}}</div>
+            </div>
+            <div>List of things to do in admin section</div>
+            <div>
+                <ul class="list-unstyled">
+                    <li><a ui-sref="brochures">Brochures</a></li>
+                    <li><a ui-sref="users">Users</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

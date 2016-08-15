@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Brochures Listing</h3>
+    </div>
+    <div class="panel-body">
+      <div ng-if="messages.error" role="alert" class="alert alert-danger">
+        <div ng-repeat="error in messages.error">{{error.msg}}</div>
+      </div>
+      <div ng-if="messages.success" role="alert" class="alert alert-success">
+        <div ng-repeat="success in messages.success">{{success.msg}}</div>
+      </div>
+
+      <!--<div>{{view.BrochureService.listing.length}}</div>-->
+      <div ng-show="view.BrochureService.addMode">
+        <wct-add-brochure></wct-add-brochure>
+      </div>
+      <div ng-show="!view.BrochureService.addMode">
+        <div>List the entities <button class="btn btn-primary" ng-click="setAddMode(true);">Add New</button></div>
+        <hr/>
+        <div>
+          <ul ng-repeat="item in view.BrochureService.listing" class="list-unstyled">
+            <li><a ui-sref="brochures_edit({brochure_id: item.id})" class="btn btn-primary btn-sm">Edit</a> <strong>{{item.title}}</strong> {{item.abstract}} </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">User Profile</h3>
+    </div>
+    <div class="panel-body">
+      <div ng-if="messages.error" role="alert" class="alert alert-danger">
+        <div ng-repeat="error in messages.error">{{error.msg}}</div>
+      </div>
+      <div ng-if="messages.success" role="alert" class="alert alert-success">
+        <div ng-repeat="success in messages.success">{{success.msg}}</div>
+      </div>
+      <div>allow a user to edit their profile</div>
+      <div>TODO this should only show current user</div>
+    </div>
+  </div>
+</div>

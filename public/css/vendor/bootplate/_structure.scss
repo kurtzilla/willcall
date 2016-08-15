@@ -1,0 +1,59 @@
+h3 {
+  //color:red !important;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color:#eee;
+  font-weight:bold;
+}
+
+.navbar {
+  background-color: #ff3e67;
+
+  a {
+    color:white;
+  }
+
+  .navbar-brand {
+    font-weight:bold;
+    color:white;
+    font-size:2em;
+    text-shadow: 2px 2px 5px rgba(100, 100, 100, .8);
+  }
+}
+html {
+  background: url(../images/crowd-shot-for-posters-purple.jpg);
+  background-size: cover;
+}
+
+body{
+  background-color: transparent;
+}
+
+.home-panel{
+  .panel {
+    background-color:rgba(200,200,200,.85);
+  }
+  min-width:900px;
+
+  .panel-body{
+    color:#444;
+    //opacity: .5;
+    h3 {
+      color:#222;
+      font-size:1.3em;
+      height:35px;
+    }
+    p{
+      font-size:.9em;
+      height:115px;
+    }
+    .btn-wrapper{
+      //text-align: center;
+    }
+    a.btn {
+      margin:10px auto 0 auto;
+      //width:120px;
+    }
+  }
+}
