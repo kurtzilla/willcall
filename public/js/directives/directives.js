@@ -4,18 +4,19 @@ angular.module('MyApp')
   return {
     restrict: 'E',
     scope: {
-
+      item: '='
     },
     templateUrl: 'partials/brochurePanel.html',
-    controller: function ($scope) {
+    controller: ['$scope','$sce', function ($scope, $sce) {
       $scope.view = {};
       $scope.view.BrochureService = BrochureService;
-      if($scope.view.BrochureService.listing.length === 0){
-        console.log('it is zero');
-        $scope.view.BrochureService.getListing();
-      }
-      console.log('listing', $scope.view.BrochureService.listing);
-    }
+      $scope.view.abstract = $sce.trustAsHtml($scope.item.abstract);
+      // if($scope.view.BrochureService.listing.length === 0){
+      //   console.log('it is zero');
+      //   $scope.view.BrochureService.getListing();
+      // }
+      // console.log('listing', $scope.view.BrochureService.listing);
+    }]
   }
 }]);
 
