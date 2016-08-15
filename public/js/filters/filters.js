@@ -15,7 +15,14 @@
         return '/proxyresource/' + encoded;
       }
     }
-  });
+  })
+  .filter('trustMe', ['$sce', function($sce){
+    return function(input){
+      if(input){
+        return $sce.trustAsHtml(input);
+      }
+    }
+  }]);
 
 
 // app.filter('substring', function(){

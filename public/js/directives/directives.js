@@ -11,11 +11,6 @@ angular.module('MyApp')
       $scope.view = {};
       $scope.view.BrochureService = BrochureService;
       $scope.view.abstract = $sce.trustAsHtml($scope.item.abstract);
-      // if($scope.view.BrochureService.listing.length === 0){
-      //   console.log('it is zero');
-      //   $scope.view.BrochureService.getListing();
-      // }
-      // console.log('listing', $scope.view.BrochureService.listing);
     }]
   }
 }]);

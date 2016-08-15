@@ -2,7 +2,7 @@
     <div class="panel">
         <div class="panel-body">
             <h3>{{item.title}}</h3>
-            <p ng-bind-html="view.abstract"></p>
+            <p ng-bind-html="item.abstract | trustMe"></p>
         </div>
     </div>
 </div>

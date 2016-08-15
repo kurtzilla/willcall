@@ -35,11 +35,9 @@ angular.module('MyApp')
     };
 
     this.getListing = function(){
-      // console.log('getting');
-      // _self.listing = [];
+      _self.listing = [];
       $http.get('/api/brochures')
       .then(function(data){
-        // console.log('getting data', data.data);
         _self.listing = data.data;
       });
     };
