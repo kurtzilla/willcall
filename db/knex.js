@@ -1,5 +1,4 @@
-var dotenv = require('dotenv');
-dotenv.load();
+require('dotenv').config();
 
 var environment = process.env.NODE_ENV;
 var config = require('../knexfile.js')[environment];

@@ -1,5 +1,4 @@
-var dotenv = require('dotenv');
-dotenv.load();
+require('dotenv').config();
 var knex = require('../../db/knex');
 
 exports.getBrochures = function(req, res){

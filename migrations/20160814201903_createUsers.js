@@ -2,12 +2,13 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', function(table) {
       table.increments();
-      table.string('name');
-      table.string('email').unique();
-      table.string('password');
+      table.timestamps(true,true);
+      table.string('name').unique().notNullable();
+      table.string('email').unique().notNullable();
+      table.string('password').notNullable();
       table.string('passwordResetToken');
       table.dateTime('passwordResetExpires');
-      table.string('roles');
+      table.json('roles').comment('this should be a listing of roles for the user - simple array');
       table.string('gender');
       table.string('location');
       table.string('website');
@@ -16,7 +17,6 @@ exports.up = function(knex, Promise) {
       table.string('twitter');
       table.string('google');
       table.string('vk');
-      table.timestamps();
     })
   ]);
 };
