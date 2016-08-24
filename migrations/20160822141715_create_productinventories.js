@@ -2,16 +2,15 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('productinventories', function(table) {
       table.increments();
-      table.timestamps();
-
+      table.timestamps(true,true);
       table.integer('product_id').references('id').inTable('products').notNullable();
 
-      table.string('name', 512);
-      table.json('attribs').comment('size, color, etc');
+      table.string('name', 512).notNullable().defaultsTo('');
+      table.json('attribs').notNullable().defaultsTo(JSON.stringify([])).comment('size, color, etc');
       table.decimal('price').comment('allow for a different price than parent');
 
       table.boolean('active').defaultsTo(true);
-      table.string('status').notNullable().defaultTo('on sale');
+      table.string('status').notNullable().defaultTo('On Sale');
 
       table.integer('maxperorder').defaultsTo(10);
       table.integer('allotted').defaultsTo(0);
