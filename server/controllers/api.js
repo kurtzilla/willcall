@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({silent:true});
 var knex = require('../../db/knex');
 
 exports.getBrochures = function(req, res){
