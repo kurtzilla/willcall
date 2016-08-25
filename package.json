@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "intern-client config=tests/intern",
     "start": "node server.js"
   },
   "author": "",
@@ -27,5 +27,8 @@
     "pg": "^6.1.0",
     "request": "^2.74.0",
     "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {
+    "intern": "^3.3.1"
   }
 }

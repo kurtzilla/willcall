@@ -13,8 +13,10 @@ var moment = require('moment');
 var request = require('request');
 var sass = require('node-sass-middleware');
 
+// Controllers
 var apiController       = require('./server/controllers/api');
 var resourceController  = require('./server/controllers/resource');
+var userController      = require('./server/controllers/user');
 
 // Declare app and configure
 var app = express();
@@ -55,6 +57,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 
+// user
+app.get('/auth/google/callback', userController.authGoogleCallback);
+app.get('/stripe/callback', userController.stripeCallback);
+
 // API
 app.get('/api/brochures', apiController.getBrochures);
 app.post('/api/brochures', apiController.addBrochure);
@@ -64,7 +70,7 @@ app.put('/api/brochures/:id', apiController.updateBrochure);
 // Proxy Resource
 app.get('/proxyresource/:resourceurl', resourceController.proxyResource);
 
-app.get('*', function(req, res) {
+app.use(function(req, res) {
   res.redirect('/#' + req.originalUrl);
 });
 
