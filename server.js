@@ -16,7 +16,9 @@ var sass = require('node-sass-middleware');
 // Controllers
 var apiController       = require('./server/controllers/api');
 var resourceController  = require('./server/controllers/resource');
-var userController      = require('./server/controllers/user');
+var usersController     = require('./server/controllers/users');
+var ordersController    = require('./server/controllers/orders');
+
 
 // Declare app and configure
 var app = express();
@@ -58,22 +60,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // user
-app.get('/auth/google/callback', userController.authGoogleCallback);
-app.get('/stripe/callback', userController.stripeCallback);
+app.get('/auth/google/callback', usersController.authGoogleCallback);
+app.post('/stripe/callback', usersController.stripeCallback);
+app.post('/orders/verify', ordersController.stripeVerifyCallback);
+
 
 // API
 app.get('/api/brochures', apiController.getBrochures);
 app.post('/api/brochures', apiController.addBrochure);
 app.get('/api/brochures/:id', apiController.getBrochure);
 app.put('/api/brochures/:id', apiController.updateBrochure);
+app.get('/api/envkey/:keyname', apiController.getEnvKey);
 
 // Proxy Resource
 app.get('/proxyresource/:resourceurl', resourceController.proxyResource);
 
+// app.get('*', function(req, res) {
+//   res.redirect('/#' + req.originalUrl);
+// });
+
 app.use(function(req, res) {
   res.redirect('/#' + req.originalUrl);
 });
-
 
 
 // Production error handler

@@ -1,6 +1,14 @@
 require('dotenv').config({silent:true});
 var knex = require('../../db/knex');
 
+// TODO authenticate
+// app.get('/api/envkey/:keyname', apiController.getEnvKey);
+exports.getEnvKey = function(req, res){
+  var key = process.env[req.params.keyname];
+  // console.log('KEY', req.params.keyname, key);
+  res.json(key);
+}
+
 exports.getBrochures = function(req, res){
   console.log('requesting api brochures');
   knex('brochures').select('*')

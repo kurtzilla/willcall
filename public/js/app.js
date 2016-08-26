@@ -1,4 +1,4 @@
-// (function() {
+
 var app = angular.module('MyApp', ['ui.router', 'satellizer'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
 
@@ -36,6 +36,32 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer'])
     templateUrl: 'partials/admin/brochures/edit.html',
     controller: 'BrochureController'
   })
+  .state('orders_verify', {
+    url: '/orders/verify',
+    templateUrl: 'partials/orders/verify.html',
+    controller: 'OrdersController'
+  })
+  .state('orders_charge', {
+    url: '/orders/charge',
+    templateUrl: 'partials/orders/charge.html',
+    controller: 'OrdersController'
+  })
+  .state('orders_success', {
+    url: '/orders/success',
+    templateUrl: 'partials/orders/success.html',
+    controller: 'OrdersController'
+  })
+  .state('users_joinus', {
+    url: '/users/joinus',
+    templateUrl: 'partials/users/joinus.html',
+    controller: 'UsersController'
+  })
+  .state('users_joinsuccess', {
+    url: '/users/joinsuccess',
+    templateUrl: 'partials/users/joinsuccess.html',
+    controller: 'UsersController'
+  })
+
   // .state('contact', {
   //   url: '/contact',
   //   templateUrl: 'partials/contact.html',
@@ -108,4 +134,4 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer'])
     $rootScope.currentUser = JSON.parse($window.localStorage.user);
   }
 });
-// })();
+

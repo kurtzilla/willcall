@@ -17,6 +17,14 @@ function generateToken(user) {
   return jwt.sign(payload, process.env.TOKEN_SECRET);
 }
 
+
+exports.stripeCallback = function(req, res) {
+  console.log('debug CALLBACK STRIPE');
+  // TODO register stripe vals to user account
+  // save auth token to db
+  res.redirect('/users/joinsuccess');
+};
+
 /**
  * POST /auth/google
  * Sign in with Google
@@ -106,11 +114,6 @@ exports.authGoogle = function(req, res) {
 };
 
 exports.authGoogleCallback = function(req, res) {
-  // console.log('debug callback google');
-  res.send('Loading...');
-};
-
-exports.stripeCallback = function(req, res) {
   // console.log('debug callback google');
   res.send('Loading...');
 };
