@@ -39,5 +39,7 @@
 
 
 
-
+============================
+what is a closure
+- access to lexical scope oin which it was created
 

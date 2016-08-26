@@ -1,0 +1,23 @@
+<div class="panel">
+  <h1>Verify your order</h1>
+  <pre>
+    * create an amount
+    * create a button to call the Stripe connect api
+  </pre>
+
+  <!--<form action="/orders/charge" method="POST">-->
+  <form action="" method="POST">
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="{{view.stripe_publish_key}}"
+      data-amount="999"
+      data-name="WillCallTickets, Inc"
+      data-zip-code="false"
+      data-description="2 Widgets"
+      data-image="/img/documentation/checkout/marketplace.png"
+      data-locale="auto">
+    </script>
+  </form>
+  <br/><br/>
+
+</div>
