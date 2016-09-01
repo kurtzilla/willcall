@@ -110,8 +110,13 @@ app.post('/api/brochures',          apiController.addBrochure);
 app.get('/api/brochures/:id',       apiController.getBrochure);
 app.put('/api/brochures/:id',       apiController.updateBrochure);
 app.get('/api/envkey/:keyname',     apiController.getEnvKey);
-app.get('/api/members/:member_id/configs',
-  apiController.getConfigs);
+
+// api member routes
+app.get('/api/members/:member_id/configs',  apiController.getConfigs);
+
+
+
+
 
 // Proxy Resource - resolves by correcting https and http for resources
 app.get('/proxyresource/:resourceurl',
