@@ -1,5 +1,5 @@
 
-var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt'])
+var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.bootstrap'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider,
                  $httpProvider, $authProvider) {
 
@@ -26,16 +26,26 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt'])
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
   })
-
-
-
+    
+    /*
+      Modals
+     */
+   
+     
+     
+     
+     
+     
+     
+     
+  
+  
   /*
     MEMBERS AREA
    */
   .state('members', {
     abstract: true,
     url: '/members',
-    
     views: {
       '@': {
         templateUrl: 'partials/members/index.html',
@@ -43,42 +53,69 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt'])
       },
       'navigation@members': {
         templateUrl: 'partials/members/navigation.html',
-        controller: 'MembersController',
       }
     }
   })
   .state('members.signin', {
     url: '/signin',
     templateUrl: 'partials/members/signin.html',
-    controller: 'MembersController',
-    // resolve: { memberAuth: memberAuth }
   })
   .state('members.profile', {
     url: '/profile',
     templateUrl: 'partials/members/profile.html',
-    controller: 'MembersController'
   })
   .state('members.dashboard', {
     url: '/dashboard',
     templateUrl: 'partials/members/dashboard.html',
-    controller: 'MembersController'
   })
+  .state("members.dashboard.configs", {
+    views:{
+      "modal@": {
+        templateUrl: "partials/members/dashboard.configs.html",
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("keyup", function(e) {
+        if(e.keyCode == 27) {
+          $(document).off("keyup");
+          $state.go("^");
+        }
+      });
+      $(document).on("click", ".Modal-backdrop, .Modal-holder", function() {
+        $state.go("^");
+      });
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+
+
+
+
+
+
+
+
+
+
   .state('members.shows', {
     url: '/shows',
     templateUrl: 'partials/members/shows.html',
-    controller: 'MembersController'
   })
   .state('members.products', {
     url: '/products',
     templateUrl: 'partials/members/products.html',
-    controller: 'MembersController'
   })
-  
+  .state('members.events', {
+    url: '/events',
+    templateUrl: 'partials/members/events.html',
+  })
   .state('members.error', {
     url: '/error',
     templateUrl: 'partials/members/error.html',
-    controller: 'MembersController'
   })
+    
 /*
   END MEMBERS AREA
  */

@@ -17,7 +17,7 @@ angular.module('MyApp')
           return data.data;
         });
       } else {
-        return null;
+        return [];
       }
     }
     

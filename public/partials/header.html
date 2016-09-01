@@ -21,6 +21,9 @@
         <li ng-show="!view.ContextService.currentMember"
             ng-class="{ active: isActive('/members/signin')}">
           <a ui-sref="members.signin">Join Us</a></li>
+        <li ng-show="view.ContextService.currentMember"
+            ng-class="{ active: isActive('/members/dashboard')}">
+          <a ui-sref="members.dashboard">Dashboard</a></li>
         <!--<li ng-class="{ active: isActive('/members/profile')}"><a ui-sref="members.profile">Profile</a></li>-->
         <!--<li ng-class="{ active: isActive('/members/dashboard')}"><a ui-sref="members.dashboard">Dash</a></li>-->
         <!--<li><a href="#" ng-click="memberLogout()">Logout</a></li>-->

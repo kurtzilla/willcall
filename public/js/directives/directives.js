@@ -1,5 +1,15 @@
 
 angular.module('MyApp')
+.directive('toggle', function(){
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      if (attrs.toggle == "tooltip") {
+        $(element).tooltip();
+      }
+    }
+  }
+})
 .directive('wctBrochureDisplay', ['BrochureService', function(BrochureService) {
   return {
     restrict: 'E',
