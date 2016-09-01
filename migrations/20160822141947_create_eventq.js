@@ -8,14 +8,18 @@ exports.up = function(knex, Promise) {
       table.timestamp('dttoprocess').defaultsTo(knex.fn.now());
       table.timestamp('dtprocessed');
       table.string('status').notNullable().defaultsTo('');
-      table.string('threadlock',50).notNullable().defaultsTo('').comment('allow for different types and formats of guids');
+      table.string('threadlock',50).notNullable().defaultsTo('')
+        .comment('allow for different types and formats of guids');
       table.integer('attemptsremaining').defaultsTo(3);
-      table.integer('priority').defaultsTo(0).comment('10 is highest, 0 lowest/normal');
+      table.integer('priority').defaultsTo(0)
+        .comment('10 is highest, 0 lowest/normal');
 
-      table.string('creator_name').notNullable().defaultsTo('');
-      table.integer('creator_id').references('id').inTable('users').nullable();
-      table.string('affected_name').notNullable().defaultsTo('');
-      table.integer('affected_user_id').references('id').inTable('users').nullable();
+      table.string('creatortype').notNullable().defaultsTo('');
+      table.string('creatorname').notNullable().defaultsTo('');
+      table.integer('creatorid').notNullable().defaultsTo(0);
+      table.string('affectedtype').notNullable().defaultsTo('');
+      table.string('affectedname').notNullable().defaultsTo('');
+      table.integer('affectedid').notNullable().defaultsTo(0);
 
       table.string('context').notNullable().defaultsTo('');
       table.string('name').notNullable().defaultsTo('');

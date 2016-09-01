@@ -1,14 +1,16 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
+  // Deletes handled in venues
 
-    return Promise.all([
-      // Inserts seed entries
-      knex('shows').insert({id: 1, venue_id: 1, url:'/shows/gonzo-show', name:'Gonzo Show',
-        description:'some show with some group'}),
-      knex('shows').insert({id: 2, venue_id: 2, url:'/shows/meet-the-morgans', name:'Meet the Morgans!',
-        description:'Another show with multiple dates'})
-    ]);
+  return Promise.all([
+    // Inserts seed entries
+    knex('shows').insert({id: 1, member_id: 1, venue_id: 1, url:'/shows/gonzo-show', name:'Gonzo Show',
+      description:'some show with some group'}),
+    knex('shows').insert({id: 2, member_id: 1, venue_id: 2, url:'/shows/meet-the-morgans', name:'Meet the Morgans!',
+      description:'Another show with multiple dates'}),
+
+    knex.raw('ALTER SEQUENCE shows_id_seq RESTART WITH 3;')
+  ]);
 };
 
 // table.integer('venue_id').references('id').inTable('venues').notNullable();

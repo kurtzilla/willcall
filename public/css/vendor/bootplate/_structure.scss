@@ -28,6 +28,7 @@ html {
 
 body{
   background-color: transparent;
+  color:#666;
 }
 
 .home-panel{
@@ -56,4 +57,24 @@ body{
       //width:120px;
     }
   }
+}
+
+
+.panel-container {
+  margin: 0 2em;
+  padding:1em;
+}
+//.panel-area {
+//  margin:0 auto;
+//  width:50%;
+//  min-width:500px;
+//}
+
+.panel-signin {
+  font-weight:bold;
+  padding:2em;
+}
+
+.btn-signin {
+  font-size:2em;
 }
