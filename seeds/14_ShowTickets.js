@@ -1,29 +1,29 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
+  // Deletes handled in venues
+  return Promise.all([
 
-    return Promise.all([
-      // Inserts seed entries
+    knex('showtickets').insert({id:1, showdate_id:1, description: 'General Admission',
+      ages: '21 and Over', price:9.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
+      allotted: 100, sold: 0, available: 100}),
+    knex('showtickets').insert({id:2, showdate_id:1, description: 'General Admission',
+      ages: 'Under 21', price:12.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
+      allotted: 100, sold: 0, available: 100}),
 
-      knex('showtickets').insert({id:1, showdate_id:1, description: 'General Admission',
-        ages: '21 and Over', price:9.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
-        allotted: 100, sold: 0, available: 100}),
-      knex('showtickets').insert({id:2, showdate_id:1, description: 'General Admission',
-        ages: 'Under 21', price:12.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
-        allotted: 100, sold: 0, available: 100}),
+    knex('showtickets').insert({id:3, showdate_id:2, description: 'General Admission',
+      ages: '21 and Over', price:14.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
+      allotted: 100, sold: 0, available: 100}),
+    knex('showtickets').insert({id:4, showdate_id:2, description: 'General Admission',
+      ages: 'Under 21', price:18.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
+      allotted: 100, sold: 0, available: 100}),
 
-      knex('showtickets').insert({id:3, showdate_id:2, description: 'General Admission',
-        ages: '21 and Over', price:14.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
-        allotted: 100, sold: 0, available: 100}),
-      knex('showtickets').insert({id:4, showdate_id:2, description: 'General Admission',
-        ages: 'Under 21', price:18.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
-        allotted: 100, sold: 0, available: 100}),
+    knex('showtickets').insert({id:5, showdate_id:3, name:'Party Ticket', description: 'General Admission',
+      ages: '21 and Over', price:21.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
+      allotted: 100, sold: 0, available: 100}),
 
-      knex('showtickets').insert({id:5, showdate_id:3, name:'Party Ticket', description: 'General Admission',
-        ages: '21 and Over', price:21.99, deliveryoptions: JSON.stringify(['WillCall']), status: 'On Sale',
-        allotted: 100, sold: 0, available: 100})
+    knex.raw('ALTER SEQUENCE showtickets_id_seq RESTART WITH 6;')
 
-    ]);
+  ]);
 };
 
 // table.integer('showdate_id').references('id').inTable('showdates').notNullable();

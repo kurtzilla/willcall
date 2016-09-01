@@ -1,6 +1,9 @@
 
-var app = angular.module('MyApp', ['ui.router', 'satellizer'])
-.config(function($stateProvider, $urlRouterProvider, $locationProvider, $authProvider) {
+var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt'])
+.config(function($stateProvider, $urlRouterProvider, $locationProvider,
+                 $httpProvider, $authProvider) {
+
+  $httpProvider.interceptors.push('jwtMemberInterceptor');
 
   $urlRouterProvider.otherwise('/');
 
@@ -10,22 +13,92 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer'])
     templateUrl: 'partials/home.html',
     controller: 'BrochureController'
   })
-  .state('profile', {
-    url: '/users/profile',
-    templateUrl: 'partials/users/profile.html'
-  })
-  .state('admin', {
-    url: '/admin',
-    templateUrl: 'partials/admin/index.html'
-  })
   .state('users', {
-    url: '/admin/users',
-    templateUrl: 'partials/admin/users/listing.html'
+    abstract: true,
+    url: '/users',
+    templateUrl: 'partials/users/index.html'
   })
+  // .state('users', {
+  //   url: '/admin/users',
+  //   templateUrl: 'partials/admin/users/listing.html'
+  // })
   .state('users_edit', {
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
   })
+
+
+
+  /*
+    MEMBERS AREA
+   */
+  .state('members', {
+    abstract: true,
+    url: '/members',
+    
+    views: {
+      '@': {
+        templateUrl: 'partials/members/index.html',
+        controller: 'MembersController',
+      },
+      'navigation@members': {
+        templateUrl: 'partials/members/navigation.html',
+        controller: 'MembersController',
+      }
+    }
+  })
+  .state('members.signin', {
+    url: '/signin',
+    templateUrl: 'partials/members/signin.html',
+    controller: 'MembersController',
+    // resolve: { memberAuth: memberAuth }
+  })
+  .state('members.profile', {
+    url: '/profile',
+    templateUrl: 'partials/members/profile.html',
+    controller: 'MembersController'
+  })
+  .state('members.dashboard', {
+    url: '/dashboard',
+    templateUrl: 'partials/members/dashboard.html',
+    controller: 'MembersController'
+  })
+  .state('members.shows', {
+    url: '/shows',
+    templateUrl: 'partials/members/shows.html',
+    controller: 'MembersController'
+  })
+  .state('members.products', {
+    url: '/products',
+    templateUrl: 'partials/members/products.html',
+    controller: 'MembersController'
+  })
+  
+  .state('members.error', {
+    url: '/error',
+    templateUrl: 'partials/members/error.html',
+    controller: 'MembersController'
+  })
+/*
+  END MEMBERS AREA
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+  .state('admin', {
+    url: '/admin',
+    templateUrl: 'partials/admin/index.html'
+  })
+
   .state('brochures', {
     url: '/admin/brochures',
     templateUrl: 'partials/admin/brochures/listing.html',
@@ -51,34 +124,7 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer'])
     templateUrl: 'partials/orders/success.html',
     controller: 'OrdersController'
   })
-  .state('users_joinus', {
-    url: '/users/joinus',
-    templateUrl: 'partials/users/joinus.html',
-    controller: 'UsersController'
-  })
-  .state('users_joinsuccess', {
-    url: '/users/joinsuccess',
-    templateUrl: 'partials/users/joinsuccess.html',
-    controller: 'UsersController'
-  })
 
-  // .state('contact', {
-  //   url: '/contact',
-  //   templateUrl: 'partials/contact.html',
-  //   controller: 'ContactCtrl'
-  // })
-  // .state('login', {
-  //   url: '/login',
-  //   templateUrl: 'partials/login.html',
-  //   controller: 'LoginCtrl',
-  //   resolve: { skipIfAuthenticated: skipIfAuthenticated }
-  // })
-  // .state('signup', {
-  //   url: '/signup',
-  //   templateUrl: 'partials/signup.html',
-  //   controller: 'SignupCtrl',
-  //   resolve: { skipIfAuthenticated: skipIfAuthenticated }
-  // })
   // .state('account', {
   //   url: '/account',
   //   templateUrl: 'partials/profile.html',
@@ -116,7 +162,9 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer'])
   //   clientId: '485087755085-79bj9q9chussumg4f5r7c6korhhpkert.apps.googleusercontent.com',
   //   redirectUri: origin + '/auth/google/callback'
   // });
-  //
+
+  // console.log('AUTHHD', $authProvider);
+
   // function skipIfAuthenticated($location, $auth) {
   //   if ($auth.isAuthenticated()) {
   //     $location.path('/');
@@ -128,10 +176,42 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer'])
   //     $location.path('/login');
   //   }
   // }
-})
-.run(function($rootScope, $window) {
-  if ($window.localStorage.user) {
-    $rootScope.currentUser = JSON.parse($window.localStorage.user);
-  }
-});
 
+  // function verifyJWT(token){
+  //
+  //   var base64Url = token.split('.')[1];
+  //   var base64 = base64Url.replace('-', '+').replace('_', '/');
+  //   return JSON.parse($window.atob(base64));
+  //
+  // };
+
+  function memberAuth($location, $auth, $http, ContextService) {
+    // console.log('AUTHHD', $http(config));
+    // if ($auth.isAuthenticated()) {
+    //   $location.path('/');
+    // }
+  };
+})
+.run(function($rootScope, $window, jwtHelper) {
+  // console.log('HELPER',jwtHelper.decodeToken(localStorage.memberToken))
+  // $rootScope.memberCurrent = null;
+  //
+  // if(localStorage.memberToken) {
+  //   $rootScope.memberCurrent = jwtHelper.decodeToken($window.localStorage.memberToken);
+  // }
+
+})
+.service('jwtMemberInterceptor', ['$rootScope', 'jwtHelper',
+  function jwtMemberInterceptor($rootScope, jwtHelper){
+  // Attach the token to every request.
+  return {
+    request: function(config){
+      $rootScope.memberToken = null;
+      if(localStorage && localStorage.memberToken) {
+        config.headers.authorization = 'Bearer ' + localStorage.memberToken;
+        //$rootScope.memberToken = localStorage.memberToken;
+      }
+      return config;
+    }
+  }
+}]);

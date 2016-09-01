@@ -1,6 +1,6 @@
 'use strict'
 
-var knex = require('../../db/knex');
+var knex = require('../../config/db/knex');
 const expect = require("chai").expect;
 const config = require('../../lib/dbaccess/config');
 

@@ -6,7 +6,7 @@ BrochureController.$inject = ['$scope', '$location', 'BrochureService'];
 
 function BrochureController($scope, $location, BrochureService) {
 
-    $scope.view = [];
+    $scope.view = {};
     $scope.view.BrochureService = BrochureService;
 
     $scope.cancel = function(){

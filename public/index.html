@@ -17,7 +17,11 @@
 </head>
 <body ng-app="MyApp">
   <div ng-include src="'partials/header.html'"></div>
-  <div ui-view></div>
+  <div class="row">
+    <div class="span12">
+      <div class="well" ui-view></div>
+    </div>
+  </div>
   <div ng-include src="'partials/footer.html'"></div>
 
 
@@ -30,25 +34,28 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-messages/1.5.8/angular-messages.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.3/angular-moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+
 
   <script src="/js/app.js"></script>
 
   <!--<script src="/js/controllers/contact.js"></script>-->
   <!--<script src="/js/controllers/forgot.js"></script>-->
-  <script src="/js/controllers/header.js"></script>
-  <script src="/js/controllers/brochures.js"></script>
-  <script src="/js/controllers/orders.js"></script>
-  <script src="/js/controllers/users.js"></script>
+  <script src="/js/controllers/headerController.js"></script>
+  <script src="/js/controllers/brochuresController.js"></script>
+  <script src="/js/controllers/membersController.js"></script>
+  <script src="/js/controllers/ordersController.js"></script>
+  <script src="/js/controllers/usersController.js"></script>
   <!--<script src="/js/controllers/profile.js"></script>-->
   <!--<script src="/js/controllers/reset.js"></script>-->
   <!--<script src="/js/controllers/signup.js"></script>-->
-  <!--<script src="/js/controllers/api.js"></script>-->
+  <!-- <script src="/js/controllers/apiService.js"></script> -->
 
-  <!--<script src="/js/services/account.js"></script>-->
-  <script src="/js/services/brochures.js"></script>
-  <script src="/js/services/orders.js"></script>
-  <script src="/js/services/users.js"></script>
-  <!--<script src="/js/services/contact.js"></script>-->
+  <script src="/js/services/contextService.js"></script>
+  <script src="/js/services/brochuresService.js"></script>
+  <script src="/js/services/ordersService.js"></script>
+  <script src="/js/services/usersService.js"></script>
+  <script src="/js/services/membersService.js"></script>
 
   <script src="/js/filters/filters.js"></script>
 

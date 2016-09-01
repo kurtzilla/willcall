@@ -1,5 +1,21 @@
 require('dotenv').config({silent:true});
-var knex = require('../../db/knex');
+var knex = require('../../config/db/knex');
+var configs = require('../../lib/dbaccess/config');
+
+
+exports.getConfigs = function(req, res){
+  // console.log('API CONFIG DATA', req.params.member_id)
+  
+  configs.getMergedConfigCollection(req.params.member_id)
+  .then(function(data){
+    
+    res.json(data);
+  });
+};
+
+
+
+
 
 // TODO authenticate
 // app.get('/api/envkey/:keyname', apiController.getEnvKey);
@@ -7,7 +23,7 @@ exports.getEnvKey = function(req, res){
   var key = process.env[req.params.keyname];
   // console.log('KEY', req.params.keyname, key);
   res.json(key);
-}
+};
 
 exports.getBrochures = function(req, res){
   console.log('requesting api brochures');

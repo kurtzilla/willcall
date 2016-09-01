@@ -239,8 +239,8 @@ th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot");
-  src: url("../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/bootstrap/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/bootstrap/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+  src: url("../fonts/glyphicons-halflings-regular.eot");
+  src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 
 .glyphicon {
   position: relative;
@@ -5993,7 +5993,8 @@ html {
   background-size: cover; }
 
 body {
-  background-color: transparent; }
+  background-color: transparent;
+  color: #666; }
 
 .home-panel {
   min-width: 900px; }
@@ -6010,3 +6011,14 @@ body {
       height: 115px; }
     .home-panel .panel-body a.btn {
       margin: 10px auto 0 auto; }
+
+.panel-container {
+  margin: 0 2em;
+  padding: 1em; }
+
+.panel-signin {
+  font-weight: bold;
+  padding: 2em; }
+
+.btn-signin {
+  font-size: 2em; }
