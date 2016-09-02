@@ -63,3 +63,10 @@ sass --watch public/css/mainMd.scss:public/css/mainMd.css
 
 You will probably want to remove public/js/services/api.js - I kept it 
     here to test initial routing
+    
+===========================================    
+Use this link for Session Key (and others) generation
+node -e "require('crypto').randomBytes(48, function(ex, buf) { console.log(buf.toString('hex')) });"
+
+C3AEC4626EC09A666BCF35EC2D444F4B8972D0ED25D4D7EB3EBF20062B9F4DEB
+ff84cf765fb4a5d468af972953d78527f4f9ac08f5d4836a63978fc1b3f3a31004a0eb53efcd018429a4bac87266225d

@@ -26,13 +26,13 @@ function generateToken(member) {
 /**
  * Login required middleware
  */
-exports.ensureAuthenticated = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(401).send({ msg: 'Unauthorized' });
-  }
-};
+// exports.ensureAuthenticated = function(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     next();
+//   } else {
+//     res.status(401).send({ msg: 'Unauthorized' });
+//   }
+// };
 
 
 
@@ -50,7 +50,7 @@ exports.stripeLogin = function(req, res) {
   // var url = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=';
   // url += process.env.STRIPE_CLIENT_ID;
   // url += '&scope=read_write';
-  console.log('STRIPE LOGIN')
+  // console.log('STRIPE LOGIN')
   
   res.redirect('https://connect.stripe.com/oauth/authorize?' + qs.stringify({
     response_type: "code",
@@ -61,18 +61,22 @@ exports.stripeLogin = function(req, res) {
 };
 
 exports.stripeAuthCallback = function(req, res) {
-console.log('CALLBACK', req)
+// console.log('STRIPE CALLBACK')
   var code = req.query.code;
 
   if(code) {
+    // console.log('STRIPE CODE', code)
     return exports.stripeGetAuthTokens(code)
     .then(function(_data){
+      // console.log('STRIPE AUTH TOKENS THEN')
       return ensureMembersTableEntry(_data);
     })
     .then(function(_member){
+      // console.log('STRIPE MEMBERS TABLE ENTRY THEN')
       res.render('memberToken', { memberToken: generateToken(_member) });
     });
   } else {
+    // console.log('STRIPE AUTH CALLBACK REDIRECT')
     // TODO  indicate user denied access
     // { error: 'access_denied', error_description: 'The user denied your request' }
     res.redirect('/members/signin');
@@ -90,22 +94,29 @@ console.log('CALLBACK', req)
 // Determine if member row exists the update
 //   with new stripe token info
 function ensureMembersTableEntry(body){
+  console.log('*ensureMembersTableEntry')
   var _stripeid     = body.stripe_user_id;
   var _accessToken  = body.access_token;
   var _refreshToken = body.refresh_token;
   var _publishKey   = body.stripe_publishable_key;
-
+  
+  // console.log('*ensureMembersTableEntry - BODY?', body)
+  
   return members.getMember_ByStripeUserId(_stripeid)
   .then(function (_member) {
+    // console.log('ENSURE - first return', _member)
     if (_member) {
+      // console.log('ENSURE - WE HAVE MEMBER')
       // we have an existing member - update stripe token info
       return members.updateMemberStripe_ByStripeUserId(
         _stripeid, _publishKey, _accessToken, _refreshToken);
     } else {
+      // console.log('ENSURE - NO MEMBER')
       // create a new member - the update with a stripe info call
       return members.createMemberStripe(
         _stripeid, _publishKey, _accessToken, _refreshToken)
       .then(function(__member){
+        // console.log('ENSURE - JUST CREATED MEMBER')
         return exports.updateMemberStripeDetails(__member);
       });
     }
@@ -137,6 +148,7 @@ exports.stripeGetAuthTokens = function(code){
     });
   });
 };
+
 
 
 // updateMemberStripeDetails
