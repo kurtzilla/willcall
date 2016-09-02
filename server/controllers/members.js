@@ -7,6 +7,7 @@ var moment = require('moment');
 var request = require('request');
 var qs = require('querystring');
 var members = require('../../lib/dbops/members');
+var members = require('../../lib/dbops/events');
 
 
 
@@ -23,17 +24,40 @@ function generateToken(member) {
 }
 
 
-/**
- * Login required middleware
- */
-// exports.ensureAuthenticated = function(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     next();
-//   } else {
-//     res.status(401).send({ msg: 'Unauthorized' });
-//   }
-// };
+/*
+  STRIPE Webhooks
+*/
+//
+// var stripe = require("stripe")("sk_test_9SckZZ3XeM2BwJBxdxdRf6st");
+//
+// // Using Express
+// app.post("/my/webhook/url", function(request, response) {
+//   // Retrieve the request's body and parse it as JSON
+//   var event_json = JSON.parse(request.body);
+//
+//   // Do something with event_json
+//
+//
+// });
 
+
+// my account events
+exports.stripeAccountWebhook = function(req, res){
+  console.log('ACCOUNT WEBHOOK')
+  events.recordWebhook(req.body)
+  .then(function(data){
+    response.send(200);
+  });
+};
+
+// member events
+exports.stripeConnectWebhook = function(req, res){
+  console.log('CONNECT WEBHOOK')
+  events.recordWebhook(req.body)
+  .then(function(data){
+    response.send(200);
+  });
+};
 
 
 //////////////////////////////////////////////////////////////////////

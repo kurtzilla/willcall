@@ -66,11 +66,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.
       "modal@members": {
         templateUrl: "partials/members/dashboard.configs.html",
         controller: 'MembersConfigController'
-        //
-        //     $scope.subview = {};
-        //     $scope.subview.larry = 'll---99';
-        //
-        // }
       }
     },
     onEnter: ["$state", function($state) {
