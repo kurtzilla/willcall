@@ -65,8 +65,10 @@ console.log('STRIPE CALLBACK')
   var code = req.query.code;
 
   if(code) {
+    console.log('STRIPE CODE', code)
     return exports.stripeGetAuthTokens(code)
     .then(function(_data){
+      console.log('STRIPE AUTH TOKENS THEN')
       return ensureMembersTableEntry(_data);
     })
     .then(function(_member){
