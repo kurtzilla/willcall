@@ -55,7 +55,7 @@ exports.stripeConnectWebhook = function(req, res){
   console.log('CONNECT WEBHOOK', req.body)
   events.recordWebhook(req.body)
   .then(function(data){
-    response.send(200);
+    res.send(200);
   });
 };
 
