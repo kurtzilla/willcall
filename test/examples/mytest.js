@@ -2,7 +2,7 @@
 
 var knex = require('../../config/db/knex');
 const expect = require("chai").expect;
-const config = require('../../lib/dbaccess/config');
+const config = require('../../lib/dbops/configs');
 
 describe("#linearSearch", function(){
 
@@ -102,4 +102,4 @@ expect(lib.binarySearch(['a','b','c'], 'd')).to.deep.equal(-1)
 
 //
 //
-// const lib = require('../../lib/dbaccess/config')
+// const lib = require('../../lib/dbops/configs')

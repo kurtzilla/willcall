@@ -7,7 +7,7 @@ var moment = require('moment');
 var request = require('request');
 var qs = require('querystring');
 var members = require('../../lib/dbops/members');
-
+var events = require('../../lib/dbops/events');
 
 
 function generateToken(member) {
@@ -23,18 +23,32 @@ function generateToken(member) {
 }
 
 
-/**
- * Login required middleware
- */
-// exports.ensureAuthenticated = function(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     next();
-//   } else {
-//     res.status(401).send({ msg: 'Unauthorized' });
-//   }
-// };
+//////////////////////////////////////////////////////////////////////
+// STRIPE Webhook callbacks - stripe event logging
+//////////////////////////////////////////////////////////////////////
+
+// my account events
+exports.stripeAccountWebhook = function(req, res){
+  console.log('ACCOUNT WEBHOOK')
+  events.recordWebhook(req.body)
+  .then(function(data){
+    response.send(200);
+  });
+};
+
+// member events
+exports.stripeConnectWebhook = function(req, res){
+  console.log('CONNECT WEBHOOK', req.body)
+  events.recordWebhook(req.body)
+  .then(function(data){
+    res.sendStatus(200);
+  });
+};
 
 
+//////////////////////////////////////////////////////////////////////
+// STRIPE AuthCallback
+//////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
 // The member will login (or decline) from Stripe
@@ -148,7 +162,6 @@ exports.stripeGetAuthTokens = function(code){
     });
   });
 };
-
 
 
 // updateMemberStripeDetails

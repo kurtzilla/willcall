@@ -1,6 +1,6 @@
 require('dotenv').config({silent:true});
 var knex = require('../../config/db/knex');
-var configs = require('../../lib/dbaccess/config');
+var configs = require('../../lib/dbops/configs');
 
 
 exports.getConfigs = function(req, res){
