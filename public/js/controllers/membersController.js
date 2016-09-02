@@ -1,8 +1,8 @@
 
 angular.module('MyApp')
 .controller('MembersController', ['$scope', '$location', '$window', '$stateParams',
-    'ContextService', 'MembersService', '$http',
-    function ($scope, $location, $window, $stateParams, ContextService, MembersService, $http) {
+    'ContextService', 'MembersService', '$http', '$state',
+    function ($scope, $location, $window, $stateParams, ContextService, MembersService, $http, $state) {
 
       // console.log('MEMBERS CONTROLLER', $stateParams);
       // console.log('MEMBERS LOCATION', $location);
@@ -14,10 +14,20 @@ angular.module('MyApp')
       $scope.view.ContextService = ContextService;
       $scope.view.MembersService = MembersService;
   
+      $scope.isActive = function(route) {
+        return $location.path().indexOf(route) !== -1;
+      };
+  
       $scope.view.currentConfigId = function(){
         // console.log('PARM',$stateParams.config_id)
         return $stateParams['config_id']
-      }
+      };
+      
+      $scope.rowGo = function(config_id){
+        // $state.go('members.dashboard');
+        // ui-sref="members.dashboard.configs({config_id: config.id})">
+        $state.go('members.dashboard.configs', {config_id: config_id});
+      };
   
       $scope.refreshDashboard = function(){
         $scope.view.configList = null;

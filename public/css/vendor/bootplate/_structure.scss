@@ -263,3 +263,25 @@ body{
     background-color: lighten(black, 75%);
   }
 }
+
+.badge-primary {
+ background-color: lighten($brand-primary, 25%);
+}
+.table-listing {
+  .badge{
+    margin-right:1em;
+  }
+}
+.table-hover {
+  > tbody > tr:hover {
+    background-color: lighten($brand-primary, 10%);
+    color:white;
+    font-weight:bold;
+    cursor: pointer;
+  }
+}
+
+
+.nav.nav-sub-nav {
+  margin-bottom:1em;
+}

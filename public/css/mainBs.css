@@ -6176,3 +6176,18 @@ body {
   border-right: solid black 1px;
   border-bottom: solid black 1px;
   background-color: #bfbfbf; }
+
+.badge-primary {
+  background-color: #8cb8df; }
+
+.table-listing .badge {
+  margin-right: 1em; }
+
+.table-hover > tbody > tr:hover {
+  background-color: #5094ce;
+  color: white;
+  font-weight: bold;
+  cursor: pointer; }
+
+.nav.nav-sub-nav {
+  margin-bottom: 1em; }

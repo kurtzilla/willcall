@@ -1,7 +1,7 @@
 <div class="panel panel-area">
     <h3>Dashboard <a ng-click="refreshDashboard()"
-                     class="btn btn-warning btn-xs">refresh</a></h3>
-    <table class="table table-bordered table-striped table-hover table-condensed">
+                     class="btn btn-primary btn-xs">refresh</a></h3>
+    <table class="table table-bordered table-striped table-hover table-condensed table-listing">
         <theader>
             <tr>
                 <th>Key</th>
@@ -10,14 +10,9 @@
             </tr>
         </theader>
         <tbody>
-            <tr ng-repeat="config in view.configList">
+            <tr ng-repeat="config in view.configList" ng-click="rowGo(config.id);">
                 <td>
-                    <button class="btn btn-primary btn-xs"
-                            type="button"
-                            ui-sref="members.dashboard.configs({config_id: config.id})">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <span class="badge"
+                    <span class="badge badge-primary"
                           data-toggle="tooltip"
                           data-placement="top"
                           data-original-title="{{config.description}}">
