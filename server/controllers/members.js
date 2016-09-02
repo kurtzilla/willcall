@@ -61,7 +61,7 @@ exports.stripeLogin = function(req, res) {
 };
 
 exports.stripeAuthCallback = function(req, res) {
-console.log('CALLBACK', req)
+console.log('STRIPE CALLBACK')
   var code = req.query.code;
 
   if(code) {
