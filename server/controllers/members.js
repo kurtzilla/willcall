@@ -99,7 +99,9 @@ function ensureMembersTableEntry(body){
   var _accessToken  = body.access_token;
   var _refreshToken = body.refresh_token;
   var _publishKey   = body.stripe_publishable_key;
-
+  
+  console.log('*ensureMembersTableEntry - BODY?', body)
+  
   return members.getMember_ByStripeUserId(_stripeid)
   .then(function (_member) {
     console.log('ENSURE - first return', _member)
