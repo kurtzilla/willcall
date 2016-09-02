@@ -37,7 +37,8 @@
     "querystring": "^0.2.0",
     "request": "^2.74.0",
     "serve-favicon": "^2.3.0",
-    "stripe": "^4.9.1"
+    "stripe": "^4.9.1",
+    "thenby": "^1.2.1"
   },
   "devDependencies": {
     "intern": "^3.3.1"

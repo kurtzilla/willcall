@@ -5,16 +5,32 @@ var configs = require('../../lib/dbaccess/config');
 
 exports.getConfigs = function(req, res){
   // console.log('API CONFIG DATA', req.params.member_id)
-  
   configs.getMergedConfigCollection(req.params.member_id)
   .then(function(data){
-    
+    res.json(data);
+  });
+};
+
+exports.getConfigById = function(req, res){
+  // console.log('API CALL',req.params.config_id)
+  configs.getConfigById(req.params.config_id)
+  .then(function(data){
     res.json(data);
   });
 };
 
 
-
+// app.post('/api/members/:member_id/configs/:config_id',  apiController.updateMemberConfig);
+exports.updateMemberConfig = function(req, res){
+  // console.log('API CALL PARAMS', req.params, req.body)
+  //
+  // res.json('in progress...');
+  
+  configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
+  .then(function(data){
+    res.json(data);
+  });
+};
 
 
 // TODO authenticate

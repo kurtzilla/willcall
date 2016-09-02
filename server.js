@@ -112,7 +112,10 @@ app.put('/api/brochures/:id',       apiController.updateBrochure);
 app.get('/api/envkey/:keyname',     apiController.getEnvKey);
 
 // api member routes
+app.get('/api/configs/:config_id',          apiController.getConfigById);
 app.get('/api/members/:member_id/configs',  apiController.getConfigs);
+app.post('/api/members/:member_id/configs/:config_id',  apiController.updateMemberConfig);
+
 
 
 

@@ -27,17 +27,9 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.
     templateUrl: 'partials/admin/users/edit.html'
   })
     
-    /*
-      Modals
-     */
-   
-     
-     
-     
-     
-     
-     
-     
+  /*
+    Modals
+   */
   
   
   /*
@@ -69,21 +61,28 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.
     templateUrl: 'partials/members/dashboard.html',
   })
   .state("members.dashboard.configs", {
+    url: '/configs/:config_id',
     views:{
-      "modal@": {
+      "modal@members": {
         templateUrl: "partials/members/dashboard.configs.html",
+        controller: 'MembersConfigController'
+        //
+        //     $scope.subview = {};
+        //     $scope.subview.larry = 'll---99';
+        //
+        // }
       }
     },
     onEnter: ["$state", function($state) {
-      $(document).on("keyup", function(e) {
-        if(e.keyCode == 27) {
-          $(document).off("keyup");
-          $state.go("^");
-        }
-      });
-      $(document).on("click", ".Modal-backdrop, .Modal-holder", function() {
-        $state.go("^");
-      });
+      // $(document).on("keyup", function(e) {
+      //   if(e.keyCode == 27) {
+      //     $(document).off("keyup");
+      //     $state.go("members.dashboard");
+      //   }
+      // });
+      // $(document).on("click", ".Modal-backdrop, .Modal-holder", function() {
+      //   $state.go("members.dashboard");
+      // });
       $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
         e.stopPropagation();
       });
