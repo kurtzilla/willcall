@@ -7,7 +7,7 @@ var moment = require('moment');
 var request = require('request');
 var qs = require('querystring');
 var members = require('../../lib/dbops/members');
-var members = require('../../lib/dbops/events');
+var events = require('../../lib/dbops/events');
 
 
 
