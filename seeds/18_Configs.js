@@ -1,13 +1,13 @@
 //
 exports.seed = function(knex, Promise) {
 //   // Deletes ALL existing entries
-  return knex('configs').del()
-    .then(function () {
+  
+    // .then(function () {
       return Promise.all([
 
         knex('configs').insert({id: 1, member_id: null, context: 'site', description: 'just some old key',
           key:'testing', value:'123',
-          datatype:'string', required:true, active:true, allowoverride:false}),
+          datatype:'string', required:true, active:true, allowoverride:true}),
         knex('configs').insert({id: 2, member_id: null, context: 'site', description: 'turns store on/off',
           key:'store_active', value:'true',
           datatype:'boolean', required:true, active:true, allowoverride:true}),
@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
         knex.raw('ALTER SEQUENCE configs_id_seq RESTART WITH 4;')
 
       ]);
-    });
+    // });
 };
 
 

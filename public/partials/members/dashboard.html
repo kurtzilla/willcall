@@ -1,36 +1,31 @@
 <div class="panel panel-area">
     <h3>Dashboard <a ng-click="refreshDashboard()"
                      class="btn btn-warning btn-xs">refresh</a></h3>
-    
     <table class="table table-bordered table-striped table-hover table-condensed">
         <theader>
             <tr>
-                <th>Context</th>
                 <th>Key</th>
                 <th>Value</th>
-                <th>&nbsp;</th>
+                <th>Context</th>
             </tr>
         </theader>
         <tbody>
             <tr ng-repeat="config in view.configList">
-                <td>{{config.context}}</td>
                 <td>
+                    <button class="btn btn-primary btn-xs"
+                            type="button"
+                            ui-sref="members.dashboard.configs({config_id: config.id})">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
                     <span class="badge"
                           data-toggle="tooltip"
                           data-placement="top"
                           data-original-title="{{config.description}}">
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                    </span>
+                          <span class="glyphicon glyphicon-info-sign"></span>
+                      </span>
                     {{config.key}}</td>
                 <td>{{config.value}}</td>
-                <td align="right">
-                    <button class="btn btn-primary btn-xs"
-                            type="button"
-                            ng-click="editModal()">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button ui-sref="members.dashboard.configs">Add to cart</button>
-                </td>
+                <td>{{config.context}}</td>
             </tr>
         </tbody>
     </table>
