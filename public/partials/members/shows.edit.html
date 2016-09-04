@@ -5,7 +5,8 @@
   <form name="_form"
         class="form-horizontal"
         novalidate
-        ng-submit="submitForm(_form);">
+        ng-submit="submitForm(_form, 'show');">
+    
     <div class="panel panel-primary panel-modal panel-area">
       <div class="panel-heading">
         <h4 class="panel-title">Show Editor</h4>
@@ -48,8 +49,8 @@
               <input type="text"
                      class="form-control"
                      name="f_description"
-                     readonly
-                     ng-value="view.currentShow.description">
+                     ng-model="_form.entity.description"
+                     ng-value="view.ContextService.currentShow.description">
             </div>
           </div>
           <div class="form-group">
@@ -97,7 +98,7 @@
 </div>
 
 
-<!--table.integer('venue_id').references('id').inTable('venues').notNullable();-->
+<!--table.string('venue').notNullable();-->
 <!--table.string('url').unique().notNullable().comment('url to show details');-->
 <!--table.string('name').notNullable().defaultsTo('');-->
 <!--table.string('description', 8192).notNullable().defaultsTo('')-->

@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
       table.timestamps(true,true);
 
       table.integer('member_id').references('id').inTable('members').notNullable();
-      table.integer('venue_id').references('id').inTable('venues').notNullable();
-
+      
+      table.string('venue').notNullable();
       table.string('url').unique().notNullable().comment('url to show details');
       table.string('name').notNullable().defaultsTo('');
       table.string('description', 8192).notNullable().defaultsTo('')

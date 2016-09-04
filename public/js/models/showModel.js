@@ -5,7 +5,7 @@ angular.module('MyApp').factory('Show', ['$http', 'moment', function($http, mome
     this.created_at = row.created_at;
     this.updated_at = row.updated_at;
     this.member_id = row.member_id;
-    this.venue_id = row.venue_id;
+    this.venue = row.venue;
     this.url = row.url;
     this.name = row.name;
     this.description = row.description;
@@ -52,6 +52,10 @@ angular.module('MyApp').factory('Show', ['$http', 'moment', function($http, mome
   ////////////////////////////////////////////
   // STATIC methods
   ////////////////////////////////////////////
+  
+  Show.processForm = function(form, input, current){
+    console.log('F I C', form, input, current)
+  };
   
   Show.buildShowCollection = function(showRows, dateModels) {
     // console.log('building...', dateRows)

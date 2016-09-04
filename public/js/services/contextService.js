@@ -1,30 +1,61 @@
 
 angular.module('MyApp')
-  .service('ContextService', ['$http', '$q', '$stateParams', '$rootScope', '$window', 'jwtHelper',
-    function($http, $q, $stateParams, $rootScope, $window, jwtHelper){
+  .service('ContextService', ['$http', '$q', '$stateParams', '$rootScope', '$window', 'jwtHelper', 'Show', 'ShowDate', 'ShowTicket',
+    function($http, $q, $stateParams, $rootScope, $window, jwtHelper, Show, ShowDate, ShowTicket){
 
       var _self = this;
+      // console.log('CTX')
    
       ////////////////////////////////////////////////
       // SHOW Funcs
       ////////////////////////////////////////////////
       this.currentShow = null;
-      this.getCurrentShow = function() {
-        if ($stateParams.show_id) {
-          return $http.get('/api/shows/' + $stateParams.show_id)
+      this.setCurrentShow = function(idx) {
+        console.log('IDX',idx)
+        if(idx && idx !== '0'){
+          return $http.get('/api/shows/' + idx)
           .then(function (data) {
+            console.log('HEY WATCH', data)
             // !!! api call returns response data - so get data at data.data
             var memberShowData = data.data;
             var shows = Show.buildShowCollection(
               memberShowData.shows,
               ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
             this.currentShow = (shows.length) ? shows[0] : null;
+            // console.log('MY CUR', this.currentShow)
+            return this.currentShow;
           });
         } else {
-          this.currentShow = null;
+          return this.currentShow = null;
         }
-      };
-      this.getCurrentShow();
+      }
+      
+      
+      
+      
+      
+      // this.getCurrentShow = function() {
+      //   console.log('HEY', $stateParams)
+      //   console.log('HEY', $stateParams['show_id'])
+      //   if ($stateParams.show_id) {
+      //     console.log('HEY WE GOTTA STATE')
+      //     return $http.get('/api/shows/' + $stateParams.show_id)
+      //     .then(function (data) {
+      //       console.log('HEY WATCH', $stateParams)
+      //       // !!! api call returns response data - so get data at data.data
+      //       var memberShowData = data.data;
+      //       var shows = Show.buildShowCollection(
+      //         memberShowData.shows,
+      //         ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
+      //       this.currentShow = (shows.length) ? shows[0] : null;
+      //       console.log('MY CUR',this.currentShow)
+      //       return this.currentShow;
+      //     });
+      //   } else {
+      //     return this.currentShow = null;
+      //   }
+      // };
+      //this.currentShow = this.getCurrentShow();
       
       
       ////////////////////////////////////////////////

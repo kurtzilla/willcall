@@ -18,10 +18,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     url: '/users',
     templateUrl: 'partials/users/index.html'
   })
-  // .state('users', {
-  //   url: '/admin/users',
-  //   templateUrl: 'partials/admin/users/listing.html'
-  // })
   .state('users_edit', {
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
@@ -68,7 +64,7 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     templateUrl: 'partials/members/configs.html',
   })
   .state("members.configs.edit", {
-    url: '/configs/:config_id',
+    url: '/:config_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/configs.edit.html",
@@ -97,12 +93,17 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     url: '/shows',
     templateUrl: 'partials/members/shows.html',
   })
+  
+  
+  
+  // WIP
   .state("members.shows.edit", {
-    url: '/shows/:show_id',
+    url: '/:show_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/shows.edit.html",
-        controller: 'MembersShowsController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShow: setCurrentShow }
       }
     },
     onEnter: ["$state", function($state) {
@@ -111,6 +112,25 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   .state("members.showdates", {
     abstract: true
   })
@@ -284,6 +304,17 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
   //   return JSON.parse($window.atob(base64));
   //
   // };
+  
+  // set the current show based on state params
+  function setCurrentShow($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.show_id) || $stateParams.show_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShow($stateParams.show_id)
+    .then(function(data){
+      return ContextService.currentShow = data;
+    });
+  };
 
   function memberAuth($location, $auth, $http, ContextService) {
     // console.log('AUTHHD', $http(config));

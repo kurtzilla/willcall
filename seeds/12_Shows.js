@@ -4,16 +4,16 @@ exports.seed = function(knex, Promise) {
 
   return Promise.all([
     // Inserts seed entries
-    knex('shows').insert({id: 1, member_id: 1, venue_id: 1, url:'/shows/gonzo-show', name:'Gonzo Show',
+    knex('shows').insert({id: 1, member_id: 1, venue: 'MagnaDrome', url:'/shows/gonzo-show', name:'Gonzo Show',
       description:'some show with some group'}),
-    knex('shows').insert({id: 2, member_id: 1, venue_id: 2, url:'/shows/meet-the-morgans', name:'Meet the Morgans!',
+    knex('shows').insert({id: 2, member_id: 1, venue: 'Cherry Creek Mall', url:'/shows/meet-the-morgans', name:'Meet the Morgans!',
       description:'Another show with multiple dates'}),
 
     knex.raw('ALTER SEQUENCE shows_id_seq RESTART WITH 3;')
   ]);
 };
 
-// table.integer('venue_id').references('id').inTable('venues').notNullable();
+// table.integer('venue').notNullable();
 // table.string('url').unique().notNullable().comment('url to show details');
 // table.string('name').notNullable().defaultsTo('');
 // table.string('description', 8192).notNullable().defaultsTo('').comment('A summary of all showdate info');

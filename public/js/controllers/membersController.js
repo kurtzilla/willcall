@@ -168,74 +168,74 @@ angular.module('MyApp')
     
   }]);
 
-angular.module('MyApp')
-.controller('MembersShowsController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate',
-  function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate) {
-  // console.log('MEMBERS SHOWS CONTROLLER', $stateParams)
-    $scope.view = {};
-    
-    $scope.view.currentShow = null;
-    $scope.getCurrentShow = function() {
-      if ($stateParams.show_id) {
-        return $http.get('/api/shows/' + $stateParams.show_id)
-        .then(function (data) {
-          // !!! api call returns response data - so get data at data.data
-          var memberShowData = data.data;
-          var shows = Show.buildShowCollection(
-            memberShowData.shows,
-            ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
-          
-          // console.log('GOT SHOW', shw[0])
-          
-          if(shows.length) {
-            $scope.view.currentShow = shows[0];
-          }
-        });
-      } else {
-        $scope.view.currentShow = null;
-      }
-    };
-    $scope.getCurrentShow();
-    
-    $scope.cancelForm = function(){
-      // in case we need to do any cleanup
-      $state.go('members.shows');
-    }
-    
-    $scope.submitForm = function(form){
-      
-      if(form.$valid){
-        if(form.entity && $scope.view.currentShow){
-          var _entity = angular.copy(form.entity);
-          // var newVal = _entity.value;
-          
-          // TODO validation - evaluate datatype and if newVal is valid...
-          // console.log('ENTITY',newVal);
-          
-          // if no member_id...
-          console.log('form updating...')
-          // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
-          // .then(function(data){
-            
-            // clean up the form and return!
-            form.entity = {};
-            form.$setPristine();
-            form.$setUntouched();
-            
-            // refresh member config collection
-            $scope.$parent.view.showist = null;
-            $scope.$parent.populateShowList();
-            
-            $state.go('members.shows');
-          // })
-          // .catch(function(err){
-          //   // TODO report any errors
-          // })
-        }
-      } // if form valid
-    } // submit post
-    
-  }]);
+// angular.module('MyApp')
+// .controller('MembersShowsController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate',
+//   function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate) {
+//   // console.log('MEMBERS SHOWS CONTROLLER', $stateParams)
+//     $scope.view = {};
+//
+//     $scope.view.currentShow = null;
+//     $scope.getCurrentShow = function() {
+//       if ($stateParams.show_id) {
+//         return $http.get('/api/shows/' + $stateParams.show_id)
+//         .then(function (data) {
+//           // !!! api call returns response data - so get data at data.data
+//           var memberShowData = data.data;
+//           var shows = Show.buildShowCollection(
+//             memberShowData.shows,
+//             ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
+//
+//           // console.log('GOT SHOW', shw[0])
+//
+//           if(shows.length) {
+//             $scope.view.currentShow = shows[0];
+//           }
+//         });
+//       } else {
+//         $scope.view.currentShow = null;
+//       }
+//     };
+//     $scope.getCurrentShow();
+//
+//     $scope.cancelForm = function(){
+//       // in case we need to do any cleanup
+//       $state.go('members.shows');
+//     }
+//
+//     $scope.submitForm = function(form){
+//
+//       if(form.$valid){
+//         if(form.entity && $scope.view.currentShow){
+//           var _entity = angular.copy(form.entity);
+//           // var newVal = _entity.value;
+//
+//           // TODO validation - evaluate datatype and if newVal is valid...
+//           // console.log('ENTITY',newVal);
+//
+//           // if no member_id...
+//           console.log('form updating...')
+//           // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
+//           // .then(function(data){
+//
+//             // clean up the form and return!
+//             form.entity = {};
+//             form.$setPristine();
+//             form.$setUntouched();
+//
+//             // refresh member config collection
+//             $scope.$parent.view.showist = null;
+//             $scope.$parent.populateShowList();
+//
+//             $state.go('members.shows');
+//           // })
+//           // .catch(function(err){
+//           //   // TODO report any errors
+//           // })
+//         }
+//       } // if form valid
+//     } // submit post
+//
+//   }]);
 
 
 angular.module('MyApp')

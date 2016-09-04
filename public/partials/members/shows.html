@@ -2,14 +2,17 @@
   <table class="table table-bordered table-striped table-condensed table-listing">
     <theader>
       <tr>
-        <th><button
-              type="button"
-              title="add new show"
-              class="btn btn-default btn-xs btn-icon"
-              ng-click="rowEdit('newshow', 0);">
-              <i class="fa fa-plus" aria-hidden="true"></i> New
-            </button>
-          name</th>
+        <th>
+          <button
+            type="button"
+            title="add new show"
+            class="width-150 btn-add"
+            ng-click="rowEdit('newshow', 0);">
+            <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add New Show
+          </button>
+        </th>
         <th>dates</th>
         <th>tickets</th>
         <th>images</th>
@@ -40,31 +43,25 @@
           <button
             type="button"
             title="edit show"
-            class="btn btn-default btn-xs btn-icon"
+            class=""
             ng-click="rowEdit('show', item.id);">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
           </button>
-          
           <span class="item-name">{{item.name}}</span>
         </div>
         <div>
-          
-          
           <span class="item-description"><small>{{item.description}}</small></span>
         </div>
-        
       </td>
       <td>
-        
         <div class="pull-left">
           <div ng-repeat="date in item.showdates">
             <button
               type="button"
               title="edit show date"
-              class="btn btn-default btn-xs btn-rpt"
+              class="width-200 btn-left btn-rpt"
               ng-click="rowEdit('showdate', item.id);">
-              <i class="fa fa-calendar"
-                 aria-hidden="true"></i>
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
               {{date.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
             </button>
           </div>
@@ -73,11 +70,10 @@
           <button
             type="button"
             title="add show date"
-            class="btn btn-default btn-xs"
+            class="width-100 btn-add"
             ng-click="rowEdit('newshowdate', 0);">
-            <i class="fa fa-plus"
-               aria-hidden="true"></i>
-            Date
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add New
           </button>
         </div>
       </td>
@@ -87,20 +83,19 @@
             <button
               type="button"
               title="edit ticket"
-              class="btn btn-default btn-xs width-60 btn-rpt"
+              class="width-100 btn-left btn-rpt"
               ng-click="rowEdit('showticket', item.id);">
-              <i class="fa fa-ticket" aria-hidden="true"></i> {{tix.price }}</button>
+              <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> {{tix.price }}</button>
           </div>
         </div>
         <div class="pull-left">
           <button
             type="button"
             title="add ticket"
-            class="btn btn-default btn-xs"
+            class="width-100 btn-add"
             ng-click="rowEdit('newshowticket', 0);">
-            <i class="fa fa-plus"
-               aria-hidden="true"></i>
-            Tix
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add New
           </button>
         </div>
       </td>
@@ -110,10 +105,9 @@
           <button
             type="button"
             title="edit image"
-            class="btn btn-default btn-xs btn-rpt">
+            class="width-100 btn-left btn-rpt">
             <!--ng-click="rowEdit('showimage', item.id);">-->
-            <i class="fa fa-picture-o"
-               aria-hidden="true"></i>
+            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
             pix
           </button>
         </div>
@@ -121,11 +115,10 @@
           <button
             type="button"
             title="add image"
-            class="btn btn-default btn-xs"
+            class="width-100 btn-add"
             ng-click="rowEdit('newshowimage', 0);">
-            <i class="fa fa-plus"
-               aria-hidden="true"></i>
-            Img
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add New
           </button>
         </div>
         <div class="clearfix" />

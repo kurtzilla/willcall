@@ -6202,11 +6202,21 @@ body {
   width: 2em;
   margin-right: 2px; }
 
-.width-100 {
-  width: 100px; }
-
 .width-60 {
   width: 60px; }
 
+.width-100 {
+  width: 100px; }
+
+.width-150 {
+  width: 150px; }
+
+.width-200 {
+  width: 200px; }
+
+.btn-left {
+  text-align: left; }
+
 .btn-rpt {
-  margin-right: 10px; }
+  margin-right: 10px;
+  margin-bottom: 3px; }
