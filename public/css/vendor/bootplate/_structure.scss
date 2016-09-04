@@ -21,6 +21,7 @@ h3 {
     text-shadow: 2px 2px 5px rgba(100, 100, 100, .8);
   }
 }
+
 html {
   background: url(../images/crowd-shot-for-posters-purple.jpg);
   background-size: cover;
@@ -34,6 +35,11 @@ body{
 /* ui.bootstrap fix for empty href */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
+
+.todo {
+  font-weight:bold;
+  color:rgba(112,10,255,.25);
+}
 
 .home-panel{
   .panel {
@@ -264,19 +270,21 @@ body{
   }
 }
 
-.badge-primary {
- background-color: lighten($brand-primary, 25%);
+.glyphicon-primary {
+ color: lighten($brand-primary, 1%);
 }
+
 .table-listing {
-  .badge{
-    margin-right:1em;
+  .glyphicon{
+    //margin-right:.5em;
   }
 }
+
 .table-hover {
   > tbody > tr:hover {
     background-color: lighten($brand-primary, 10%);
     color:white;
-    font-weight:bold;
+    //font-weight:bold;
     cursor: pointer;
   }
 }
@@ -284,4 +292,29 @@ body{
 
 .nav.nav-sub-nav {
   margin-bottom:1em;
+}
+
+.show-item{
+  .item-name, .item-description{
+    margin-left:.5em;
+  }
+  .item-description{
+    //margin-left: 3em;
+    color:#999;
+  }
+  
+  .btn-icon {
+    width:2em;
+    margin-right:2px;
+  }
+}
+
+.width-100 {
+  width:100px;
+}
+.width-60{
+  width:60px;
+}
+.btn-rpt {
+  margin-right:10px;
 }

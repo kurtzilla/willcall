@@ -4,12 +4,32 @@ angular.module('MyApp')
     function($http, $q, $stateParams, $rootScope, $window, jwtHelper){
 
       var _self = this;
-      this.listing = null;
-      // console.log('CONTEXT ROOT SCOPE', $rootScope);
-      // console.log('STATE PARAMS', $stateParams)
-      // console.log('HTTP', $http)
+   
+      ////////////////////////////////////////////////
+      // SHOW Funcs
+      ////////////////////////////////////////////////
+      this.currentShow = null;
+      this.getCurrentShow = function() {
+        if ($stateParams.show_id) {
+          return $http.get('/api/shows/' + $stateParams.show_id)
+          .then(function (data) {
+            // !!! api call returns response data - so get data at data.data
+            var memberShowData = data.data;
+            var shows = Show.buildShowCollection(
+              memberShowData.shows,
+              ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
+            this.currentShow = (shows.length) ? shows[0] : null;
+          });
+        } else {
+          this.currentShow = null;
+        }
+      };
+      this.getCurrentShow();
       
-
+      
+      ////////////////////////////////////////////////
+      // MEMBER Funcs
+      ////////////////////////////////////////////////
       this.__memberCurrent = function() {
         var _token = $window.localStorage.memberToken;
         if (_token && (!jwtHelper.isTokenExpired(_token))) {
@@ -18,17 +38,11 @@ angular.module('MyApp')
         }
         return false;
       };
-
       this.currentMember = this.__memberCurrent();
-      
-      
+            
       this.memberLogout = function(){
-        // console.log('Signing out AT CONTEXT')
         delete $window.localStorage.memberToken;
-        // console.log('DELETED STORAGE TOKEN')
         this.currentMember = this.__memberCurrent();
       }
-  
-      // console.log('CURRENT MEMBER',this.currentMember);
       
   }]);

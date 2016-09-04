@@ -6000,6 +6000,10 @@ body {
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
 
+.todo {
+  font-weight: bold;
+  color: rgba(112, 10, 255, 0.25); }
+
 .home-panel {
   min-width: 900px; }
   .home-panel .panel {
@@ -6177,17 +6181,32 @@ body {
   border-bottom: solid black 1px;
   background-color: #bfbfbf; }
 
-.badge-primary {
-  background-color: #8cb8df; }
-
-.table-listing .badge {
-  margin-right: 1em; }
+.glyphicon-primary {
+  color: #357dbb; }
 
 .table-hover > tbody > tr:hover {
   background-color: #5094ce;
   color: white;
-  font-weight: bold;
   cursor: pointer; }
 
 .nav.nav-sub-nav {
   margin-bottom: 1em; }
+
+.show-item .item-name, .show-item .item-description {
+  margin-left: .5em; }
+
+.show-item .item-description {
+  color: #999; }
+
+.show-item .btn-icon {
+  width: 2em;
+  margin-right: 2px; }
+
+.width-100 {
+  width: 100px; }
+
+.width-60 {
+  width: 60px; }
+
+.btn-rpt {
+  margin-right: 10px; }

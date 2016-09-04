@@ -1,0 +1,26 @@
+<div class="panel panel-area">
+  <table class="table table-bordered table-striped table-hover table-condensed table-listing">
+    <theader>
+      <tr>
+        <th>Processed</th>
+        <th>Status</th>
+        <th>Context</th>
+        <th>Name</th>
+        <th>Old Val</th>
+        <th>New Val</th>
+        <th>Description</th>
+      </tr>
+    </theader>
+    <tbody>
+    <tr ng-repeat="eventq in view.eventQs">
+      <td>{{eventq.dtprocessed | amDateFormat:'YYYY/MM/DD hh:mm a'}}</td>
+      <td>{{eventq.status}}</td>
+      <td>{{eventq.context}}</td>
+      <td>{{eventq.name}}</td>
+      <td>{{eventq.oldvalue}}</td>
+      <td>{{eventq.newvalue}}</td>
+      <td>{{eventq.description}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,95 @@
+<div class="Modal-backdrop"></div>
+<div ui-view="modal"
+     class="Modal-holder"
+     autoscroll="false">
+    <form name="_form"
+          class="form-horizontal"
+          novalidate
+          ng-submit="submitForm(_form);">
+        <div class="panel panel-primary panel-modal panel-area">
+            <div class="panel-heading">
+                <h4 class="panel-title">Config Editor</h4>
+            </div>
+            <div class="panel-body" style="padding-top:2em;">
+                <div class="input-controls">
+                    <div class="form-group">
+                        <label class="col-xs-2" for="f_description">Description</label>
+                        <div class="col-xs-10">
+                            <input type="text"
+                                   class="form-control"
+                                   name="f_description"
+                                   readonly
+                                   ng-value="view.currentConfig.description">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-xs-2" for="f_context">Context</label>
+                        <div class="col-xs-10">
+                            <input type="text"
+                                   class="form-control"
+                                   name="f_context"
+                                   readonly
+                                   ng-value="view.currentConfig.context">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2" for="f_key">Key</label>
+                        <div class="col-xs-10">
+                            <input type="text"
+                                   class="form-control"
+                                   name="f_key"
+                                   readonly
+                                   ng-value="view.currentConfig.key">
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error' : _form.f_value.$invalid && _form.f_value.$touched,
+                          'has-success': _form.f_value.$valid && _form.f_value.$touched}">
+                        <label class="col-xs-2" for="f_value">Value</label>
+                        <div    ng-if="view.currentConfig.datatype === 'boolean' ||
+                                    view.currentConfig.datatype === 'bool'"
+                                class="col-xs-10">
+                            <select class="form-control"
+                                    ng-options="item as item for item in ['true','false']"
+                                    ng-init="_form.entity.value=view.currentConfig.value"
+                                    name="f_value"
+                                    ng-model="_form.entity.value">
+                            </select>
+                        </div>
+                        <div    ng-if="view.currentConfig.datatype === 'number' ||
+                                    view.currentConfig.datatype === 'int' ||
+                                    view.currentConfig.datatype === 'decimal'"
+                                class="col-xs-10">
+                            <input  class="form-control"
+                                    type="number"
+                                    name="f_value"
+                                    ng-value="view.currentConfig.value"
+                                    ng-model="_form.entity.value"
+                                    maxlength=64 />
+                        </div>
+                        <div    ng-if="view.currentConfig.datatype === 'string' ||
+                                    view.currentConfig.datatype === 'text'"
+                                class="col-xs-10">
+                            <input  class="form-control"
+                                    type="text"
+                                    name="f_value"
+                                    ng-value="view.currentConfig.value"
+                                    ng-model="_form.entity.value"
+                                    maxlength=512>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- panel-body-->
+            <div class="panel-footer form-command">
+                <button ng-show="_form.$valid"
+                        type="submit"
+                        class="btn btn-sm btn-primary">Save</button>
+                <button ng-click="cancelForm()"
+                        type="button"
+                        class="btn btn-sm btn-primary">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,31 @@
+<div class="panel panel-area">
+    <table class="table table-bordered table-striped table-hover table-condensed table-listing">
+        <theader>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+                <th>Context</th>
+            </tr>
+        </theader>
+        <tbody>
+            <tr ng-repeat="item in view.configList">
+                <td>
+                    <button
+                        type="button"
+                        title="edit config"
+                        class="btn btn-default btn-xs btn-icon"
+                        ng-click="rowEdit('config', item.id);">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+                    <span data-original-title="{{item.description}}">
+                        {{item.key}}
+                    </span>
+                </td>
+                <td>{{item.value}}</td>
+                <td>{{item.context}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
