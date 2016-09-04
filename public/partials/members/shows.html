@@ -1,11 +1,137 @@
 <div class="panel panel-area">
-  <h1>Members Shows</h1>
-  <pre>
-    list of all shows
-    some sort of paging
-    search for shows
-    edit single
-    show dates & inventory
-    sales
-  </pre>
+  <table class="table table-bordered table-striped table-condensed table-listing">
+    <theader>
+      <tr>
+        <th><button
+              type="button"
+              title="add new show"
+              class="btn btn-default btn-xs btn-icon"
+              ng-click="rowEdit('newshow', 0);">
+              <i class="fa fa-plus" aria-hidden="true"></i> New
+            </button>
+          name</th>
+        <th>dates</th>
+        <th>tickets</th>
+        <th>images</th>
+      </tr>
+    </theader>
+    <tbody>
+    <tr class="show-item" ng-repeat="item in view.showList">
+      <td ng-click="rowEdit('show', item.id);" style="width:50%;">
+        <div>
+          <!--<button disabled-->
+            <!--type="button"-->
+            <!--title="page preview"-->
+            <!--class="btn btn-default btn-xs btn-icon">-->
+            <!--<i class="fa fa-eye" aria-hidden="true"></i>-->
+          <!--</button>-->
+          <!--<button disabled-->
+            <!--type="button"-->
+            <!--title="mobile preview"-->
+            <!--class="btn btn-default btn-xs btn-icon">-->
+            <!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
+          <!--</button>-->
+          <!--<button disabled-->
+                  <!--type="button"-->
+                  <!--data-original-title="visit {{item.url}}"-->
+                  <!--class="btn btn-default btn-xs btn-icon">-->
+            <!--<i class="fa fa-globe" aria-hidden="true"></i>-->
+          <!--</button>-->
+          <button
+            type="button"
+            title="edit show"
+            class="btn btn-default btn-xs btn-icon"
+            ng-click="rowEdit('show', item.id);">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </button>
+          
+          <span class="item-name">{{item.name}}</span>
+        </div>
+        <div>
+          
+          
+          <span class="item-description"><small>{{item.description}}</small></span>
+        </div>
+        
+      </td>
+      <td>
+        
+        <div class="pull-left">
+          <div ng-repeat="date in item.showdates">
+            <button
+              type="button"
+              title="edit show date"
+              class="btn btn-default btn-xs btn-rpt"
+              ng-click="rowEdit('showdate', item.id);">
+              <i class="fa fa-calendar"
+                 aria-hidden="true"></i>
+              {{date.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
+            </button>
+          </div>
+        </div>
+        <div class="pull-left">
+          <button
+            type="button"
+            title="add show date"
+            class="btn btn-default btn-xs"
+            ng-click="rowEdit('newshowdate', 0);">
+            <i class="fa fa-plus"
+               aria-hidden="true"></i>
+            Date
+          </button>
+        </div>
+      </td>
+      <td>
+        <div class="pull-left">
+          <div ng-repeat="tix in item.showtickets()">
+            <button
+              type="button"
+              title="edit ticket"
+              class="btn btn-default btn-xs width-60 btn-rpt"
+              ng-click="rowEdit('showticket', item.id);">
+              <i class="fa fa-ticket" aria-hidden="true"></i> {{tix.price }}</button>
+          </div>
+        </div>
+        <div class="pull-left">
+          <button
+            type="button"
+            title="add ticket"
+            class="btn btn-default btn-xs"
+            ng-click="rowEdit('newshowticket', 0);">
+            <i class="fa fa-plus"
+               aria-hidden="true"></i>
+            Tix
+          </button>
+        </div>
+      </td>
+      
+      <td>
+        <div class="pull-left">
+          <button
+            type="button"
+            title="edit image"
+            class="btn btn-default btn-xs btn-rpt">
+            <!--ng-click="rowEdit('showimage', item.id);">-->
+            <i class="fa fa-picture-o"
+               aria-hidden="true"></i>
+            pix
+          </button>
+        </div>
+        <div class="pull-left">
+          <button
+            type="button"
+            title="add image"
+            class="btn btn-default btn-xs"
+            ng-click="rowEdit('newshowimage', 0);">
+            <i class="fa fa-plus"
+               aria-hidden="true"></i>
+            Img
+          </button>
+        </div>
+        <div class="clearfix" />
+        <div class="todo">TODO</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,5 +1,5 @@
 
-var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.bootstrap'])
+var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'angularMoment'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider,
                  $httpProvider, $authProvider) {
 
@@ -56,15 +56,22 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.
     url: '/profile',
     templateUrl: 'partials/members/profile.html',
   })
-  .state('members.dashboard', {
-    url: '/dashboard',
-    templateUrl: 'partials/members/dashboard.html',
+  .state('members.eventqs', {
+    url: '/eventqs',
+    templateUrl: 'partials/members/eventqs.html',
   })
-  .state("members.dashboard.configs", {
+  ///////////////////////////////
+  // Member Configs
+  ///////////////////////////////
+  .state('members.configs', {
+    url: '/configs',
+    templateUrl: 'partials/members/configs.html',
+  })
+  .state("members.configs.edit", {
     url: '/configs/:config_id',
     views:{
       "modal@members": {
-        templateUrl: "partials/members/dashboard.configs.html",
+        templateUrl: "partials/members/configs.edit.html",
         controller: 'MembersConfigController'
       }
     },
@@ -83,27 +90,89 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.
       });
     }],
   })
-
-
-
-
-
-
-
-
-
-
+  ///////////////////////////////
+  // Member Shows
+  ///////////////////////////////
   .state('members.shows', {
     url: '/shows',
     templateUrl: 'partials/members/shows.html',
   })
+  .state("members.shows.edit", {
+    url: '/shows/:show_id',
+    views:{
+      "modal@members": {
+        templateUrl: "partials/members/shows.edit.html",
+        controller: 'MembersShowsController'
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+  .state("members.showdates", {
+    abstract: true
+  })
+  .state("members.showdates.edit", {
+    url: '/showdates/:showdate_id',
+    views:{
+      "modal@members": {
+        templateUrl: "partials/members/showdates.edit.html",
+        controller: 'MembersShowDatesController'
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+  .state("members.showtickets", {
+    abstract: true
+  })
+  .state("members.showtickets.edit", {
+    url: '/showtickets/:showticket_id',
+    views:{
+      "modal@members": {
+        templateUrl: "partials/members/showtickets.edit.html",
+        controller: 'MembersShowTicketsController'
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+  .state("members.showimages", {
+    abstract: true
+  })
+  .state("members.showimages.edit", {
+    url: '/showimages/:showimage_id',
+    views:{
+      "modal@members": {
+        templateUrl: "partials/members/showimages.edit.html",
+        controller: 'MembersShowImagesController'
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+
+
+  
+
   .state('members.products', {
     url: '/products',
     templateUrl: 'partials/members/products.html',
   })
-  .state('members.events', {
-    url: '/events',
-    templateUrl: 'partials/members/events.html',
+  .state('members.dashboard', {
+    url: '/dashboard',
+    templateUrl: 'partials/members/dashboard.html',
   })
   .state('members.error', {
     url: '/error',
@@ -240,7 +309,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ui.
       $rootScope.memberToken = null;
       if(localStorage && localStorage.memberToken) {
         config.headers.authorization = 'Bearer ' + localStorage.memberToken;
-        //$rootScope.memberToken = localStorage.memberToken;
       }
       return config;
     }

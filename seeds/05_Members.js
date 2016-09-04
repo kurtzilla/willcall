@@ -1,6 +1,8 @@
 
 exports.seed = function(knex, Promise) {
   
+  return knex('eventqs').del()
+  .then(function(){
   return knex('configs').del()
   .then(function(){
     return knex('productinventories').del()
@@ -42,7 +44,8 @@ exports.seed = function(knex, Promise) {
         });
       });
     });
-  })
+  });
+  });
 };
 /*
  table.increments();

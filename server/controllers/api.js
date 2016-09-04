@@ -1,18 +1,20 @@
 require('dotenv').config({silent:true});
+
+var async = require('async');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
+var jwt = require('jsonwebtoken');
+var moment = require('moment');
+var request = require('request');
+var qs = require('querystring');
 var knex = require('../../config/db/knex');
+var members = require('../../lib/dbops/members');
+var events = require('../../lib/dbops/events');
+var shows = require('../../lib/dbops/shows');
 var configs = require('../../lib/dbops/configs');
 
 
-exports.getConfigs = function(req, res){
-  // console.log('API CONFIG DATA', req.params.member_id)
-  configs.getMergedConfigCollection(req.params.member_id)
-  .then(function(data){
-    res.json(data);
-  });
-};
-
 exports.getConfigById = function(req, res){
-  // console.log('API CALL',req.params.config_id)
   configs.getConfigById(req.params.config_id)
   .then(function(data){
     res.json(data);
@@ -20,24 +22,9 @@ exports.getConfigById = function(req, res){
 };
 
 
-// app.post('/api/members/:member_id/configs/:config_id',  apiController.updateMemberConfig);
-exports.updateMemberConfig = function(req, res){
-  // console.log('API CALL PARAMS', req.params, req.body)
-  //
-  // res.json('in progress...');
-  
-  configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
-  .then(function(data){
-    res.json(data);
-  });
-};
-
-
 // TODO authenticate
-// app.get('/api/envkey/:keyname', apiController.getEnvKey);
 exports.getEnvKey = function(req, res){
   var key = process.env[req.params.keyname];
-  // console.log('KEY', req.params.keyname, key);
   res.json(key);
 };
 

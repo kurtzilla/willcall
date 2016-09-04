@@ -1,29 +1,29 @@
+
 <div class="panel panel-area">
-    <h3>Dashboard <a ng-click="refreshDashboard()"
-                     class="btn btn-primary btn-xs">refresh</a></h3>
-    <table class="table table-bordered table-striped table-hover table-condensed table-listing">
-        <theader>
-            <tr>
-                <th>Key</th>
-                <th>Value</th>
-                <th>Context</th>
-            </tr>
-        </theader>
-        <tbody>
-            <tr ng-repeat="config in view.configList" ng-click="rowGo(config.id);">
-                <td>
-                    <span class="badge badge-primary"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          data-original-title="{{config.description}}">
-                          <span class="glyphicon glyphicon-info-sign"></span>
-                      </span>
-                    {{config.key}}</td>
-                <td>{{config.value}}</td>
-                <td>{{config.context}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>Dashboard</h3>
+    <!--<table class="table table-bordered table-striped table-hover table-condensed table-listing">-->
+        <!--<theader>-->
+            <!--<tr>-->
+                <!--<th>Key</th>-->
+                <!--<th>Value</th>-->
+                <!--<th>Context</th>-->
+            <!--</tr>-->
+        <!--</theader>-->
+        <!--<tbody>-->
+            <!--<tr ng-repeat="item in view.configList" ng-click="rowEdit('config', item.id);">-->
+                <!--<td>-->
+                    <!--<span class="badge badge-primary"-->
+                          <!--data-toggle="tooltip"-->
+                          <!--data-placement="top"-->
+                          <!--data-original-title="{{item.description}}">-->
+                          <!--<span class="glyphicon glyphicon-info-sign"></span>-->
+                      <!--</span>-->
+                    <!--{{item.key}}</td>-->
+                <!--<td>{{item.value}}</td>-->
+                <!--<td>{{item.context}}</td>-->
+            <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
 </div>
 
 

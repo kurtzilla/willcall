@@ -13,6 +13,7 @@ Create a page to handle stripe webhooks
 Implement app logging
 
 
+// http://stackoverflow.com/questions/26865967/how-do-i-create-a-custom-object-class-thats-available-to-my-methods-in-angular
 
 ## Steps to complete boilerplate
 create a db

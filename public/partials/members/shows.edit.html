@@ -1,0 +1,108 @@
+<div class="Modal-backdrop"></div>
+<div ui-view="modal"
+     class="Modal-holder"
+     autoscroll="false">
+  <form name="_form"
+        class="form-horizontal"
+        novalidate
+        ng-submit="submitForm(_form);">
+    <div class="panel panel-primary panel-modal panel-area">
+      <div class="panel-heading">
+        <h4 class="panel-title">Show Editor</h4>
+      </div>
+      <div class="panel-body" style="padding-top:2em;">
+        <div class="input-controls">
+          <div class="form-group">
+            <label class="col-xs-2" for="f_venue_id">Venue</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_venue_id"
+                     readonly
+                     ng-value="view.currentShow.venue_id">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2" for="f_url">Url</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_url"
+                     readonly
+                     ng-value="view.currentShow.url">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2" for="f_name">Name</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_name"
+                     readonly
+                     ng-value="view.currentShow.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2" for="f_description">Description</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_description"
+                     readonly
+                     ng-value="view.currentShow.description">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2" for="f_active">Active</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_active"
+                     readonly
+                     ng-value="view.currentShow.active">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2" for="f_announcedate">Announce</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_announcedate"
+                     readonly
+                     ng-value="view.currentShow.announcedate">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2" for="f_enddate">End Date</label>
+            <div class="col-xs-10">
+              <input type="text"
+                     class="form-control"
+                     name="f_enddate"
+                     readonly
+                     ng-value="view.currentShow.enddate">
+            </div>
+          </div>
+        </div><!-- end input controls -->
+      </div><!-- end panel-body -->
+      <div class="panel-footer form-command">
+        <button ng-show="_form.$valid"
+                type="submit"
+                class="btn btn-sm btn-primary">Save</button>
+        <button ng-click="cancelForm()"
+                type="button"
+                class="btn btn-sm btn-primary">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!--table.integer('venue_id').references('id').inTable('venues').notNullable();-->
+<!--table.string('url').unique().notNullable().comment('url to show details');-->
+<!--table.string('name').notNullable().defaultsTo('');-->
+<!--table.string('description', 8192).notNullable().defaultsTo('')-->
+<!--.comment('A summary of all showdate info');-->
+<!--table.json('images').notNullable().defaultsTo(JSON.stringify([]))-->
+<!--table.boolean('active').defaultsTo(true);-->
+<!--table.timestamp('announcedate').defaultsTo(knex.fn.now())-->
+<!--table.timestamp('enddate')-->
