@@ -1,4 +1,5 @@
-angular.module('MyApp').factory('Show', ['$http', 'moment', function($http, moment){
+angular.module('MyApp').factory('Show',
+  ['$http', '$q', 'moment', function($http, $q, moment){
   
   function Show(row, dateModels = null){
     this.id = row.id;
@@ -53,10 +54,44 @@ angular.module('MyApp').factory('Show', ['$http', 'moment', function($http, mome
   // STATIC methods
   ////////////////////////////////////////////
   
-  Show.processForm = function(form, input, current){
-    console.log('F I C', form, input, current)
-  };
+  Show.processForm = function(form, input, currentShow){
   
+    var deferred = $q.defer();
+  
+    // console.log('FORM', form)
+    // console.log('INPUT', input)
+    // console.log('CURRENT', current)
+    
+    // active, announcedate(change to null), description, name, venue
+    
+    // this.url = row.url;
+    // this.images = row.images;
+    // this.enddate = row.enddate;
+    // this.showdates = [];
+  
+    var errors = [];
+    
+    $http.post('/api/shows', {
+      input: input,
+      current: currentShow
+    })
+    .then(function(data){
+      var returnData = data.data;
+      deferred.resolve(returnData);
+    })
+    .catch(function(err){
+      //convert err to array and return
+      // console.log('I CAUGHT it', err)
+      errors.push(err.data);
+      deferred.reject(errors);
+    })
+    
+    
+    return deferred.promise;
+  };
+    
+  
+  // Convert to Show Objects
   Show.buildShowCollection = function(showRows, dateModels) {
     // console.log('building...', dateRows)
     return showRows.map(function (show) {

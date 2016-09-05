@@ -1,5 +1,6 @@
 
-var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'angularMoment'])
+var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
+  'angularMoment', 'ui.bootstrap.datetimepicker', 'ui.dateTimeInput'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider,
                  $httpProvider, $authProvider) {
 
@@ -93,10 +94,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     url: '/shows',
     templateUrl: 'partials/members/shows.html',
   })
-  
-  
-  
-  // WIP
   .state("members.shows.edit", {
     url: '/:show_id',
     views:{
@@ -112,24 +109,12 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+  // WIP
+    
+  ///////////////////////////////
+  // Member ShowDates
+  ///////////////////////////////
   
   .state("members.showdates", {
     abstract: true
@@ -139,7 +124,8 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     views:{
       "modal@members": {
         templateUrl: "partials/members/showdates.edit.html",
-        controller: 'MembersShowDatesController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShowDate: setCurrentShowDate }
       }
     },
     onEnter: ["$state", function($state) {
@@ -148,6 +134,9 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
+  ///////////////////////////////
+  // Member ShowTickets
+  ///////////////////////////////
   .state("members.showtickets", {
     abstract: true
   })
@@ -156,7 +145,8 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     views:{
       "modal@members": {
         templateUrl: "partials/members/showtickets.edit.html",
-        controller: 'MembersShowTicketsController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShowTicket: setCurrentShowTicket }
       }
     },
     onEnter: ["$state", function($state) {
@@ -165,15 +155,36 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   .state("members.showimages", {
     abstract: true
   })
   .state("members.showimages.edit", {
-    url: '/showimages/:showimage_id',
+    url: '/:showimage_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/showimages.edit.html",
-        controller: 'MembersShowImagesController'
+        controller: 'MembersFormsController'
       }
     },
     onEnter: ["$state", function($state) {
@@ -315,7 +326,31 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       return ContextService.currentShow = data;
     });
   };
-
+  
+  // set the current showdate based on state params
+  function setCurrentShowDate($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.showdate_id) || $stateParams.showdate_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShowDate($stateParams.showdate_id)
+    .then(function(data){
+      return ContextService.currentShowDate = data;
+    });
+  };
+  
+  // set the current showticket based on state params
+  function setCurrentShowTicket($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.showticket_id) || $stateParams.showticket_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShowTicket($stateParams.showticket_id)
+    .then(function(data){
+      return ContextService.currentShowTicket = data;
+    });
+  };
+  
+  
+  
   function memberAuth($location, $auth, $http, ContextService) {
     // console.log('AUTHHD', $http(config));
     // if ($auth.isAuthenticated()) {

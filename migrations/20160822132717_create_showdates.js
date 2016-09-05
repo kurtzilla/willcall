@@ -16,7 +16,7 @@ exports.up = function(knex, Promise) {
       table.string('description', 8192).notNullable().defaultsTo('');
 
       table.boolean('active').defaultsTo(true);
-      table.string('status').notNullable().defaultsTo('On Sale');
+      table.string('status').notNullable().defaultsTo('on sale');
     })
   ]);
 };

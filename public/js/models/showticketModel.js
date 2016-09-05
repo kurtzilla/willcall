@@ -1,7 +1,7 @@
 angular.module('MyApp')
-.factory('ShowTicket', function(){
+.factory('ShowTicket', ['$http', function($http){
   
-  function ShowTicket(row, parentShowDate){
+  function ShowTicket(row, parentShowDate = null){
     this.id = row.id;
     this.created_at = row.created_at;
     this.updated_at = row.updated_at;
@@ -24,15 +24,60 @@ angular.module('MyApp')
     
     this._parentShowDate = parentShowDate;
   }
-  // ShowTicket.prototype = {
-  //
-  // };
   
-  // static methods
-  // ShowTicket.someFunction = function(){}
+  ShowTicket.prototype = {
+    parentShowDate(row){
+      this._parentShowDate = row;
+    }
+  };
+  
+  ////////////////////////////////////////////
+  // STATIC methods
+  ////////////////////////////////////////////
+  
+  // list to refresh and refreshmethod should point to show list
+  ShowTicket.processForm = function(form, input, currentShowDate, currentTicket){
+    
+    var deferred = $q.defer();
+    
+    console.log('FORM', form)
+    console.log('INPUT', input)
+    console.log('CURRENT DATE', currentShowDate)
+    console.log('CURRENT TICKET', currentShowTicket)
+    
+    // TODO add showdate_id to input
+    
+    var errors = [];
+    
+    $http.post('/api/showtickets', {
+      input: input,
+      current: currentTicket
+    })
+    .then(function(data){
+      var returnData = data.data;
+      deferred.resolve(returnData);
+    })
+    .catch(function(err){
+      //convert err to array and return
+      // console.log('I CAUGHT it', err)
+      errors.push(err.data);
+      deferred.reject(errors);
+    })
+    
+    
+    return deferred.promise;
+  };
+  
+  // Convert to ShowTicket Objects
+  ShowTicket.buildShowTicketCollection = function(ticketRows) {
+    // console.log('building...', dateRows)
+    return ticketRows.map(function (ticket) {
+      return new ShowTicket(ticket);
+    });
+  };
   
   return ShowTicket;
-});
+}]);
 
 
 // http://stackoverflow.com/questions/26865967/how-do-i-create-a-custom-object-class-thats-available-to-my-methods-in-angular

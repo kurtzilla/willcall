@@ -6,62 +6,91 @@ angular.module('MyApp')
     
       $scope.view = {};
       $scope.view.ContextService = ContextService;
-      // $scope.view.Ctx = ContextService;
-      // console.log('CTX', ContextService)
-      // console.log('S PARAMS', $stateParams)
-  
-  
-      // var cShow = ContextService.getCurrentShow();
-      //
-      // console.log('Show', $scope.view.ContextService.currentShow)
-      //
       
       
-        
-      $scope.cancelForm = function(){
-        // in case we need to do any cleanup
-        $state.go('members.shows');
+      $scope.cancelForm = function(form){
+        cleanupFormAndReturn(form);
       };
-    
-    
+      
+      $scope.resetForm = function(form){
+        $state.reload();
+      };
+      
       var cleanupFormAndReturn = function(form){
+        $scope.view.ContextService.currentShow = null;
+        $scope.view.ContextService.currentShowDate = null;
+        $scope.view.ContextService.currentShowTicket = null;
+        
         // clean up the form and return!
-          form.entity = {};
-          form.$setPristine();
-          form.$setUntouched();
+        form.entity = {};
+        form.$setPristine();
+        form.$setUntouched();
 
-          // refresh member config collection and return
-          $scope.$parent.view.showList = null;
-          $scope.$parent.populateShowList();
-          $state.go('members.shows');
+        // TODO context will dictate what to refresh??
+        // refresh member config collection and return
+        // $scope.$parent.view.showList = null;
+        // $scope.$parent.populateShowList();
+        
+        redirectToPreviousState();
+      };
+  
+      var redirectToPreviousState = function(){
+        // var parentState = $state.current.name.split('.').slice(0,-1).join('.');
+        var currentState = $state.current.name;
+        //TODO it may just be showdates, showtickets and productinventories breaking the mold
+        var goto = 'members.shows';
+        if(currentState.indexOf('members.configs') !== -1){
+          var goto = 'members.configs';
+        }
+        $state.go(goto);
       };
       
+      
+      // Keep an eye on datetime-picker as it may always report due
+      //  to formatting changes from model date to date format
+      // Also be aware that boolean values will report as well,
+      //  due to the form using strings vs boolean
       $scope.submitForm = function(form, context) {
-  
+        $scope.view.errors = null;
+        // console.log('FORM',form)
+        
         if(form.$valid && form.entity) {
           var _entity = angular.copy(form.entity);
           var formSubmit = null;
-          
-          if(context === 'show'){
-            formSubmit = ContextService.getCurrentShow()
-            .then(function(data){
-              return Show.processForm(form, _entity, data);
-            });
-          } else {
-            // TODO throw an error
+          var listToRefresh = null;
+          var refreshMethod = null;
+  
+          // select form submission by model
+          if(context === 'show') {
+            _entity.member_id = $scope.view.ContextService.currentMember.id;
+            formSubmit = Show.processForm(form, _entity,
+              $scope.view.ContextService.currentShow);
+            listToRefresh = $scope.$parent.view.showList;
+            refreshMethod = $scope.$parent.populateShowList;
+          } else if (context === 'showdate') {
+            
+            // TODO get current SHOW ID too ALSO as well
+            // _entity.member_id = $scope.view.ContextService.currentMember.id;
+            
+            formSubmit = ShowDate.processForm(form, _entity,
+              $scope.view.ContextService.currentShow,// we may need to set this on the form - hidden val?
+              $scope.view.ContextService.currentShowDate);
+            listToRefresh = $scope.$parent.view.showList;
+            refreshMethod = $scope.$parent.populateShowList;
           }
           
-          
-          // submit form based upon context - let model handle
-          return formSubmit()
-          .then(function(success){
+          return formSubmit
+          .then(function(data){
+  
+            listToRefresh = null;
+            refreshMethod();
             cleanupFormAndReturn(form);
           })
           .catch(function(err){
-  
-          })
+            // console.log('ERROR', err)
+            $scope.view.errors = err;
+          });
         }
       };
-      
       
   }]);

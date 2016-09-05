@@ -41,6 +41,33 @@ body{
   color:rgba(112,10,255,.25);
 }
 
+/* ERROR MESSAGES */
+.has-error label {
+  color:red;
+}
+.has-error input {
+  border-width: 2px;
+}
+
+.form-errors {
+  border:solid red 1px;
+  border-radius: 3px;
+  background-color: rgba(200,50,50, .3);
+  color: #cc0000;
+  margin-top:1.6em;
+  padding:1em;
+  font-size:1.4em;
+}
+.form-error-msg {
+  font-size:.8em;
+  margin-top:.5em;
+}
+
+
+
+
+
+
 .home-panel{
   .panel {
     background-color:rgba(200,200,200,.85);
@@ -106,10 +133,12 @@ body{
 
 .Modal-holder
 {
-  position: fixed;
+  //border:solid red 2px;
+  //position: fixed; // this does not allow scrolling
+  position: absolute;
   top: 50px;
   left: 0px;
-  height:100%;
+  height:90%;
   width:100%;
   background: transparent;
   z-index: 2;
@@ -117,16 +146,17 @@ body{
   font-size:.8em;
 }
 
-.Modal-box
-{
-  margin: 0 auto;
-  width: 100%;
-  background: #fff;
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
-  position: relative;
-}
+//.Modal-box
+//{
+//  border:solid green 3px !important;
+//  margin: 0 auto;
+//  width: 100%;
+//  background: #fff;
+//  padding: 15px;
+//  border-radius: 4px;
+//  box-shadow: 1px 2px 5px rgba(0,0,0,0.3);
+//  position: relative;
+//}
 
 @media screen and (min-width: 992px)
 {
@@ -137,11 +167,14 @@ body{
   }
 }
 
+
+
 .panel-modal {
   width:90%;
   max-width:700px;
   margin:0 auto;
   padding:1em 2em 2em 2em;
+  overflow: scroll;
   
   
   &.panel-primary{
@@ -309,6 +342,16 @@ body{
   }
 }
 
+.btn-add {
+  font-weight:bold;
+  text-align:left;
+  padding-left:8px;
+  color:#777;
+  //background-color: #777;
+  //border:none;
+  //font-size:.75em;
+}
+
 .width-60{
   width:60px;
 }
@@ -327,4 +370,11 @@ body{
 .btn-rpt {
   margin-right:10px;
   margin-bottom:3px;
+}
+
+.panel-modal {
+  .panel-heading {
+    //border:solid green 3px;
+    padding-bottom:3em;
+  }
 }

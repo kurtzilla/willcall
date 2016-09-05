@@ -7,7 +7,7 @@
             type="button"
             title="add new show"
             class="width-150 btn-add"
-            ng-click="rowEdit('newshow', 0);">
+            ng-click="rowEdit('show');">
             <!--<i class="fa fa-plus" aria-hidden="true"></i>-->
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             Add New Show
@@ -15,54 +15,41 @@
         </th>
         <th>dates</th>
         <th>tickets</th>
-        <th>images</th>
+        <!--<th>images</th>-->
       </tr>
     </theader>
     <tbody>
-    <tr class="show-item" ng-repeat="item in view.showList">
-      <td ng-click="rowEdit('show', item.id);" style="width:50%;">
+    
+    
+    <tr class="show-item" ng-repeat="show in view.showList">
+      <td style="width:50%;">
         <div>
-          <!--<button disabled-->
-            <!--type="button"-->
-            <!--title="page preview"-->
-            <!--class="btn btn-default btn-xs btn-icon">-->
-            <!--<i class="fa fa-eye" aria-hidden="true"></i>-->
-          <!--</button>-->
-          <!--<button disabled-->
-            <!--type="button"-->
-            <!--title="mobile preview"-->
-            <!--class="btn btn-default btn-xs btn-icon">-->
-            <!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
-          <!--</button>-->
-          <!--<button disabled-->
-                  <!--type="button"-->
-                  <!--data-original-title="visit {{item.url}}"-->
-                  <!--class="btn btn-default btn-xs btn-icon">-->
-            <!--<i class="fa fa-globe" aria-hidden="true"></i>-->
-          <!--</button>-->
           <button
             type="button"
             title="edit show"
             class=""
-            ng-click="rowEdit('show', item.id);">
+            ng-click="rowEdit('show', show, null);">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
           </button>
-          <span class="item-name">{{item.name}}</span>
+          <span class="item-name">{{show.name}}</span>
         </div>
         <div>
-          <span class="item-description"><small>{{item.description}}</small></span>
+          <span class="item-description"><small>{{show.description}}</small></span>
         </div>
       </td>
+      
+      
+      
       <td>
         <div class="pull-left">
-          <div ng-repeat="date in item.showdates">
+          <div ng-repeat="showdate in show.showdates">
             <button
               type="button"
               title="edit show date"
               class="width-200 btn-left btn-rpt"
-              ng-click="rowEdit('showdate', item.id);">
+              ng-click="rowEdit('showdate', showdate, show);">
               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-              {{date.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
+              {{showdate.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
             </button>
           </div>
         </div>
@@ -71,21 +58,25 @@
             type="button"
             title="add show date"
             class="width-100 btn-add"
-            ng-click="rowEdit('newshowdate', 0);">
+            ng-click="rowEdit('showdate', null, show);">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             Add New
           </button>
         </div>
       </td>
+      
+      
       <td>
         <div class="pull-left">
-          <div ng-repeat="tix in item.showtickets()">
+          <div ng-repeat="showticket in show.showtickets()">
             <button
               type="button"
               title="edit ticket"
               class="width-100 btn-left btn-rpt"
-              ng-click="rowEdit('showticket', item.id);">
-              <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> {{tix.price }}</button>
+              ng-click="rowEdit('showticket', showticket, showticket._parentShowDate);">
+              <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+              {{tix.price }}
+            </button>
           </div>
         </div>
         <div class="pull-left">
@@ -93,38 +84,58 @@
             type="button"
             title="add ticket"
             class="width-100 btn-add"
-            ng-click="rowEdit('newshowticket', 0);">
+            ng-click="rowEdit('showticket', null, );">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             Add New
           </button>
         </div>
       </td>
       
-      <td>
-        <div class="pull-left">
-          <button
-            type="button"
-            title="edit image"
-            class="width-100 btn-left btn-rpt">
+      <!--<td>-->
+        <!--<div class="pull-left">-->
+          <!--<button-->
+            <!--type="button"-->
+            <!--title="edit image"-->
+            <!--class="width-100 btn-left btn-rpt"-->
             <!--ng-click="rowEdit('showimage', item.id);">-->
-            <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-            pix
-          </button>
-        </div>
-        <div class="pull-left">
-          <button
-            type="button"
-            title="add image"
-            class="width-100 btn-add"
-            ng-click="rowEdit('newshowimage', 0);">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            Add New
-          </button>
-        </div>
-        <div class="clearfix" />
-        <div class="todo">TODO</div>
-      </td>
+            <!--<span class="glyphicon glyphicon-picture" aria-hidden="true"></span>-->
+            <!--pix-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="pull-left">-->
+          <!--<button-->
+            <!--type="button"-->
+            <!--title="add image"-->
+            <!--class="width-100 btn-add"-->
+            <!--ng-click="rowEdit('showimage', 0);">-->
+            <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>-->
+            <!--Add New-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="clearfix" />-->
+        <!--<div class="todo">TODO</div>-->
+      <!--</td>-->
     </tr>
     </tbody>
   </table>
 </div>
+
+
+<!--<button disabled-->
+<!--type="button"-->
+<!--title="page preview"-->
+<!--class="btn btn-default btn-xs btn-icon">-->
+<!--<i class="fa fa-eye" aria-hidden="true"></i>-->
+<!--</button>-->
+<!--<button disabled-->
+<!--type="button"-->
+<!--title="mobile preview"-->
+<!--class="btn btn-default btn-xs btn-icon">-->
+<!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
+<!--</button>-->
+<!--<button disabled-->
+<!--type="button"-->
+<!--data-original-title="visit {{item.url}}"-->
+<!--class="btn btn-default btn-xs btn-icon">-->
+<!--<i class="fa fa-globe" aria-hidden="true"></i>-->
+<!--</button>-->
