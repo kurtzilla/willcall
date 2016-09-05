@@ -1,6 +1,6 @@
 angular.module('MyApp').factory('ShowDate',
-  ['$http', 'ShowTicket',
-    function($http, ShowTicket){
+  ['$http', '$q', 'ShowTicket',
+    function($http, $q, ShowTicket){
       
       function ShowDate(row, ticketRows = null){
         this.id = row.id;
@@ -36,22 +36,23 @@ angular.module('MyApp').factory('ShowDate',
       ////////////////////////////////////////////
   
       // list to refresh and refreshmethod should point to show list
-      ShowDate.processForm = function(form, input, currentShow, currentDate){
+      ShowDate.processForm = function(form, input, currentShowDate, currentShow){
     
         var deferred = $q.defer();
     
-        console.log('FORM', form)
-        console.log('INPUT', input)
-        console.log('CURRENT SHOW', currentShow)
-        console.log('CURRENT DATE', currentShowDate)
-    
-        // TODO add show_id to input
+        // console.log('FORM', form)
+        // console.log('INPUT', input)
+        // console.log('CURRENT SHOW', currentShow)
+        // console.log('CURRENT DATE', currentShowDate)
     
         var errors = [];
+        
+        input.show_id = (currentShowDate) ?
+          currentShowDate.show_id : (currentShow) ? currentShow.id : -1;
     
         $http.post('/api/showdates', {
           input: input,
-          current: currentDate
+          current: currentShowDate
         })
         .then(function(data){
           var returnData = data.data;

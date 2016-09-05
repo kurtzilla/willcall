@@ -61,27 +61,16 @@ angular.module('MyApp')
         } else if(entityType === 'show'){
           $state.go('members.shows.edit', {show_id: idx});
         } else if(entityType === 'showdate'){
-          $state.go('members.showdates.edit', {showdate_id: idx, show_id: parentIdx});
+          // console.log('showdate_id', idx, 'show_id', parentIdx)
+          $state.go('members.shows.edit.showdates.edit', {showdate_id: idx, show_id: parentIdx});
         } else if(entityType === 'showticket'){
-          // console.log('TYPE', entityType)
-          $state.go('members.showtickets.edit', {showticket_id: idx, showdate_id: parentIdx});
+          // console.log('showdate_id', idx, 'show_id', parentIdx)
+          $state.go('members.shows.edit.showdates.edit.showtickets.edit', {showticket_id: idx, showdate_id: parentIdx});
         } else if(entityType === 'showimage'){
-          $state.go('members.showimages.edit', {showimage_id: idx, show_id, parentIdx});
+          // console.log('showdate_id', idx, 'show_id', parentIdx)
+          $state.go('members.shows.edit.showimages.edit', {showimage_id: idx, show_id, parentIdx});
         }
       };
-  
-      // if(entityType === 'config'){
-      //   $state.go('members.configs.edit', {config_id: entity.id});
-      // } else if(entityType === 'show'){
-      //   $state.go('members.shows.edit', {show_id: id});
-      // } else if(entityType === 'showdate'){
-      //   $state.go('members.showdates.edit', {showdate_id: id});
-      // } else if(entityType === 'showticket'){
-      //   console.log('TYPE', entityType)
-      //   $state.go('members.showtickets.edit', {showticket_id: id});
-      // } else if(entityType === 'showimage'){
-      //   $state.go('members.showimages.edit', {showimage_id: id});
-      // }
       
       // list assigns - be sure to init below
       $scope.view.configList = null;

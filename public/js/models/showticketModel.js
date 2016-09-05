@@ -36,22 +36,23 @@ angular.module('MyApp')
   ////////////////////////////////////////////
   
   // list to refresh and refreshmethod should point to show list
-  ShowTicket.processForm = function(form, input, currentShowDate, currentTicket){
+  ShowTicket.processForm = function(form, input, currentShowTicket, currentShowDate){
     
     var deferred = $q.defer();
     
-    console.log('FORM', form)
-    console.log('INPUT', input)
-    console.log('CURRENT DATE', currentShowDate)
-    console.log('CURRENT TICKET', currentShowTicket)
-    
-    // TODO add showdate_id to input
+    // console.log('FORM', form)
+    // console.log('INPUT', input)
+    // console.log('CURRENT DATE', currentShowDate)
+    // console.log('CURRENT TICKET', currentShowTicket)
     
     var errors = [];
+  
+    input.showdate_id = (currentShowTicket) ?
+      currentShowTicket.showdate_id : (currentShowDate) ? currentShowDate.id : -1;
     
     $http.post('/api/showtickets', {
       input: input,
-      current: currentTicket
+      current: currentShowTicket
     })
     .then(function(data){
       var returnData = data.data;

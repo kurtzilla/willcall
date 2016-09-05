@@ -73,8 +73,8 @@ angular.module('MyApp')
             // _entity.member_id = $scope.view.ContextService.currentMember.id;
             
             formSubmit = ShowDate.processForm(form, _entity,
-              $scope.view.ContextService.currentShow,// we may need to set this on the form - hidden val?
-              $scope.view.ContextService.currentShowDate);
+              $scope.view.ContextService.currentShowDate,
+              $scope.view.ContextService.currentShow);
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
           }

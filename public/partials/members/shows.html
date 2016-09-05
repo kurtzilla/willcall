@@ -19,79 +19,77 @@
       </tr>
     </theader>
     <tbody>
-    
-    
-    <tr class="show-item" ng-repeat="show in view.showList">
-      <td style="width:50%;">
-        <div>
-          <button
-            type="button"
-            title="edit show"
-            class=""
-            ng-click="rowEdit('show', show, null);">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          </button>
-          <span class="item-name">{{show.name}}</span>
-        </div>
-        <div>
-          <span class="item-description"><small>{{show.description}}</small></span>
-        </div>
-      </td>
-      
-      
-      
-      <td>
-        <div class="pull-left">
-          <div ng-repeat="showdate in show.showdates">
+      <tr class="show-item" ng-repeat="show in view.showList">
+        <td style="width:50%;">
+          <div>
             <button
               type="button"
-              title="edit show date"
-              class="width-200 btn-left btn-rpt"
-              ng-click="rowEdit('showdate', showdate, show);">
-              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-              {{showdate.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
+              title="edit show"
+              class=""
+              ng-click="rowEdit('show', show);">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             </button>
+            <span class="item-name">{{show.name}}</span>
           </div>
-        </div>
-        <div class="pull-left">
-          <button
-            type="button"
-            title="add show date"
-            class="width-100 btn-add"
-            ng-click="rowEdit('showdate', null, show);">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            Add New
-          </button>
-        </div>
-      </td>
-      
-      
-      <td>
-        <div class="pull-left">
-          <div ng-repeat="showticket in show.showtickets()">
+          <div>
+            <span class="item-description"><small>{{show.description}}</small></span>
+          </div>
+        </td>
+        <td width="25%">
+          <div class="pull-left">
+            <div ng-repeat="showdate in show.showdates">
+              <button
+                type="button"
+                title="edit show date"
+                class="width-175 btn-left btn-rpt btn-clr{{$index}}"
+                ng-click="rowEdit('showdate', showdate, show);">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                {{showdate.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
+              </button>
+            </div>
+          </div>
+          <div class="pull-left">
             <button
               type="button"
-              title="edit ticket"
-              class="width-100 btn-left btn-rpt"
-              ng-click="rowEdit('showticket', showticket, showticket._parentShowDate);">
-              <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-              {{tix.price }}
+              title="add show date"
+              class="width-100 btn-add"
+              ng-click="rowEdit('showdate', null, show);">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              Add Date
             </button>
           </div>
-        </div>
-        <div class="pull-left">
-          <button
-            type="button"
-            title="add ticket"
-            class="width-100 btn-add"
-            ng-click="rowEdit('showticket', null, null);">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            Add New
-          </button>
-        </div>
-      </td>
-
-    </tr>
+        </td>
+    
+        <td>
+          
+            <div ng-repeat="showdate in show.showdates">
+          
+              <div class="pull-left" ng-repeat="showticket in showdate.showtickets">
+                <button
+                  type="button"
+                  title="edit ticket"
+                  class="width-80 btn-left btn-rpt btn-clr{{$parent.$index}}"
+                  ng-click="rowEdit('showticket', showticket, showdate);">
+                  <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                  {{showticket.price }}
+                </button>
+            
+                <div ng-if="$index === 0" class="pull-right">
+                  <!-- parent.parent due to ng-if scope -->
+                  <button
+                    type="button"
+                    title="add ticket"
+                    class="width-100 btn-add btn-clr{{$parent.$parent.$index}}"
+                    ng-click="rowEdit('showticket', null, showdate);">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Add Tix
+                  </button>
+                </div>
+              </div><!-- end of showtickets -->
+            </div><!-- end of showdate loop -->
+          
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

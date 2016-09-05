@@ -104,17 +104,13 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
       });
     }],
   })
-
-  // WIP
-    
   ///////////////////////////////
   // Member ShowDates
   ///////////////////////////////
-  
-  .state("members.showdates", {
+  .state("members.shows.edit.showdates", {
     abstract: true
   })
-  .state("members.showdates.edit", {
+  .state("members.shows.edit.showdates.edit", {
     url: '/showdates/:showdate_id',
     views:{
       "modal@members": {
@@ -132,10 +128,10 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
   ///////////////////////////////
   // Member ShowTickets
   ///////////////////////////////
-  .state("members.showtickets", {
+  .state("members.shows.edit.showdates.edit.showtickets", {
     abstract: true
   })
-  .state("members.showtickets.edit", {
+  .state("members.shows.edit.showdates.edit.showtickets.edit", {
     url: '/showtickets/:showticket_id',
     views:{
       "modal@members": {
@@ -150,19 +146,19 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
       });
     }],
   })
-
-
-
-
-  .state("members.showimages", {
+  ///////////////////////////////
+  // Member ShowImages
+  ///////////////////////////////
+  .state("members.shows.edit.showimages", {
     abstract: true
   })
-  .state("members.showimages.edit", {
+  .state("members.shows.edit.showimages.edit", {
     url: '/:showimage_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/showimages.edit.html",
-        controller: 'MembersFormsController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShowImage: setCurrentShowImage }
       }
     },
     onEnter: ["$state", function($state) {
@@ -283,6 +279,17 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     return ContextService.setCurrentShowTicket($stateParams.showticket_id)
     .then(function(data){
       return ContextService.currentShowTicket = data;
+    });
+  };
+  
+  // set the current showimage based on state params
+  function setCurrentShowImage($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.showimage_id) || $stateParams.showimage_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShowImage($stateParams.showimage_id)
+    .then(function(data){
+      return ContextService.currentShowImage = data;
     });
   };
       

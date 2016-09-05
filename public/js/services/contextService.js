@@ -47,7 +47,7 @@ angular.module('MyApp')
             if(this.currentShowDate){
               this.currentShowDate.parentShow((memberShowData.shows.length) ? memberShowData.shows[0] : null);
             }
-            console.log('MY CUR DATE', this.currentShowDate)
+            //console.log('MY CUR DATE', this.currentShowDate)
             return this.currentShowDate;
           });
         } else {
@@ -76,13 +76,33 @@ angular.module('MyApp')
                 this.currentShowTicket.parentShowDate(_showDate);
               }
             }
-            console.log('MY CUR TIX', this.currentShowTicket)
+            // console.log('MY CUR TIX', this.currentShowTicket)
             return this.currentShowTicket;
           });
         } else {
           return this.currentShowTicket = null;
         }
       };
+  
+      ////////////////////////////////////////////////
+      // SHOWIMAGE Funcs
+      ////////////////////////////////////////////////
+      // this.currentShowImage = null;
+      // this.setCurrentShowImage = function(idx) {
+      //   // console.log('IDX',idx)
+      //   if(idx && idx !== '0'){
+      //     return $http.get('/api/showimages/' + idx)
+      //     .then(function (data) {
+      //       this.currentShowImage = data.data;
+      //
+      //       // TODO add parent show to image?
+      //
+      //       return this.currentShowImage;
+      //     });
+      //   } else {
+      //     return this.currentShowImage = null;
+      //   }
+      // };
       
       ////////////////////////////////////////////////
       // MEMBER Funcs
