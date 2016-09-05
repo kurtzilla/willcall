@@ -1,10 +1,11 @@
 
-var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'angularMoment'])
+var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
+  'angularMoment', 'ui.bootstrap.datetimepicker', 'ui.dateTimeInput'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider,
                  $httpProvider, $authProvider) {
-
+  
+  $locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('jwtMemberInterceptor');
-
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -18,20 +19,11 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     url: '/users',
     templateUrl: 'partials/users/index.html'
   })
-  // .state('users', {
-  //   url: '/admin/users',
-  //   templateUrl: 'partials/admin/users/listing.html'
-  // })
   .state('users_edit', {
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
   })
-    
-  /*
-    Modals
-   */
-  
-  
+      
   /*
     MEMBERS AREA
    */
@@ -68,7 +60,7 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     templateUrl: 'partials/members/configs.html',
   })
   .state("members.configs.edit", {
-    url: '/configs/:config_id',
+    url: '/:config_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/configs.edit.html",
@@ -98,11 +90,12 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
     templateUrl: 'partials/members/shows.html',
   })
   .state("members.shows.edit", {
-    url: '/shows/:show_id',
+    url: '/:show_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/shows.edit.html",
-        controller: 'MembersShowsController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShow: setCurrentShow }
       }
     },
     onEnter: ["$state", function($state) {
@@ -111,15 +104,19 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
-  .state("members.showdates", {
+  ///////////////////////////////
+  // Member ShowDates
+  ///////////////////////////////
+  .state("members.shows.edit.showdates", {
     abstract: true
   })
-  .state("members.showdates.edit", {
+  .state("members.shows.edit.showdates.edit", {
     url: '/showdates/:showdate_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/showdates.edit.html",
-        controller: 'MembersShowDatesController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShowDate: setCurrentShowDate }
       }
     },
     onEnter: ["$state", function($state) {
@@ -128,15 +125,19 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
-  .state("members.showtickets", {
+  ///////////////////////////////
+  // Member ShowTickets
+  ///////////////////////////////
+  .state("members.shows.edit.showdates.edit.showtickets", {
     abstract: true
   })
-  .state("members.showtickets.edit", {
+  .state("members.shows.edit.showdates.edit.showtickets.edit", {
     url: '/showtickets/:showticket_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/showtickets.edit.html",
-        controller: 'MembersShowTicketsController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShowTicket: setCurrentShowTicket }
       }
     },
     onEnter: ["$state", function($state) {
@@ -145,15 +146,19 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
       });
     }],
   })
-  .state("members.showimages", {
+  ///////////////////////////////
+  // Member ShowImages
+  ///////////////////////////////
+  .state("members.shows.edit.showimages", {
     abstract: true
   })
-  .state("members.showimages.edit", {
-    url: '/showimages/:showimage_id',
+  .state("members.shows.edit.showimages.edit", {
+    url: '/:showimage_id',
     views:{
       "modal@members": {
         templateUrl: "partials/members/showimages.edit.html",
-        controller: 'MembersShowImagesController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentShowImage: setCurrentShowImage }
       }
     },
     onEnter: ["$state", function($state) {
@@ -182,15 +187,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
 /*
   END MEMBERS AREA
  */
-
-
-
-
-
-
-
-
-
 
 
 
@@ -249,47 +245,55 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt', 'ang
   //   controller: 'ApiCtrl'
   //   // , resolve: { skipIfAuthenticated: skipIfAuthenticated }
   // });
-  $locationProvider.html5Mode(true);
+  
 
 
-  // TODO handle auth
-  var origin = window.location.origin;
-
-  // $authProvider.loginUrl = '/login';
-  // $authProvider.signupUrl = '/signup';
-  // $authProvider.google({
-  //   url: '/auth/google',
-  //   clientId: '485087755085-79bj9q9chussumg4f5r7c6korhhpkert.apps.googleusercontent.com',
-  //   redirectUri: origin + '/auth/google/callback'
-  // });
-
-  // console.log('AUTHHD', $authProvider);
-
-  // function skipIfAuthenticated($location, $auth) {
-  //   if ($auth.isAuthenticated()) {
-  //     $location.path('/');
-  //   }
-  // }
-  //
-  // function loginRequired($location, $auth) {
-  //   if (!$auth.isAuthenticated()) {
-  //     $location.path('/login');
-  //   }
-  // }
-
-  // function verifyJWT(token){
-  //
-  //   var base64Url = token.split('.')[1];
-  //   var base64 = base64Url.replace('-', '+').replace('_', '/');
-  //   return JSON.parse($window.atob(base64));
-  //
-  // };
-
+  
+  // set the current show based on state params
+  function setCurrentShow($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.show_id) || $stateParams.show_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShow($stateParams.show_id)
+    .then(function(data){
+      return ContextService.currentShow = data;
+    });
+  };
+  
+  // set the current showdate based on state params
+  function setCurrentShowDate($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.showdate_id) || $stateParams.showdate_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShowDate($stateParams.showdate_id)
+    .then(function(data){
+      return ContextService.currentShowDate = data;
+    });
+  };
+  
+  // set the current showticket based on state params
+  function setCurrentShowTicket($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.showticket_id) || $stateParams.showticket_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShowTicket($stateParams.showticket_id)
+    .then(function(data){
+      return ContextService.currentShowTicket = data;
+    });
+  };
+  
+  // set the current showimage based on state params
+  function setCurrentShowImage($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.showimage_id) || $stateParams.showimage_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentShowImage($stateParams.showimage_id)
+    .then(function(data){
+      return ContextService.currentShowImage = data;
+    });
+  };
+      
   function memberAuth($location, $auth, $http, ContextService) {
-    // console.log('AUTHHD', $http(config));
-    // if ($auth.isAuthenticated()) {
-    //   $location.path('/');
-    // }
   };
 })
 .run(function($rootScope, $window, jwtHelper) {

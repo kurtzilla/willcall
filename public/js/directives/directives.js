@@ -1,5 +1,36 @@
 
 angular.module('MyApp')
+
+// http://intown.biz/2015/05/28/angular-bootstrap-date-picker-validation-fix/
+// .directive('validDate', function () {
+//   return {
+//     restrict: 'A',
+//     require: 'ngModel',
+//     link: function (scope, element, attrs, control) {
+//
+//       console.log('SCOPE', scope)
+//       console.log('ELEMENT', element)
+//       console.log('CONTROL', control)
+//       // console.log('CONTROL', control.$viewValue)
+//       console.log('validatin', element[0].value)
+//
+//       control.$parsers.push(function (viewValue) {
+//         var newDate = model.$viewValue;
+//         console.log('HEY', newDate)
+//         control.$setValidity("invalidDate", true);
+//         if (typeof newDate === "object" || newDate == "") return newDate;  // pass through if we clicked date from popup
+//         if (!newDate.match(/^\d{1,2}\/\d{1,2}\/((\d{2})|(\d{4}))$/))
+//           control.$setValidity("invalidDate", false);
+//         return viewValue;
+//       });
+//
+//
+//     }
+//   };
+// })
+
+
+
 .directive('toggle', function(){
   return {
     restrict: 'A',

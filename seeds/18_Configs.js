@@ -14,8 +14,14 @@ exports.seed = function(knex, Promise) {
         knex('configs').insert({id: 3, member_id: null, context: 'locale', description: '',
           key:'box_office_address', value:'box office address',
           datatype:'string', required:true, active:true, allowoverride:true}),
+        knex('configs').insert({id: 4, member_id: null, context: 'setup', description: 'timezone for your server',
+          key:'timezone_name', value:'MST',
+          datatype:'string', required:true, active:true, allowoverride:true}),
+        knex('configs').insert({id: 5, member_id: null, context: 'setup', description: 'timezone for your server',
+          key:'timezone_offset', value:'-6',
+          datatype:'string', required:true, active:true, allowoverride:true}),
 
-        knex.raw('ALTER SEQUENCE configs_id_seq RESTART WITH 4;')
+        knex.raw('ALTER SEQUENCE configs_id_seq RESTART WITH 6;')
 
       ]);
     // });

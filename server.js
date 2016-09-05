@@ -109,6 +109,12 @@ app.post('/stripe/webhook/connect/',  membersController.stripeConnectWebhook);
 // api routes
 app.get('/api/configs/:config_id',                      apiController.getConfigById);
 app.get('/api/shows/:show_id',                          showsController.getShowById);
+app.post('/api/shows',                                  showsController.createOrUpdateShow);
+app.get('/api/showdates/:showdate_id',                  showsController.getShowDateById);
+app.post('/api/showdates',                              showsController.createOrUpdateShowDate);
+app.get('/api/showtickets/:showticket_id',              showsController.getShowTicketById);
+app.post('/api/showtickets',                            showsController.createOrUpdateShowTicket);
+
 
 
 /////////////////////////

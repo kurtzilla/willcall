@@ -42,35 +42,35 @@ angular.module('MyApp')
       $scope.view.currentShowId = function(){
         return $stateParams['show_id']
       };
+      $scope.view.currentShowDateId = function(){
+        return $stateParams['showdate_id']
+      };
+      $scope.view.currentShowTicketId = function(){
+        return $stateParams['showticket_id']
+      };
       
       
       
       // Mode methods
-      $scope.rowEdit = function(entityType, id){
+      $scope.rowEdit = function(entityType, entity = null, parent = null){
+        var idx = (entity) ? entity.id: 0;
+        var parentIdx = (parent) ? parent.id: 0;
+        
         if(entityType === 'config'){
-          $state.go('members.configs.edit', {config_id: id});
+          $state.go('members.configs.edit', {config_id: idx});
         } else if(entityType === 'show'){
-          $state.go('members.shows.edit', {show_id: id});
+          $state.go('members.shows.edit', {show_id: idx});
         } else if(entityType === 'showdate'){
-          $state.go('members.showdates.edit', {showdate_id: id});
+          // console.log('showdate_id', idx, 'show_id', parentIdx)
+          $state.go('members.shows.edit.showdates.edit', {showdate_id: idx, show_id: parentIdx});
         } else if(entityType === 'showticket'){
-          $state.go('members.showtickets.edit', {showticket_id: id});
+          // console.log('showdate_id', idx, 'show_id', parentIdx)
+          $state.go('members.shows.edit.showdates.edit.showtickets.edit', {showticket_id: idx, showdate_id: parentIdx});
         } else if(entityType === 'showimage'){
-          $state.go('members.showimages.edit', {showimage_id: id});
-          
-          
-        } else if(entityType === 'newshow'){
-          $state.go('members.shows.edit', {show_id: id});
-        } else if(entityType === 'newshowdate'){
-          $state.go('members.showdates.edit', {showdate_id: id});
-        } else if(entityType === 'newshowticket'){
-          $state.go('members.showtickets.edit', {showticket_id: id});
-        } else if(entityType === 'newshowimage'){
-          $state.go('members.showimages.edit', {showimage_id: id});
+          // console.log('showdate_id', idx, 'show_id', parentIdx)
+          $state.go('members.shows.edit.showimages.edit', {showimage_id: idx, show_id, parentIdx});
         }
       };
-  
-      
       
       // list assigns - be sure to init below
       $scope.view.configList = null;
@@ -85,14 +85,12 @@ angular.module('MyApp')
       $scope.populateEventQs = function(){
         $scope.view.MembersService.getMemberEvents()
         .then(function(data){
-          // console.log('FINAL', data)
           $scope.view.eventQs = data;
         })
       };
   
       $scope.view.showList = null;
       $scope.populateShowList = function(){
-      
         $scope.view.MembersService.getMemberShowListing()
         .then(function(data){
           $scope.view.showList = data;
@@ -104,8 +102,6 @@ angular.module('MyApp')
       $scope.populateConfig();
       $scope.populateShowList();
       $scope.populateEventQs();
-      
-      // console.log('SHOWS', $scope.view.showList)
 }]);
     
 
@@ -168,292 +164,223 @@ angular.module('MyApp')
     
   }]);
 
-angular.module('MyApp')
-.controller('MembersShowsController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate',
-  function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate) {
-  // console.log('MEMBERS SHOWS CONTROLLER', $stateParams)
-    $scope.view = {};
-    
-    $scope.view.currentShow = null;
-    $scope.getCurrentShow = function() {
-      if ($stateParams.show_id) {
-        return $http.get('/api/shows/' + $stateParams.show_id)
-        .then(function (data) {
-          // !!! api call returns response data - so get data at data.data
-          var memberShowData = data.data;
-          var shows = Show.buildShowCollection(
-            memberShowData.shows,
-            ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
-          
-          // console.log('GOT SHOW', shw[0])
-          
-          if(shows.length) {
-            $scope.view.currentShow = shows[0];
-          }
-        });
-      } else {
-        $scope.view.currentShow = null;
-      }
-    };
-    $scope.getCurrentShow();
-    
-    $scope.cancelForm = function(){
-      // in case we need to do any cleanup
-      $state.go('members.shows');
-    }
-    
-    $scope.submitForm = function(form){
-      
-      if(form.$valid){
-        if(form.entity && $scope.view.currentShow){
-          var _entity = angular.copy(form.entity);
-          // var newVal = _entity.value;
-          
-          // TODO validation - evaluate datatype and if newVal is valid...
-          // console.log('ENTITY',newVal);
-          
-          // if no member_id...
-          console.log('form updating...')
-          // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
-          // .then(function(data){
-            
-            // clean up the form and return!
-            form.entity = {};
-            form.$setPristine();
-            form.$setUntouched();
-            
-            // refresh member config collection
-            $scope.$parent.view.showist = null;
-            $scope.$parent.populateShowList();
-            
-            $state.go('members.shows');
-          // })
-          // .catch(function(err){
-          //   // TODO report any errors
-          // })
-        }
-      } // if form valid
-    } // submit post
-    
-  }]);
 
-
-angular.module('MyApp')
-.controller('MembersShowDatesController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate',
-  function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate) {
-    // console.log('MEMBERS SHOWS CONTROLLER', $stateParams)
-    $scope.view = {};
-    
-    
-    
-    //TODO
-    // build a showdate based on a single showdateid
-    
-    
-    
-    
-    
-    
-    $scope.view.currentShowDate = null;
-    $scope.getCurrentShowDate = function() {
-      // if ($stateParams.showdate_id) {
-      //   return $http.get('/api/showdates/' + $stateParams.showdate_id)
-      //   .then(function (data) {
-      //     // !!! api call returns response data - so get data at data.data
-      //     var memberShowDateData = data.data;
-      //     var showdates = Show.buildShowCollection(
-      //       memberShowDateData.shows,
-      //       ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
-      //
-      //     // console.log('GOT SHOW', shw[0])
-      //
-      //     if(showdates.length) {
-      //       $scope.view.currentShowDate = showdates[0];
-      //     }
-      //   });
-      // } else {
-        $scope.view.currentShowDate = null;
-      // }
-    };
-    $scope.getCurrentShowDate();
-    
-    $scope.cancelForm = function(){
-      // in case we need to do any cleanup
-      $state.go('members.shows');
-    }
-    
-    $scope.submitForm = function(form){
-      
-      if(form.$valid){
-        if(form.entity && $scope.view.currentShowDate){
-          var _entity = angular.copy(form.entity);
-          // var newVal = _entity.value;
-          
-          // TODO validation - evaluate datatype and if newVal is valid...
-          // console.log('ENTITY',newVal);
-          
-          // if no member_id...
-          console.log('form updating...')
-          // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
-          // .then(function(data){
-          
-          // clean up the form and return!
-          form.entity = {};
-          form.$setPristine();
-          form.$setUntouched();
-          
-          // refresh member config collection
-          $scope.$parent.view.showist = null;
-          $scope.$parent.populateShowList();
-          
-          $state.go('members.shows');
-          // })
-          // .catch(function(err){
-          //   // TODO report any errors
-          // })
-        }
-      } // if form valid
-    } // submit post
-    
-  }]);
-
-angular.module('MyApp')
-.controller('MembersShowTicketsController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate', 'ShowTicket',
-  function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate, ShowTicket) {
-    $scope.view = {};
-    //TODO
-    // build a showticket based on a single showticketid
-        
-    $scope.view.currentShowTicket = null;
-    $scope.getCurrentShowTicket = function() {
-      // if ($stateParams.showdate_id) {
-      //   return $http.get('/api/showdates/' + $stateParams.showdate_id)
-      //   .then(function (data) {
-      //     // !!! api call returns response data - so get data at data.data
-      //     var memberShowDateData = data.data;
-      //     var showdates = Show.buildShowCollection(
-      //       memberShowDateData.shows,
-      //       ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
-      //
-      //     // console.log('GOT SHOW', shw[0])
-      //
-      //     if(showdates.length) {
-      //       $scope.view.currentShowDate = showdates[0];
-      //     }
-      //   });
-      // } else {
-      $scope.view.currentShowTicket = null;
-      // }
-    };
-    $scope.getCurrentShowTicket();
-    
-    $scope.cancelForm = function(){
-      // in case we need to do any cleanup
-      $state.go('members.shows');
-    }
-    
-    $scope.submitForm = function(form){
-      
-      if(form.$valid){
-        if(form.entity && $scope.view.currentShowTicket){
-          var _entity = angular.copy(form.entity);
-          // var newVal = _entity.value;
-          
-          // TODO validation - evaluate datatype and if newVal is valid...
-          // console.log('ENTITY',newVal);
-          
-          // if no member_id...
-          console.log('form updating...')
-          // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
-          // .then(function(data){
-          
-          // clean up the form and return!
-          form.entity = {};
-          form.$setPristine();
-          form.$setUntouched();
-          
-          // refresh member config collection
-          $scope.$parent.view.showist = null;
-          $scope.$parent.populateShowList();
-          
-          $state.go('members.shows');
-          // })
-          // .catch(function(err){
-          //   // TODO report any errors
-          // })
-        }
-      } // if form valid
-    } // submit post
-    
-  }]);
-
-
-angular.module('MyApp')
-.controller('MembersShowImagesController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate', 'ShowTicket',
-  function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate, ShowTicket) {
-    $scope.view = {};
-    //TODO
-    // build a showimage based on a single showimageid
-    
-    $scope.view.currentShowImage = null;
-    $scope.getCurrentShowImage = function() {
-      // if ($stateParams.showdate_id) {
-      //   return $http.get('/api/showdates/' + $stateParams.showdate_id)
-      //   .then(function (data) {
-      //     // !!! api call returns response data - so get data at data.data
-      //     var memberShowDateData = data.data;
-      //     var showdates = Show.buildShowCollection(
-      //       memberShowDateData.shows,
-      //       ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
-      //
-      //     // console.log('GOT SHOW', shw[0])
-      //
-      //     if(showdates.length) {
-      //       $scope.view.currentShowDate = showdates[0];
-      //     }
-      //   });
-      // } else {
-      $scope.view.currentShowImage = null;
-      // }
-    };
-    $scope.getCurrentShowImage();
-    
-    $scope.cancelForm = function(){
-      // in case we need to do any cleanup
-      $state.go('members.shows');
-    }
-    
-    $scope.submitForm = function(form){
-      
-      if(form.$valid){
-        if(form.entity && $scope.view.currentShowImage){
-          var _entity = angular.copy(form.entity);
-          // var newVal = _entity.value;
-          
-          // TODO validation - evaluate datatype and if newVal is valid...
-          // console.log('ENTITY',newVal);
-          
-          // if no member_id...
-          console.log('form updating...')
-          // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
-          // .then(function(data){
-          
-          // clean up the form and return!
-          form.entity = {};
-          form.$setPristine();
-          form.$setUntouched();
-          
-          // refresh member config collection
-          $scope.$parent.view.showist = null;
-          $scope.$parent.populateShowList();
-          
-          $state.go('members.shows');
-          // })
-          // .catch(function(err){
-          //   // TODO report any errors
-          // })
-        }
-      } // if form valid
-    } // submit post
-    
-  }]);
+// angular.module('MyApp')
+// .controller('MembersShowDatesController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate',
+//   function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate) {
+//     // console.log('MEMBERS SHOWS CONTROLLER', $stateParams)
+//     $scope.view = {};
+//
+//
+//
+//     //TODO
+//     // build a showdate based on a single showdateid
+//
+//
+//
+//
+//
+//
+//     $scope.view.currentShowDate = null;
+//     $scope.getCurrentShowDate = function() {
+//       // if ($stateParams.showdate_id) {
+//       //   return $http.get('/api/showdates/' + $stateParams.showdate_id)
+//       //   .then(function (data) {
+//       //     // !!! api call returns response data - so get data at data.data
+//       //     var memberShowDateData = data.data;
+//       //     var showdates = Show.buildShowCollection(
+//       //       memberShowDateData.shows,
+//       //       ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
+//       //
+//       //     // console.log('GOT SHOW', shw[0])
+//       //
+//       //     if(showdates.length) {
+//       //       $scope.view.currentShowDate = showdates[0];
+//       //     }
+//       //   });
+//       // } else {
+//         $scope.view.currentShowDate = null;
+//       // }
+//     };
+//     $scope.getCurrentShowDate();
+//
+//     $scope.cancelForm = function(){
+//       // in case we need to do any cleanup
+//       $state.go('members.shows');
+//     }
+//
+//     $scope.submitForm = function(form){
+//
+//       if(form.$valid){
+//         if(form.entity && $scope.view.currentShowDate){
+//           var _entity = angular.copy(form.entity);
+//           // var newVal = _entity.value;
+//
+//           // TODO validation - evaluate datatype and if newVal is valid...
+//           // console.log('ENTITY',newVal);
+//
+//           // if no member_id...
+//           console.log('form updating...')
+//           // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
+//           // .then(function(data){
+//
+//           // clean up the form and return!
+//           form.entity = {};
+//           form.$setPristine();
+//           form.$setUntouched();
+//
+//           // refresh member config collection
+//           $scope.$parent.view.showist = null;
+//           $scope.$parent.populateShowList();
+//
+//           $state.go('members.shows');
+//           // })
+//           // .catch(function(err){
+//           //   // TODO report any errors
+//           // })
+//         }
+//       } // if form valid
+//     } // submit post
+//
+//   }]);
+//
+// angular.module('MyApp')
+// .controller('MembersShowTicketsController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate', 'ShowTicket',
+//   function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate, ShowTicket) {
+//     $scope.view = {};
+//     //TODO
+//     // build a showticket based on a single showticketid
+//
+//     $scope.view.currentShowTicket = null;
+//     $scope.getCurrentShowTicket = function() {
+//       // if ($stateParams.showdate_id) {
+//       //   return $http.get('/api/showdates/' + $stateParams.showdate_id)
+//       //   .then(function (data) {
+//       //     // !!! api call returns response data - so get data at data.data
+//       //     var memberShowDateData = data.data;
+//       //     var showdates = Show.buildShowCollection(
+//       //       memberShowDateData.shows,
+//       //       ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
+//       //
+//       //     // console.log('GOT SHOW', shw[0])
+//       //
+//       //     if(showdates.length) {
+//       //       $scope.view.currentShowDate = showdates[0];
+//       //     }
+//       //   });
+//       // } else {
+//       $scope.view.currentShowTicket = null;
+//       // }
+//     };
+//     $scope.getCurrentShowTicket();
+//
+//     $scope.cancelForm = function(){
+//       // in case we need to do any cleanup
+//       $state.go('members.shows');
+//     }
+//
+//     $scope.submitForm = function(form){
+//
+//       if(form.$valid){
+//         if(form.entity && $scope.view.currentShowTicket){
+//           var _entity = angular.copy(form.entity);
+//           // var newVal = _entity.value;
+//
+//           // TODO validation - evaluate datatype and if newVal is valid...
+//           // console.log('ENTITY',newVal);
+//
+//           // if no member_id...
+//           console.log('form updating...')
+//           // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
+//           // .then(function(data){
+//
+//           // clean up the form and return!
+//           form.entity = {};
+//           form.$setPristine();
+//           form.$setUntouched();
+//
+//           // refresh member config collection
+//           $scope.$parent.view.showist = null;
+//           $scope.$parent.populateShowList();
+//
+//           $state.go('members.shows');
+//           // })
+//           // .catch(function(err){
+//           //   // TODO report any errors
+//           // })
+//         }
+//       } // if form valid
+//     } // submit post
+//
+//   }]);
+//
+//
+// angular.module('MyApp')
+// .controller('MembersShowImagesController', ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate', 'ShowTicket',
+//   function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate, ShowTicket) {
+//     $scope.view = {};
+//     //TODO
+//     // build a showimage based on a single showimageid
+//
+//     $scope.view.currentShowImage = null;
+//     $scope.getCurrentShowImage = function() {
+//       // if ($stateParams.showdate_id) {
+//       //   return $http.get('/api/showdates/' + $stateParams.showdate_id)
+//       //   .then(function (data) {
+//       //     // !!! api call returns response data - so get data at data.data
+//       //     var memberShowDateData = data.data;
+//       //     var showdates = Show.buildShowCollection(
+//       //       memberShowDateData.shows,
+//       //       ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
+//       //
+//       //     // console.log('GOT SHOW', shw[0])
+//       //
+//       //     if(showdates.length) {
+//       //       $scope.view.currentShowDate = showdates[0];
+//       //     }
+//       //   });
+//       // } else {
+//       $scope.view.currentShowImage = null;
+//       // }
+//     };
+//     $scope.getCurrentShowImage();
+//
+//     $scope.cancelForm = function(){
+//       // in case we need to do any cleanup
+//       $state.go('members.shows');
+//     }
+//
+//     $scope.submitForm = function(form){
+//
+//       if(form.$valid){
+//         if(form.entity && $scope.view.currentShowImage){
+//           var _entity = angular.copy(form.entity);
+//           // var newVal = _entity.value;
+//
+//           // TODO validation - evaluate datatype and if newVal is valid...
+//           // console.log('ENTITY',newVal);
+//
+//           // if no member_id...
+//           console.log('form updating...')
+//           // $scope.$parent.view.MembersService.updateMemberConfig($scope.view.currentConfig.id, newVal)
+//           // .then(function(data){
+//
+//           // clean up the form and return!
+//           form.entity = {};
+//           form.$setPristine();
+//           form.$setUntouched();
+//
+//           // refresh member config collection
+//           $scope.$parent.view.showist = null;
+//           $scope.$parent.populateShowList();
+//
+//           $state.go('members.shows');
+//           // })
+//           // .catch(function(err){
+//           //   // TODO report any errors
+//           // })
+//         }
+//       } // if form valid
+//     } // submit post
+//
+//   }]);

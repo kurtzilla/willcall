@@ -1,6 +1,6 @@
 angular.module('MyApp').factory('ShowDate',
-  ['$http', 'ShowTicket',
-    function($http, ShowTicket){
+  ['$http', '$q', 'ShowTicket',
+    function($http, $q, ShowTicket){
       
       function ShowDate(row, ticketRows = null){
         this.id = row.id;
@@ -34,7 +34,42 @@ angular.module('MyApp').factory('ShowDate',
       ////////////////////////////////////////////
       // STATIC methods
       ////////////////////////////////////////////
+  
+      // list to refresh and refreshmethod should point to show list
+      ShowDate.processForm = function(form, input, currentShowDate, currentShow){
     
+        var deferred = $q.defer();
+    
+        // console.log('FORM', form)
+        // console.log('INPUT', input)
+        // console.log('CURRENT SHOW', currentShow)
+        // console.log('CURRENT DATE', currentShowDate)
+    
+        var errors = [];
+        
+        input.show_id = (currentShowDate) ?
+          currentShowDate.show_id : (currentShow) ? currentShow.id : -1;
+    
+        $http.post('/api/showdates', {
+          input: input,
+          current: currentShowDate
+        })
+        .then(function(data){
+          var returnData = data.data;
+          deferred.resolve(returnData);
+        })
+        .catch(function(err){
+          //convert err to array and return
+          // console.log('I CAUGHT it', err)
+          errors.push(err.data);
+          deferred.reject(errors);
+        })
+    
+    
+        return deferred.promise;
+      };
+  
+      // Convert to ShowDate Objects
       ShowDate.buildShowDateCollection = function(dateRows, ticketRows) {
         // console.log('building...', dateRows)
         return dateRows.map(function (date) {
@@ -46,9 +81,6 @@ angular.module('MyApp').factory('ShowDate',
           return new ShowDate(date, matches);
         });
       };
-      
-      // console.log('DEFINED',ShowDate)
-      // console.log('DEFINED',ShowDate.buildShowDateCollection)
       
       return ShowDate;
 }]);
