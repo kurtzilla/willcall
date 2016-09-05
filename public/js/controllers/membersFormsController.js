@@ -68,13 +68,15 @@ angular.module('MyApp')
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
           } else if (context === 'showdate') {
-            
-            // TODO get current SHOW ID too ALSO as well
-            // _entity.member_id = $scope.view.ContextService.currentMember.id;
-            
             formSubmit = ShowDate.processForm(form, _entity,
               $scope.view.ContextService.currentShowDate,
               $scope.view.ContextService.currentShow);
+            listToRefresh = $scope.$parent.view.showList;
+            refreshMethod = $scope.$parent.populateShowList;
+          }  else if (context === 'showticket') {
+            formSubmit = ShowTicket.processForm(form, _entity,
+              $scope.view.ContextService.currentShowTicket,
+              $scope.view.ContextService.currentShowDate);
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
           }

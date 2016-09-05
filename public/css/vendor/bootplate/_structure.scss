@@ -354,16 +354,16 @@ body{
 
 
 .btn-clr0 {
-  background-color: rgba(189,233,245,.5);
+  background-color: rgba(155,111,245,.3);
 }
 .btn-clr1 {
   background-color: rgba(245,118,182,.4);
 }
 .btn-clr2 {
-  background-color: rgba(245,237,66,.4);
+  background-color: rgba(133,245,121,.4);
 }
 .btn-clr3 {
-  background-color: rgba(133,245,121,.4);
+  background-color: rgba(245,245,95,.5);
 }
 .btn-clr4 {
   background-color: rgba(245,183,79,.4);
@@ -372,12 +372,13 @@ body{
   background-color: rgba(66,58,245,.2);
 }
 .btn-clr6 {
-  background-color: rgba(155,111,245,.3);
+  background-color: rgba(189,233,245,.5);
 }
 .btn-clr7 {
   background-color: rgba(255,19,37,.4);
 }
 .btn-clr8 {
+  background-color: rgba(155,111,245,.3);
 }
 
 .width-60{
@@ -385,6 +386,12 @@ body{
 }
 .width-80{
   width:80px;
+}
+.width-85{
+  width:85px;
+}
+.width-90{
+  width:90px;
 }
 .width-100 {
   width:100px;
@@ -411,4 +418,72 @@ body{
     //border:solid green 3px;
     padding-bottom:3em;
   }
+}
+
+.show-date-repeater{
+  padding:5px 5px 4px 5px;
+  margin-bottom:6px;
+  
+  button {
+    background: #fff; /* fallback color for old browsers */
+    background: rgba(249, 249, 249, 0.75);
+  }
+}
+
+.inventory-container {
+  //border:solid red 1px;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  height:42px;
+  align-items:center;
+}
+
+span.inventory-name{
+  height:26px;
+  display:inline-block;
+}
+
+
+.btn-tkt {
+  //border:solid blue 1px;
+  position:relative;
+  .glyphicon{
+    position:absolute;
+    top:5px;
+  }
+}
+
+.tkt-btn-inv {
+  position:relative;
+  float:right;
+  top:-3px;
+  //border:solid red 1px;
+  display:inline-block;
+  font-size:.6em;
+  width:100%;
+  text-align:right;
+  background: rgba(182, 182, 182, 0.15);
+}
+
+
+
+.badge-primary {
+  background-color: $brand-primary;
+}
+.badge-danger {
+  background-color: $brand-danger;
+}
+.badge-success {
+  background-color: $brand-success;
+}
+.badge-warning {
+  background-color: $brand-warning;
+}
+.badge-info {
+  background-color: $brand-info;
+}
+.badge-default {
+  background-color: #e6e6e6;
+  color:$brand-primary;
 }

@@ -36,105 +36,62 @@
           </div>
         </td>
         <td width="25%">
-          <div class="pull-left">
-            <div ng-repeat="showdate in show.showdates">
-              <button
-                type="button"
-                title="edit show date"
-                class="width-175 btn-left btn-rpt btn-clr{{$index}}"
-                ng-click="rowEdit('showdate', showdate, show);">
-                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                {{showdate.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
-              </button>
-            </div>
-          </div>
-          <div class="pull-left">
+          <div class="show-date-repeater btn-clr{{$index}}" ng-repeat="showdate in show.showdates">
             <button
               type="button"
-              title="add show date"
-              class="width-100 btn-add"
-              ng-click="rowEdit('showdate', null, show);">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-              Add Date
+              title="edit show date"
+              class="width-175 btn-left btn-rpt"
+              ng-click="rowEdit('showdate', showdate, show);">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+              {{showdate.dateofshow | amDateFormat:'YYYY/MM/DD hh:mm a'}}
             </button>
           </div>
+          <button
+            type="button"
+            title="add show date"
+            class="width-100 btn-add"
+            ng-click="rowEdit('showdate', null, show);">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add Date
+          </button>
         </td>
-    
         <td>
-          
-            <div ng-repeat="showdate in show.showdates">
-          
-              <div class="pull-left" ng-repeat="showticket in showdate.showtickets">
-                <button
-                  type="button"
-                  title="edit ticket"
-                  class="width-80 btn-left btn-rpt btn-clr{{$parent.$index}}"
-                  ng-click="rowEdit('showticket', showticket, showdate);">
-                  <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                  {{showticket.price }}
-                </button>
-            
-                <div ng-if="$index === 0" class="pull-right">
-                  <!-- parent.parent due to ng-if scope -->
-                  <button
-                    type="button"
-                    title="add ticket"
-                    class="width-100 btn-add btn-clr{{$parent.$parent.$index}}"
-                    ng-click="rowEdit('showticket', null, showdate);">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Add Tix
-                  </button>
-                </div>
-              </div><!-- end of showtickets -->
-            </div><!-- end of showdate loop -->
-          
+          <div class="pull-left show-date-repeater btn-clr{{$index}}" style="width:100%;padding:5px 5px 2px 5px;margin-bottom:5px;" ng-repeat="showdate in show.showdates">
+            <div style="font-size:.75em;font-weight:bold;color:#888;margin-top:-5px;margin-bottom:2px;">{{showdate.dateofshow | amDateFormat:'ddd YYYY/MM/DD hh:mm a'}}</div>
+            <div class="col-xs-6 text-left ticket-container" style="padding-left:0;">
+              
+              <button ng-repeat="showticket in showdate.showtickets"
+                type="button"
+                title="edit ticket"
+                class="width-100 btn-left btn-rpt btn-tkt"
+                ng-click="rowEdit('showticket', showticket, showdate);">
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                
+                
+                <span class="pull-right text-right">
+                  {{showticket.price | currency}}<br>
+                  <span class="tkt-btn-inv">
+                    {{showticket.allotted - showticket.sold + showticket.refunds }}/
+                    {{showticket.allotted}}/
+                    {{((showticket.sold + showticket.refunds) * showticket.price) | currency}}
+                  </span>
+                </span>
+                
+              </button>
+            </div><!-- end ticket container -->
+            <div class="col-xs-6 text-right ticket-add-container" style="padding-right:0;">
+              <button
+                type="button"
+                title="add ticket"
+                class="pull-right width-90 btn-add "
+                ng-click="rowEdit('showticket', null, showdate);">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Add Tix
+              </button>
+            </div>
+          </div><!-- end of showdate loop -->
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-
-
-
-<!--<td>-->
-<!--<div class="pull-left">-->
-<!--<button-->
-<!--type="button"-->
-<!--title="edit image"-->
-<!--class="width-100 btn-left btn-rpt"-->
-<!--ng-click="rowEdit('showimage', item.id);">-->
-<!--<span class="glyphicon glyphicon-picture" aria-hidden="true"></span>-->
-<!--pix-->
-<!--</button>-->
-<!--</div>-->
-<!--<div class="pull-left">-->
-<!--<button-->
-<!--type="button"-->
-<!--title="add image"-->
-<!--class="width-100 btn-add"-->
-<!--ng-click="rowEdit('showimage', 0);">-->
-<!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>-->
-<!--Add New-->
-<!--</button>-->
-<!--</div>-->
-<!--<div class="clearfix" />-->
-<!--<div class="todo">TODO</div>-->
-<!--</td>-->
-<!--<button disabled-->
-<!--type="button"-->
-<!--title="page preview"-->
-<!--class="btn btn-default btn-xs btn-icon">-->
-<!--<i class="fa fa-eye" aria-hidden="true"></i>-->
-<!--</button>-->
-<!--<button disabled-->
-<!--type="button"-->
-<!--title="mobile preview"-->
-<!--class="btn btn-default btn-xs btn-icon">-->
-<!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
-<!--</button>-->
-<!--<button disabled-->
-<!--type="button"-->
-<!--data-original-title="visit {{item.url}}"-->
-<!--class="btn btn-default btn-xs btn-icon">-->
-<!--<i class="fa fa-globe" aria-hidden="true"></i>-->
-<!--</button>-->

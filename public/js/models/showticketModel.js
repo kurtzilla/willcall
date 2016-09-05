@@ -1,5 +1,5 @@
 angular.module('MyApp')
-.factory('ShowTicket', ['$http', function($http){
+.factory('ShowTicket', ['$http', '$q', function($http, $q){
   
   function ShowTicket(row, parentShowDate = null){
     this.id = row.id;
@@ -49,7 +49,8 @@ angular.module('MyApp')
   
     input.showdate_id = (currentShowTicket) ?
       currentShowTicket.showdate_id : (currentShowDate) ? currentShowDate.id : -1;
-    
+    input.deliveryoptions = JSON.stringify([input.deliveryoptions])
+      
     $http.post('/api/showtickets', {
       input: input,
       current: currentShowTicket

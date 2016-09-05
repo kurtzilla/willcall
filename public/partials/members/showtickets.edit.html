@@ -42,7 +42,7 @@
                ng-class="{  'has-error' : _form.f_price.$invalid && _form.f_price.$touched}">
             <label class="col-xs-3" for="f_price">Price</label>
             <div class="col-xs-9">
-              <input type="text"
+              <input type="number"
                      class="form-control"
                      name="f_price"
                      ng-model="_form.entity.price"
@@ -87,6 +87,35 @@
               </select>
             </div>
           </div>
+  
+          <div class="form-group"
+               ng-class="{  'has-error' : _form.f_allotted.$invalid && _form.f_allotted.$touched}">
+            <label class="col-xs-3" for="f_allotted">Allotted</label>
+            <div class="col-xs-2">
+              <input type="number"
+                     class="form-control"
+                     name="f_allotted"
+                     ng-model="_form.entity.allotted"
+                     ng-init="_form.entity.allotted=view.ContextService.currentShowTicket.allotted"
+                     ng-pattern="\\d+"
+              >
+            </div>
+            <div class="col-xs-7 inventory-container">
+              <span class="badge badge-primary inventory-name">Sold
+                <span class="badge badge-default">{{(view.ContextService.currentShowTicket) ? view.ContextService.currentShowTicket.sold : 0}}</span>
+              </span>
+              <!--<span class="badge badge-primary inventory-name">Refunds-->
+                <!--<span class="badge badge-default">{{view.ContextService.currentShowTicket.refunded}}</span>-->
+              <!--</span>-->
+              <span class="badge badge-primary inventory-name">Avail
+                <span class="badge badge-default">{{(view.ContextService.currentShowTicket) ? (view.ContextService.currentShowTicket.sold - view.ContextService.currentShowTicket.refunded) : 0 }}</span>
+              </span>
+              <span class="badge badge-primary inventory-name">Sales
+                <span class="badge badge-default">{{(view.ContextService.currentShowTicket) ? ((view.ContextService.currentShowTicket.sold + view.ContextService.currentShowTicket.refunds) * view.ContextService.currentShowTicket.price) : 0 | currency}}</span>
+              </span>
+            </div>
+          </div>
+          
         </div><!-- end input controls -->
   
         <div ng-show="view.errors && view.errors.length" class="form-errors">
