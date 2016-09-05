@@ -6220,14 +6220,44 @@ body {
   padding-left: 8px;
   color: #777; }
 
+.btn-clr0 {
+  background-color: rgba(189, 233, 245, 0.5); }
+
+.btn-clr1 {
+  background-color: rgba(245, 118, 182, 0.4); }
+
+.btn-clr2 {
+  background-color: rgba(245, 237, 66, 0.4); }
+
+.btn-clr3 {
+  background-color: rgba(133, 245, 121, 0.4); }
+
+.btn-clr4 {
+  background-color: rgba(245, 183, 79, 0.4); }
+
+.btn-clr5 {
+  background-color: rgba(66, 58, 245, 0.2); }
+
+.btn-clr6 {
+  background-color: rgba(155, 111, 245, 0.3); }
+
+.btn-clr7 {
+  background-color: rgba(255, 19, 37, 0.4); }
+
 .width-60 {
   width: 60px; }
+
+.width-80 {
+  width: 80px; }
 
 .width-100 {
   width: 100px; }
 
 .width-150 {
   width: 150px; }
+
+.width-175 {
+  width: 175px; }
 
 .width-200 {
   width: 200px; }

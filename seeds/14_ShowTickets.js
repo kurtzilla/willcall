@@ -17,8 +17,8 @@ exports.seed = function(knex, Promise) {
       ages: 'all ages', price:18.99, deliveryoptions: JSON.stringify(['willcall']), status: 'on sale',
       allotted: 100, sold: 0, available: 100}),
 
-    knex('showtickets').insert({id:5, showdate_id:3, name:'Party Ticket', name: 'general admission',
-      ages: '21+', price:21.99, deliveryoptions: JSON.stringify(['willcall']), status: 'on sale',
+    knex('showtickets').insert({id:5, showdate_id:3, name: 'party admission',
+      ages: '21+', price:201.99, deliveryoptions: JSON.stringify(['willcall']), status: 'on sale',
       allotted: 100, sold: 0, available: 100}),
 
     knex.raw('ALTER SEQUENCE showtickets_id_seq RESTART WITH 6;')

@@ -3,9 +3,9 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
   'angularMoment', 'ui.bootstrap.datetimepicker', 'ui.dateTimeInput'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider,
                  $httpProvider, $authProvider) {
-
+  
+  $locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('jwtMemberInterceptor');
-
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -23,12 +23,7 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
   })
-    
-  /*
-    Modals
-   */
-  
-  
+      
   /*
     MEMBERS AREA
    */
@@ -159,23 +154,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .state("members.showimages", {
     abstract: true
   })
@@ -213,15 +191,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
 /*
   END MEMBERS AREA
  */
-
-
-
-
-
-
-
-
-
 
 
 
@@ -280,41 +249,9 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
   //   controller: 'ApiCtrl'
   //   // , resolve: { skipIfAuthenticated: skipIfAuthenticated }
   // });
-  $locationProvider.html5Mode(true);
+  
 
 
-  // TODO handle auth
-  var origin = window.location.origin;
-
-  // $authProvider.loginUrl = '/login';
-  // $authProvider.signupUrl = '/signup';
-  // $authProvider.google({
-  //   url: '/auth/google',
-  //   clientId: '485087755085-79bj9q9chussumg4f5r7c6korhhpkert.apps.googleusercontent.com',
-  //   redirectUri: origin + '/auth/google/callback'
-  // });
-
-  // console.log('AUTHHD', $authProvider);
-
-  // function skipIfAuthenticated($location, $auth) {
-  //   if ($auth.isAuthenticated()) {
-  //     $location.path('/');
-  //   }
-  // }
-  //
-  // function loginRequired($location, $auth) {
-  //   if (!$auth.isAuthenticated()) {
-  //     $location.path('/login');
-  //   }
-  // }
-
-  // function verifyJWT(token){
-  //
-  //   var base64Url = token.split('.')[1];
-  //   var base64 = base64Url.replace('-', '+').replace('_', '/');
-  //   return JSON.parse($window.atob(base64));
-  //
-  // };
   
   // set the current show based on state params
   function setCurrentShow($stateParams, ContextService){
@@ -348,14 +285,8 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
       return ContextService.currentShowTicket = data;
     });
   };
-  
-  
-  
+      
   function memberAuth($location, $auth, $http, ContextService) {
-    // console.log('AUTHHD', $http(config));
-    // if ($auth.isAuthenticated()) {
-    //   $location.path('/');
-    // }
   };
 })
 .run(function($rootScope, $window, jwtHelper) {

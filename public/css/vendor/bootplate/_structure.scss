@@ -9,11 +9,11 @@ h3 {
 
 .navbar {
   background-color: #ff3e67;
-
+  
   a {
     color:white;
   }
-
+  
   .navbar-brand {
     font-weight:bold;
     color:white;
@@ -73,7 +73,7 @@ body{
     background-color:rgba(200,200,200,.85);
   }
   min-width:900px;
-
+  
   .panel-body{
     color:#444;
     //opacity: .5;
@@ -282,29 +282,29 @@ body{
     background-color: lighten($brand-info, 35%);
   }
 }&.panel-inverse{
-  .panel-heading {
-    border-left: solid black 1px;
-    border-right: solid black 1px;
-    border-top: solid black 1px;
-    background-color: lighten(black, 20%);
-  }
-  .panel-title{
-    color:white;
-  }
-  .panel-body{
-    border-left: solid black 1px;
-    border-right: solid black 1px;
-  }
-  .panel-footer{
-    border-left: solid black 1px;
-    border-right: solid black 1px;
-    border-bottom: solid black 1px;
-    background-color: lighten(black, 75%);
-  }
-}
+   .panel-heading {
+     border-left: solid black 1px;
+     border-right: solid black 1px;
+     border-top: solid black 1px;
+     background-color: lighten(black, 20%);
+   }
+   .panel-title{
+     color:white;
+   }
+   .panel-body{
+     border-left: solid black 1px;
+     border-right: solid black 1px;
+   }
+   .panel-footer{
+     border-left: solid black 1px;
+     border-right: solid black 1px;
+     border-bottom: solid black 1px;
+     background-color: lighten(black, 75%);
+   }
+ }
 
 .glyphicon-primary {
- color: lighten($brand-primary, 1%);
+  color: lighten($brand-primary, 1%);
 }
 
 .table-listing {
@@ -352,14 +352,48 @@ body{
   //font-size:.75em;
 }
 
+
+.btn-clr0 {
+  background-color: rgba(189,233,245,.5);
+}
+.btn-clr1 {
+  background-color: rgba(245,118,182,.4);
+}
+.btn-clr2 {
+  background-color: rgba(245,237,66,.4);
+}
+.btn-clr3 {
+  background-color: rgba(133,245,121,.4);
+}
+.btn-clr4 {
+  background-color: rgba(245,183,79,.4);
+}
+.btn-clr5 {
+  background-color: rgba(66,58,245,.2);
+}
+.btn-clr6 {
+  background-color: rgba(155,111,245,.3);
+}
+.btn-clr7 {
+  background-color: rgba(255,19,37,.4);
+}
+.btn-clr8 {
+}
+
 .width-60{
   width:60px;
+}
+.width-80{
+  width:80px;
 }
 .width-100 {
   width:100px;
 }
 .width-150 {
   width:150px;
+}
+.width-175 {
+  width:175px;
 }
 .width-200 {
   width:200px;
