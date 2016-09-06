@@ -20,6 +20,7 @@ var moment              = require('moment');
 
 // Controllers
 var apiController       = require('./server/controllers/api');
+var productsController  = require('./server/controllers/products');
 var showsController     = require('./server/controllers/shows');
 var resourceController  = require('./server/controllers/resource');
 var membersController   = require('./server/controllers/members');
@@ -109,6 +110,10 @@ app.post('/stripe/webhook/connect/',  membersController.stripeConnectWebhook);
 // api routes
 app.get('/api/configs/:config_id',                      apiController.getConfigById);
 app.post('/api/configs',                                apiController.createOrUpdateConfig);
+app.get('/api/products/:product_id',                    productsController.getProductById);
+app.post('/api/products',                               productsController.createOrUpdateProduct);
+app.get('/api/productskus/:productsku_id',              productsController.getProductSkuById);
+app.post('/api/productskus',                            productsController.createOrUpdateProductSku);
 app.get('/api/shows/:show_id',                          showsController.getShowById);
 app.post('/api/shows',                                  showsController.createOrUpdateShow);
 app.get('/api/showdates/:showdate_id',                  showsController.getShowDateById);
@@ -126,7 +131,8 @@ app.post('/api/showtickets',                            showsController.createOr
 app.get('/api/members/:member_id/configs',              membersController.getMemberConfigs);
 // app.post('/api/members/:member_id/configs/:config_id',  membersController.updateMemberConfig);
 app.get('/api/members/:member_id/events',               membersController.getMemberEvents);
-
+// member products
+app.get('/api/members/:member_id/products',             membersController.getMemberProductListing);
 // member shows
 app.get('/api/members/:member_id/shows',                membersController.getMemberShowListing);
 

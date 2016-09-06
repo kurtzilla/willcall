@@ -23,8 +23,6 @@ exports.up = function(knex, Promise) {
       table.integer('allotted').defaultsTo(0);
       table.integer('sold').defaultsTo(0);
       table.integer('refunded').defaultsTo(0);
-      table.integer('available').defaultsTo(0)
-        .comment('Alloted - Sold + Refunded. This should essentially be a formula column. Updated with each access.');
     })
   ]);
 };

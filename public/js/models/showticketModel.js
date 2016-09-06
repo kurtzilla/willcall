@@ -20,7 +20,6 @@ angular.module('MyApp')
     this.allotted = row.allotted;
     this.sold = row.sold;
     this.refunded = row.refunded;
-    this.available = row.available;
     
     this._parentShowDate = parentShowDate;
   }
@@ -35,7 +34,6 @@ angular.module('MyApp')
   // STATIC methods
   ////////////////////////////////////////////
   
-  // list to refresh and refreshmethod should point to show list
   ShowTicket.processForm = function(form, input, currentShowTicket, currentShowDate){
     
     var deferred = $q.defer();

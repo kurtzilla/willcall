@@ -4,10 +4,12 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
 .config(function($stateProvider, $urlRouterProvider, $locationProvider,
                  $httpProvider, $authProvider) {
   
+  
   $locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('jwtMemberInterceptor');
   $urlRouterProvider.otherwise('/');
-
+  
+  
   $stateProvider
   .state('home', {
     url: '/',
@@ -23,7 +25,6 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
   })
-      
   /*
     MEMBERS AREA
    */
@@ -159,28 +160,66 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
       });
     }],
   })
-
-
-  
-
+  ///////////////////////////////
+  // Member Products
+  ///////////////////////////////
   .state('members.products', {
     url: '/products',
     templateUrl: 'partials/members/products.html',
   })
+  .state("members.products.edit", {
+    url: '/:product_id',
+    views:{
+      "modal@members": {
+        templateUrl: "partials/members/products.edit.html",
+        controller: 'MembersFormsController',
+        resolve: { setCurrentProduct: setCurrentProduct }
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+  ///////////////////////////////
+  // Member ProductSkus
+  ///////////////////////////////
+  .state("members.products.edit.productskus", {
+    abstract: true
+  })
+  .state("members.products.edit.productskus.edit", {
+    url: '/productskus/:productsku_id',
+    views:{
+      "modal@members": {
+        templateUrl: "partials/members/productskus.edit.html",
+        controller: 'MembersFormsController',
+        resolve: { setCurrentProductSku: setCurrentProductSku }
+      }
+    },
+    onEnter: ["$state", function($state) {
+      $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
+        e.stopPropagation();
+      });
+    }],
+  })
+  ///////////////////////////////
+  // Member Dashboard
+  ///////////////////////////////
   .state('members.dashboard', {
     url: '/dashboard',
     templateUrl: 'partials/members/dashboard.html',
   })
+  ///////////////////////////////
+  // Member Errors
+  ///////////////////////////////
   .state('members.error', {
     url: '/error',
     templateUrl: 'partials/members/error.html',
   })
-    
 /*
   END MEMBERS AREA
  */
-
-
 
   .state('admin', {
     url: '/admin',
@@ -248,6 +287,29 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     return ContextService.setCurrentConfig($stateParams.config_id)
     .then(function(data){
       return ContextService.currentConfig = data;
+    });
+  };
+  
+  // set the current product based on state params
+  function setCurrentProduct($stateParams, ContextService){
+    if(!$stateParams || (!$stateParams.product_id) || $stateParams.product_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentProduct($stateParams.product_id)
+    .then(function(data){
+      return ContextService.currentProduct = data;
+    });
+  };
+  
+  // set the current productsku based on state params
+  function setCurrentProductSku($stateParams, ContextService){
+    // console.log('STATE PARAMS', $stateParams)
+    if(!$stateParams || (!$stateParams.productsku_id) || $stateParams.productsku_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentProductSku($stateParams.productsku_id)
+    .then(function(data){
+      return ContextService.currentProductSku = data;
     });
   };
   
