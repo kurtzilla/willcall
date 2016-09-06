@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
 
       table.integer('invoice_id').references('id').inTable('invoices').notNullable();
       table.integer('ticket_id').references('id').inTable('showtickets').nullable();
-      table.integer('product_id').references('id').inTable('productinventories').nullable();
+      table.integer('product_id').references('id').inTable('productskus').nullable();
 
       table.string('uniqueid', 50).unique().notNullable()
         .comment('guid');

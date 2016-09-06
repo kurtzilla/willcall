@@ -21,6 +21,9 @@ angular.module('MyApp')
         $scope.view.ContextService.currentShow = null;
         $scope.view.ContextService.currentShowDate = null;
         $scope.view.ContextService.currentShowTicket = null;
+        $scope.view.ContextService.currentProduct = null;
+        $scope.view.ContextService.currentProductSku = null;
+        
         
         // clean up the form and return!
         form.entity = {};
@@ -33,12 +36,13 @@ angular.module('MyApp')
       var redirectToPreviousState = function(){
         // var parentState = $state.current.name.split('.').slice(0,-1).join('.');
         var currentState = $state.current.name;
-        //TODO it may just be showdates, showtickets and productinventories breaking the mold
+        //TODO it may just be showdates, showtickets and productskus breaking the mold
         var goto = 'members.shows';
-        if(currentState.indexOf('members.configs') !== -1){
-          var goto = 'members.configs';
+        if(currentState.indexOf('members.products') !== -1) {
+          goto = 'members.products';
+        } else if (currentState.indexOf('members.configs') !== -1) {
+          goto = 'members.configs';
         }
-        // console.log('GOTO', goto)
         $state.go(goto);
       };
       

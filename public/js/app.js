@@ -7,6 +7,8 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
   $locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('jwtMemberInterceptor');
   $urlRouterProvider.otherwise('/');
+  
+  
 
   $stateProvider
   .state('home', {

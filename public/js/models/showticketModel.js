@@ -20,7 +20,6 @@ angular.module('MyApp')
     this.allotted = row.allotted;
     this.sold = row.sold;
     this.refunded = row.refunded;
-    this.available = row.available;
     
     this._parentShowDate = parentShowDate;
   }

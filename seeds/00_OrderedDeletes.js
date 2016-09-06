@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
           .then(function(){
             return knex('configs').del()
             .then(function(){
-              return knex('productinventories').del()
+              return knex('productskus').del()
               .then(function () {
                 return knex('products').del()
                 .then(function () {

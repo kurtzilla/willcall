@@ -12,14 +12,9 @@ exports.up = function(knex, Promise) {
       table.string('description', 8192).notNullable().defaultsTo('');
       table.json('images').notNullable().defaultsTo(JSON.stringify([]))
         .comment('name, context, short description and a url');
-
-      table.decimal('price');
-      table.string('pricedetail', 512).notNullable().defaultsTo('')
-        .comment('allow a description on the makeup of product price');
       table.json('deliveryoptions').notNullable().defaultsTo(JSON.stringify([]));
-
       table.boolean('active').defaultsTo(true);
-      table.string('status').notNullable().defaultsTo('On Sale');
+      table.string('status').notNullable().defaultsTo('on sale');
     })
   ]);
 };
