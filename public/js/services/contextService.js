@@ -1,10 +1,59 @@
 
 angular.module('MyApp')
-  .service('ContextService', ['$http', '$q', '$stateParams', '$rootScope', '$window', 'jwtHelper', 'Config', 'Show', 'ShowDate', 'ShowTicket',
-    function($http, $q, $stateParams, $rootScope, $window, jwtHelper, Config, Show, ShowDate, ShowTicket){
+  .service('ContextService', ['$http', '$q', '$stateParams', '$rootScope', '$window', 'jwtHelper',
+    'Config', 'Show', 'ShowDate', 'ShowTicket', 'Product', 'ProductSku',
+    function($http, $q, $stateParams, $rootScope, $window, jwtHelper,
+             Config, Show, ShowDate, ShowTicket, Product, ProductSku){
 
       var _self = this;
-      // console.log('CTX')
+  
+      ////////////////////////////////////////////////
+      // PRODUCT Funcs
+      ////////////////////////////////////////////////
+      this.currentProduct = null;
+      this.setCurrentProduct = function(idx) {
+        // console.log('IDX',idx)
+        if(idx && idx !== '0'){
+          return $http.get('/api/products/' + idx)
+          .then(function (data) {
+            var memberProductData = data.data;
+            // console.log('PROD DATA', memberProductData)
+            var products = Product.buildProductCollection(
+              memberProductData.products,
+              ProductSku.buildProductSkuCollection(memberProductData.productskus));
+            this.currentProduct = (products.length) ? products[0] : null;
+            // console.log('MY CUR', this.currentProduct)
+            return this.currentProduct;
+          });
+        } else {
+          return this.currentProduct = null;
+        }
+      };
+  
+      ////////////////////////////////////////////////
+      // PRODUCTSKU Funcs
+      ////////////////////////////////////////////////
+      this.currentProductSku = null;
+      this.setCurrentProductSku = function(idx) {
+        // console.log('IDX',idx)
+        if(idx && idx !== '0'){
+          return $http.get('/api/productskus/' + idx)
+          .then(function (data) {
+            // console.log('set current',data)
+            var memberProductData = data.data;
+            var productskus = ProductSku.buildProductSkuCollection(
+              memberProductData.productskus);
+            this.currentProductSku = (productskus.length) ? productskus[0] : null;
+            if(this.currentProductSku){
+              this.currentProductSku.parentProduct((memberProductData.products.length) ? memberProductData.products[0] : null);
+            }
+            //console.log('MY CUR SKU', this.currentProductSku)
+            return this.currentProductSku;
+          });
+        } else {
+          return this.currentProductSku = null;
+        }
+      };
   
       ////////////////////////////////////////////////
       // CONFIG Funcs

@@ -4,9 +4,9 @@ angular.module('MyApp')
     'ContextService', 'MembersService', '$http', '$state',
     function ($scope, $location, $window, $stateParams, ContextService, MembersService, $http, $state) {
 
-      // console.log('MEMBERS CONTROLLER', $stateParams);
-      // console.log('MEMBERS LOCATION', $location);
-      // console.log('MEMBERS STATE', $stateParams);
+      console.log('MEMBERS CONTROLLER', $stateParams);
+      console.log('MEMBERS LOCATION', $location);
+      console.log('MEMBERS STATE', $stateParams);
       // an alt method with ui-bootstrap https://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
       // http://www.dwmkerr.com/the-only-angularjs-modal-service-youll-ever-need/
 
@@ -14,12 +14,19 @@ angular.module('MyApp')
       $scope.view.ContextService = ContextService;
       $scope.view.MembersService = MembersService;
   
+  
+      // console.log('MEMBERS LOCATION', $location);
+      // console.log('MEMBERS STATE', $stateParams);
+      // console.log('CONTEXT SERVICE', ContextService);
+      // console.log('MEMBERS SERVICE', MembersService);
+      
+      
+  
       
       // Navigation helper
       $scope.isRouteActive = function(route) {
         return $location.path().indexOf(route) !== -1;
       };
-  
       
       // Member Signin & Logout
       $scope.stripeSignin = function(){
@@ -34,7 +41,6 @@ angular.module('MyApp')
         $location.path('/members/signin');
       };
       
-      
   
       $scope.view.currentConfigId = function(){
         return $stateParams['config_id']
@@ -48,7 +54,12 @@ angular.module('MyApp')
       $scope.view.currentShowTicketId = function(){
         return $stateParams['showticket_id']
       };
-      
+      $scope.view.currentProductId = function(){
+        return $stateParams['product_id']
+      };
+      $scope.view.currentProductSkuId = function(){
+        return $stateParams['productsku_id']
+      };
       
       
       // Mode methods
@@ -70,6 +81,11 @@ angular.module('MyApp')
         } else if(entityType === 'showimage'){
           // console.log('showdate_id', idx, 'show_id', parentIdx)
           $state.go('members.shows.edit.showimages.edit', {showimage_id: idx, show_id, parentIdx});
+        } else if(entityType === 'product'){
+          $state.go('members.products.edit', {product_id: idx});
+        } else if(entityType === 'productsku'){
+          // console.log('productsku_id', idx, 'product_id', parentIdx)
+          $state.go('members.products.edit.productskus.edit', {productsku_id: idx, product_id: parentIdx});
         }
       };
       
@@ -98,12 +114,25 @@ angular.module('MyApp')
           $scope.view.showList = data;
         })
       };
+  
+      $scope.view.productList = null;
+      $scope.populateProductList = function(){
+        $scope.view.MembersService.getMemberProductListing()
+        .then(function(data){
+          // console.log('LISTING', data)
+          $scope.view.productList = data;
+        })
+      };
       
       
       // init methods
-      $scope.populateConfig();
-      $scope.populateShowList();
-      $scope.populateEventQs();
+      // if($scope.view.MembersService.currentMember) {
+      
+        $scope.populateConfig();
+        $scope.populateShowList();
+        $scope.populateEventQs();
+        $scope.populateProductList();
+      // }
       
       // console.log('MEM LIST',$scope.view.configList )
 }]);

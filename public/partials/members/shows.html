@@ -51,7 +51,7 @@
             </button>
             <button disabled
               type="button"
-              data-original-title="visit {{item.url}}"
+              data-original-title="visit"
               class="">
               <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
             </button>
@@ -95,13 +95,12 @@
                 ng-click="rowEdit('showticket', showticket, showdate);">
                 <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
                 
-                
                 <span class="pull-right text-right">
                   {{showticket.price | currency}}<br>
                   <span class="tkt-btn-inv">
-                    {{showticket.allotted - showticket.sold + showticket.refunds }}/
+                    {{showticket.allotted - (showticket.sold + showticket.refunded) }}/
                     {{showticket.allotted}}/
-                    {{((showticket.sold + showticket.refunds) * showticket.price) | currency}}
+                    {{((showticket.sold - showticket.refunded) * showticket.price) | currency}}
                   </span>
                 </span>
                 

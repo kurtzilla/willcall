@@ -5,11 +5,11 @@
   <form name="_form"
         class="form-horizontal"
         novalidate
-        ng-submit="submitForm(_form, 'showticket');">
+        ng-submit="submitForm(_form, 'productsku');">
     <div class="panel panel-primary panel-modal panel-area">
-      <!--CURRENT {{view.ContextService.currentShowTicket}}-->
+      <!--CURRENT {{view.ContextService.currentProductSku}}-->
       <div class="panel-heading">
-        <h4 class="panel-title col-xs-6">Show Ticket Editor</h4>
+        <h4 class="panel-title col-xs-6">Product SKU Editor</h4>
         <!--<h4 class="panel-title col-xs-9">{{view.ContextService.currentShow.url}}</h4>-->
       </div>
       <div class="panel-body" style="padding-top:2em;">
@@ -22,22 +22,11 @@
                      class="form-control"
                      name="f_name"
                      ng-model="_form.entity.name"
-                     ng-init="_form.entity.name=view.ContextService.currentShowTicket.name"
+                     ng-init="_form.entity.name=view.ContextService.currentProductSku.name"
                      ng-max-length="512">
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-xs-3" for="f_ages">Ages</label>
-            <div class="col-xs-9">
-              <select class="form-control"
-                      ng-options="item as item for item in ['all ages','21+']"
-                      ng-init="_form.entity.ages=(view.ContextService.currentShowTicket) ? view.ContextService.currentShowTicket.ages : 'all ages'"
-                      name="f_ages"
-                      ng-model="_form.entity.ages">
-              </select>
-            </div>
-          </div>
-          <!-- TODO Bagging description for now-->
+          <!-- TODO Bagging attribs for now-->
           <div class="form-group"
                ng-class="{  'has-error' : _form.f_price.$invalid && _form.f_price.$touched}">
             <label class="col-xs-3" for="f_price">Price</label>
@@ -46,23 +35,9 @@
                      class="form-control"
                      name="f_price"
                      ng-model="_form.entity.price"
-                     ng-init="_form.entity.price=view.ContextService.currentShowTicket.price"
+                     ng-init="_form.entity.price=view.ContextService.currentProductSku.price"
                      ng-pattern="/^[0-9]{1,7}(\.[0-9]+)?$/">
               <!--//TODO validate decimal input -->
-            </div>
-          </div>
-          <!-- TODO Bagging pricedetail for now-->
-          <!-- TODO Bagging pricedos for now-->
-          <!-- TODO Bagging pricedosdetail for now-->
-          <div class="form-group">
-            <label class="col-xs-3" for="f_deliveryoptions">Delivery</label>
-            <div class="col-xs-9">
-              <select class="form-control"
-                      ng-options="item as item for item in ['willcall','print at home','ground service']"
-                      ng-init="_form.entity.deliveryoptions=(view.ContextService.currentShowTicket && view.ContextService.currentShowTicket.deliveryoptions.length) ? view.ContextService.currentShowTicket.deliveryoptions[0] : 'willcall'"
-                      name="f_deliveryoptions"
-                      ng-model="_form.entity.deliveryoptions">
-              </select>
             </div>
           </div>
           <div class="form-group">
@@ -70,7 +45,7 @@
             <div class="col-xs-9">
               <select class="form-control"
                       ng-options="item as item for item in ['true','false']"
-                      ng-init="_form.entity.active=(view.ContextService.currentShowTicket) ? view.ContextService.currentShowTicket.active.toString() : 'true'"
+                      ng-init="_form.entity.active=(view.ContextService.currentProductSku) ? view.ContextService.currentProductSku.active.toString() : 'true'"
                       name="f_active"
                       ng-model="_form.entity.active">
               </select>
@@ -81,7 +56,7 @@
             <div class="col-xs-9">
               <select class="form-control"
                       ng-options="item as item for item in ['on sale','sold out']"
-                      ng-init="_form.entity.status=(view.ContextService.currentShowTicket) ? view.ContextService.currentShowTicket.status : 'on sale'"
+                      ng-init="_form.entity.status=(view.ContextService.currentProductSku) ? view.ContextService.currentProductSku.status : 'on sale'"
                       name="f_status"
                       ng-model="_form.entity.status">
               </select>
@@ -96,22 +71,22 @@
                      class="form-control"
                      name="f_allotted"
                      ng-model="_form.entity.allotted"
-                     ng-init="_form.entity.allotted=view.ContextService.currentShowTicket.allotted"
+                     ng-init="_form.entity.allotted=view.ContextService.currentProductSku.allotted"
                      
               >
             </div>
             <div class="col-xs-7 inventory-container">
               <span class="badge badge-primary inventory-name">Sold
-                <span class="badge badge-default">{{(view.ContextService.currentShowTicket) ? view.ContextService.currentShowTicket.sold : 0}}</span>
+                <span class="badge badge-default">{{(view.ContextService.currentProductSku) ? view.ContextService.currentProductSku.sold : 0}}</span>
               </span>
               <!--<span class="badge badge-primary inventory-name">Refunds-->
-                <!--<span class="badge badge-default">{{view.ContextService.currentShowTicket.refunded}}</span>-->
+                <!--<span class="badge badge-default">{{view.ContextService.currentProductSku.refunded}}</span>-->
               <!--</span>-->
               <span class="badge badge-primary inventory-name">Avail
-                <span class="badge badge-default">{{(view.ContextService.currentShowTicket) ? (view.ContextService.currentShowTicket.allotted - (view.ContextService.currentShowTicket.sold + view.ContextService.currentShowTicket.refunded)) : 0 }}</span>
+                <span class="badge badge-default">{{(view.ContextService.currentProductSku) ? (view.ContextService.currentProductSku.allotted - view.ContextService.currentProductSku.sold + view.ContextService.currentShowTicket.refunded) : 0 }}</span>
               </span>
               <span class="badge badge-primary inventory-name">Sales
-                <span class="badge badge-default">{{(view.ContextService.currentShowTicket) ? ((view.ContextService.currentShowTicket.sold - view.ContextService.currentShowTicket.refunded) * view.ContextService.currentShowTicket.price) : 0 | currency}}</span>
+                <span class="badge badge-default">{{(view.ContextService.currentProductSku) ? ((view.ContextService.currentProductSku.sold - view.ContextService.currentShowTicket.refunded) * view.ContextService.currentProductSku.price) : 0 | currency}}</span>
               </span>
             </div>
           </div>
@@ -140,15 +115,3 @@
     </div>
   </form>
 </div>
-
-
-<!--table.integer('show_id').references('id').inTable('shows').notNullable();-->
-<!--table.timestamp('dateofshow').notNullable().comment('Date and show time');-->
-<!--table.string('doorsopen').notNullable().defaultsTo('');-->
-<!--table.string('name').notNullable().defaultsTo('')-->
-<!--table.string('ages').notNullable().defaultsTo('all ages');-->
-<!--table.string('billing', 8192).notNullable().defaultsTo('');-->
-<!--table.string('pricing', 2048).notNullable().defaultsTo('');-->
-<!--table.string('description', 8192).notNullable().defaultsTo('');-->
-<!--table.boolean('active').defaultsTo(true);-->
-<!--table.string('status').notNullable().defaultsTo('On Sale');-->

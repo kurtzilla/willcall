@@ -1,13 +1,15 @@
 angular.module('MyApp')
 .controller('MembersFormsController',
-  ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Config', 'Show', 'ShowDate', 'ShowTicket',
+  ['$scope', '$stateParams', '$http', 'ContextService', '$state',
+    'Config', 'Show', 'ShowDate', 'ShowTicket',
+    'Product', 'ProductSku',
   
-    function ($scope, $stateParams, $http, ContextService, $state, Config, Show, ShowDate, ShowTicket) {
+    function ($scope, $stateParams, $http, ContextService, $state,
+              Config, Show, ShowDate, ShowTicket, Product, ProductSku) {
     
       $scope.view = {};
       $scope.view.ContextService = ContextService;
-      
-      
+            
       $scope.cancelForm = function(form){
         cleanupFormAndReturn(form);
       };
@@ -23,8 +25,7 @@ angular.module('MyApp')
         $scope.view.ContextService.currentShowTicket = null;
         $scope.view.ContextService.currentProduct = null;
         $scope.view.ContextService.currentProductSku = null;
-        
-        
+       
         // clean up the form and return!
         form.entity = {};
         form.$setPristine();
@@ -86,6 +87,18 @@ angular.module('MyApp')
               $scope.view.ContextService.currentShowDate);
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
+          } else if (context === 'product') {
+            _entity.member_id = $scope.view.ContextService.currentMember.id;
+            formSubmit = Product.processForm(form, _entity,
+              $scope.view.ContextService.currentProduct);
+            listToRefresh = $scope.$parent.view.productList;
+            refreshMethod = $scope.$parent.populateProductList;
+          } else if (context === 'productsku') {
+            formSubmit = ProductSku.processForm(form, _entity,
+              $scope.view.ContextService.currentProductSku,
+              $scope.view.ContextService.currentProduct);
+            listToRefresh = $scope.$parent.view.productList;
+            refreshMethod = $scope.$parent.populateProductList;
           }
           
           return formSubmit

@@ -6,7 +6,6 @@ angular.module('MyApp').factory('Product',
     this.created_at = row.created_at;
     this.updated_at = row.updated_at;
     this.member_id = row.member_id;
-  
     this.division = row.division;
     this.category = row.category;
     this.name = row.name;
@@ -15,15 +14,17 @@ angular.module('MyApp').factory('Product',
     this.deliveryoptions = row.deliveryoptions;
     this.active = row.active;
     this.status = row.status;
-    this.skus = [];
+    this.productskus = [];
     
     if(skuModels && skuModels.length > 0){
-      this.skus = skuModels.map(function(e){
-        e.parentShow(row);
+      this.productskus = skuModels.map(function(e){
+        e.parentProduct(row);
         return e;
       });
     }
   };
+  
+  
   
   // Product.prototype = {
   //   firstDate: function(){
@@ -42,11 +43,13 @@ angular.module('MyApp').factory('Product',
   
     var deferred = $q.defer();
   
-    console.log('FORM', form)
-    console.log('INPUT', input)
-    console.log('CURRENT', currentProduct)
+    // console.log('FORM', form)
+    // console.log('INPUT', input)
+    // console.log('CURRENT', currentProduct)
       
     var errors = [];
+  
+    input.deliveryoptions = JSON.stringify([input.deliveryoptions]);
     
     $http.post('/api/products', {
       input: input,
@@ -71,10 +74,12 @@ angular.module('MyApp').factory('Product',
   Product.buildProductCollection = function(productRows, skuModels) {
     // console.log('building...', dateRows)
     return productRows.map(function (product) {
-      var matches = skuModels.filter(e => e.show_id === product.id);
+      var matches = skuModels.filter(e => e.product_id === product.id);
       if (matches.length > 1) {
-        matches.sort((a, b) => a.id - b.id);
+        matches.sort('name');//(a, b) => a.name > b.name);
       }
+      
+      // console.log('MATCHES',matches)
       return new Product(product, matches);
     });
   };

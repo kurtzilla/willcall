@@ -34,7 +34,6 @@ angular.module('MyApp')
   // STATIC methods
   ////////////////////////////////////////////
   
-  // list to refresh and refreshmethod should point to show list
   ShowTicket.processForm = function(form, input, currentShowTicket, currentShowDate){
     
     var deferred = $q.defer();

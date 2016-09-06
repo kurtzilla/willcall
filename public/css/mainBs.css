@@ -6268,6 +6268,12 @@ body {
 .width-200 {
   width: 200px; }
 
+.width-250 {
+  width: 250px; }
+
+.width-300 {
+  width: 300px; }
+
 .btn-left {
   text-align: left; }
 
@@ -6301,7 +6307,8 @@ span.inventory-name {
   position: relative; }
   .btn-tkt .glyphicon {
     position: absolute;
-    top: 5px; }
+    top: 5px;
+    left: 5px; }
 
 .tkt-btn-inv {
   position: relative;

@@ -60,15 +60,8 @@ angular.module('MyApp').factory('Show',
   
     // console.log('FORM', form)
     // console.log('INPUT', input)
-    // console.log('CURRENT', current)
-    
-    // active, announcedate(change to null), description, name, venue
-    
-    // this.url = row.url;
-    // this.images = row.images;
-    // this.enddate = row.enddate;
-    // this.showdates = [];
-  
+    // console.log('CURRENT', currentShow)
+      
     var errors = [];
     
     $http.post('/api/shows', {

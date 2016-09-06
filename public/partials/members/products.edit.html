@@ -1,0 +1,111 @@
+<div class="Modal-backdrop"></div>
+<div ui-view="modal"
+     class="Modal-holder"
+     autoscroll="false">
+  <form name="_form"
+        class="form-horizontal"
+        novalidate
+        ng-submit="submitForm(_form, 'product');">
+    <div class="panel panel-primary panel-modal panel-area">
+      <!--CURRENT {{view.ContextService.currentProduct}}-->
+      <div class="panel-heading">
+        <h4 class="panel-title col-xs-6">Product Editor</h4>
+        <!--<h4 class="panel-title col-xs-9">{{view.ContextService.currentShow.url}}</h4>-->
+      </div>
+      <div class="panel-body" style="padding-top:2em;">
+        <div class="input-controls">
+          
+          
+          <div class="form-group">
+            <label class="col-xs-3" for="f_division">Division</label>
+            <div class="col-xs-9">
+              <select class="form-control"
+                      ng-options="item as item for item in ['apparel','art','media','posters','downloads']"
+                      ng-init="_form.entity.division=(view.ContextService.currentProduct) ? view.ContextService.currentProduct.division : 'apparel'"
+                      name="f_division"
+                      ng-model="_form.entity.division">
+              </select>
+            </div>
+          </div>
+          <!-- category is nothing as of yet -->
+          <div class="form-group"
+               ng-class="{  'has-error' : _form.f_name.$invalid && _form.f_name.$touched}">
+            <label class="col-xs-3" for="f_name">Name</label>
+            <div class="col-xs-9">
+              <input type="text"
+                     class="form-control"
+                     name="f_name"
+                     ng-model="_form.entity.name"
+                     ng-init="_form.entity.name=view.ContextService.currentProduct.name"
+                     ng-minlength="1" ng-max-length="255" ng-required="true">
+            </div>
+          </div>
+          <div class="form-group"
+               ng-class="{  'has-error' : _form.f_description.$invalid && _form.f_description.$touched}">
+            <label class="col-xs-3" for="f_description">Description</label>
+            <div class="col-xs-9">
+              <input type="text"
+                     class="form-control"
+                     name="f_description"
+                     ng-init="_form.entity.description=view.ContextService.currentProduct.description"
+                     ng-model="_form.entity.description"
+                     ng-max-length="8192">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3" for="f_deliveryoptions">Delivery</label>
+            <div class="col-xs-9">
+              <select class="form-control"
+                      ng-options="item as item for item in ['willcall','ground service','download']"
+                      ng-init="_form.entity.deliveryoptions=(view.ContextService.currentProduct && view.ContextService.currentProduct.deliveryoptions.length) ? view.ContextService.currentProduct.deliveryoptions[0] : 'willcall'"
+                      name="f_deliveryoptions"
+                      ng-model="_form.entity.deliveryoptions">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3" for="f_active">Active</label>
+            <div class="col-xs-9">
+              <select class="form-control"
+                      ng-options="item as item for item in ['true','false']"
+                      ng-init="_form.entity.active=(view.ContextService.currentShow) ? view.ContextService.currentShow.active.toString() : 'true'"
+                      name="f_active"
+                      ng-model="_form.entity.active">
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-3" for="f_status">Status</label>
+            <div class="col-xs-9">
+              <select class="form-control"
+                      ng-options="item as item for item in ['on sale','sold out', 'backordered']"
+                      ng-init="_form.entity.status=(view.ContextService.currentProduct) ? view.ContextService.currentProduct.status : 'on sale'"
+                      name="f_status"
+                      ng-model="_form.entity.status">
+              </select>
+            </div>
+          </div>
+        </div><!-- end input controls -->
+  
+        <div ng-show="view.errors && view.errors.length" class="form-errors">
+          The following errors occurred:
+          <div ng-repeat="error in view.errors" class="form-error-msg">
+            {{error}}
+          </div>
+        </div>
+        
+      </div><!-- end panel-body -->
+      <div class="panel-footer form-command">
+        <button ng-disabled="_form.$invalid"
+                type="submit"
+                class="btn btn-sm btn-primary">Save</button>
+        <button ng-click="cancelForm(_form)"
+                type="button"
+                class="btn btn-sm btn-primary">Cancel</button>
+        <button ng-click="resetForm(_form);"
+                type="reset"
+                class="btn btn-sm btn-primary">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>

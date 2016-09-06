@@ -7,6 +7,7 @@ var moment = require('moment');
 var request = require('request');
 var qs = require('querystring');
 var members = require('../../lib/dbops/members');
+var products = require('../../lib/dbops/products');
 var events = require('../../lib/dbops/events');
 var shows = require('../../lib/dbops/shows');
 var configs = require('../../lib/dbops/configs');
@@ -24,16 +25,27 @@ function generateToken(member) {
   return jwt.sign(payload, process.env.TOKEN_SECRET);
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// MEMBER PRODUCTS
+//////////////////////////////////////////////////////////////////////
+
+exports.getMemberProductListing = function(req, res){
+  products.getMemberProductListing(req.params.member_id)
+  .then(function(data){
+    res.json(data);
+  });
+};
+
+
 //////////////////////////////////////////////////////////////////////
 // MEMBER SHOWS
 //////////////////////////////////////////////////////////////////////
 
 // get members shows' - simple get
 exports.getMemberShowListing = function(req, res){
-  // console.log('API CONFIG DATA', req.params.member_id)
   shows.getMemberShowListing(req.params.member_id)
   .then(function(data){
-    // console.log('API SHOWS', data)
     res.json(data);
   });
 };
@@ -44,7 +56,6 @@ exports.getMemberShowListing = function(req, res){
 //////////////////////////////////////////////////////////////////////
 
 exports.getMemberEvents = function(req, res){
-  // console.log('API CONFIG DATA', req.params.member_id)
   events.getMemberEventCollection(req.params.member_id)
   .then(function(data){
     res.json(data);
@@ -56,22 +67,11 @@ exports.getMemberEvents = function(req, res){
 //////////////////////////////////////////////////////////////////////
 
 exports.getMemberConfigs = function(req, res){
-  // console.log('API CONFIG DATA', req.params.member_id)
   configs.getMergedConfigCollection(req.params.member_id)
   .then(function(data){
     res.json(data);
   });
 };
-
-// app.post('/members/:member_id/configs/:config_id',  apiController.updateMemberConfig);
-// exports.updateMemberConfig = function(req, res){
-//   configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
-//   .then(function(data){
-//     // console.log('member data')
-//     res.json(data);
-//   });
-// };
-
 
 
 //////////////////////////////////////////////////////////////////////
