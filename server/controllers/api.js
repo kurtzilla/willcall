@@ -21,6 +21,28 @@ exports.getConfigById = function(req, res){
   });
 };
 
+exports.createOrUpdateConfig = function(req,res){
+  configs.createOrUpdate(req.body.input, req.body.current)
+  .then(function(data){
+    res.status(200).json(data);
+  })
+  .catch(function(err){
+    console.log(err)
+    res.status(400).json(err.message);
+  });
+};
+
+
+
+// exports.updateMemberConfig = function(req, res){
+//   configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
+//   .then(function(data){
+//     // console.log('member data')
+//     res.json(data);
+//   });
+// };
+
+
 
 // TODO authenticate
 exports.getEnvKey = function(req, res){

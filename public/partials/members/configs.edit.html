@@ -5,8 +5,9 @@
     <form name="_form"
           class="form-horizontal"
           novalidate
-          ng-submit="submitForm(_form);">
+          ng-submit="submitForm(_form, 'config');">
         <div class="panel panel-primary panel-modal panel-area">
+            <!--Current {{view.ContextService.currentConfig}}-->
             <div class="panel-heading">
                 <h4 class="col-xs-12 panel-title">Config Editor</h4>
             </div>
@@ -19,7 +20,7 @@
                                    class="form-control"
                                    name="f_context"
                                    readonly
-                                   ng-value="view.currentConfig.context">
+                                   ng-value="view.ContextService.currentConfig.context">
                         </div>
                     </div>
                     <div class="form-group">
@@ -29,7 +30,7 @@
                                    class="form-control"
                                    name="f_key"
                                    readonly
-                                   ng-value="view.currentConfig.key">
+                                   ng-value="view.ContextService.currentConfig.key">
                         </div>
                     </div>
                     <div class="form-group">
@@ -39,41 +40,41 @@
                                    class="form-control"
                                    name="f_description"
                                    readonly
-                                   ng-value="view.currentConfig.description">
+                                   ng-value="view.ContextService.currentConfig.description">
                         </div>
                     </div>
                     <div class="form-group"
                          ng-class="{ 'has-error' : _form.f_value.$invalid && _form.f_value.$touched,
                           'has-success': _form.f_value.$valid && _form.f_value.$touched}">
                         <label class="col-xs-2" for="f_value">Value</label>
-                        <div    ng-if="view.currentConfig.datatype === 'boolean' ||
-                                    view.currentConfig.datatype === 'bool'"
+                        <div    ng-if="view.ContextService.currentConfig.datatype === 'boolean' ||
+                                    view.ContextService.currentConfig.datatype === 'bool'"
                                 class="col-xs-10">
                             <select class="form-control"
                                     ng-options="item as item for item in ['true','false']"
-                                    ng-init="_form.entity.value=view.currentConfig.value"
+                                    ng-init="_form.entity.value=view.ContextService.currentConfig.value"
                                     name="f_value"
                                     ng-model="_form.entity.value">
                             </select>
                         </div>
-                        <div    ng-if="view.currentConfig.datatype === 'number' ||
-                                    view.currentConfig.datatype === 'int' ||
-                                    view.currentConfig.datatype === 'decimal'"
+                        <div    ng-if="view.ContextService.currentConfig.datatype === 'number' ||
+                                    view.ContextService.currentConfig.datatype === 'int' ||
+                                    view.ContextService.currentConfig.datatype === 'decimal'"
                                 class="col-xs-10">
                             <input  class="form-control"
                                     type="number"
                                     name="f_value"
-                                    ng-value="view.currentConfig.value"
+                                    ng-value="view.ContextService.currentConfig.value"
                                     ng-model="_form.entity.value"
                                     maxlength=64 />
                         </div>
-                        <div    ng-if="view.currentConfig.datatype === 'string' ||
-                                    view.currentConfig.datatype === 'text'"
+                        <div    ng-if="view.ContextService.currentConfig.datatype === 'string' ||
+                                    view.ContextService.currentConfig.datatype === 'text'"
                                 class="col-xs-10">
                             <input  class="form-control"
                                     type="text"
                                     name="f_value"
-                                    ng-value="view.currentConfig.value"
+                                    ng-value="view.ContextService.currentConfig.value"
                                     ng-model="_form.entity.value"
                                     maxlength=512>
                         </div>
@@ -81,12 +82,15 @@
                 </div>
             </div><!-- panel-body-->
             <div class="panel-footer form-command">
-                <button ng-show="_form.$valid"
+                <button ng-disabled="_form.$invalid"
                         type="submit"
                         class="btn btn-sm btn-primary">Save</button>
-                <button ng-click="cancelForm()"
+                <button ng-click="cancelForm(_form)"
                         type="button"
                         class="btn btn-sm btn-primary">Cancel</button>
+                <button ng-click="resetForm(_form);"
+                        type="reset"
+                        class="btn btn-sm btn-primary">Reset</button>
             </div>
         </div>
     </form>

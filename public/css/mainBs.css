@@ -6204,9 +6204,6 @@ body {
 .nav.nav-sub-nav {
   margin-bottom: 1em; }
 
-.show-item .item-name, .show-item .item-description {
-  margin-left: .5em; }
-
 .show-item .item-description {
   color: #999; }
 
@@ -6233,13 +6230,13 @@ body {
   background-color: rgba(245, 245, 95, 0.5); }
 
 .btn-clr4 {
-  background-color: rgba(245, 183, 79, 0.4); }
+  background-color: rgba(189, 233, 245, 0.5); }
 
 .btn-clr5 {
   background-color: rgba(66, 58, 245, 0.2); }
 
 .btn-clr6 {
-  background-color: rgba(189, 233, 245, 0.5); }
+  background-color: rgba(245, 183, 79, 0.4); }
 
 .btn-clr7 {
   background-color: rgba(255, 19, 37, 0.4); }

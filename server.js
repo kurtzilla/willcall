@@ -108,6 +108,7 @@ app.post('/stripe/webhook/connect/',  membersController.stripeConnectWebhook);
 /////////////////////////
 // api routes
 app.get('/api/configs/:config_id',                      apiController.getConfigById);
+app.post('/api/configs',                                apiController.createOrUpdateConfig);
 app.get('/api/shows/:show_id',                          showsController.getShowById);
 app.post('/api/shows',                                  showsController.createOrUpdateShow);
 app.get('/api/showdates/:showdate_id',                  showsController.getShowDateById);
@@ -123,7 +124,7 @@ app.post('/api/showtickets',                            showsController.createOr
 
 // member configs
 app.get('/api/members/:member_id/configs',              membersController.getMemberConfigs);
-app.post('/api/members/:member_id/configs/:config_id',  membersController.updateMemberConfig);
+// app.post('/api/members/:member_id/configs/:config_id',  membersController.updateMemberConfig);
 app.get('/api/members/:member_id/events',               membersController.getMemberEvents);
 
 // member shows

@@ -64,19 +64,11 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     views:{
       "modal@members": {
         templateUrl: "partials/members/configs.edit.html",
-        controller: 'MembersConfigController'
+        controller: 'MembersFormsController',
+        resolve: { setCurrentConfig: setCurrentConfig }
       }
     },
     onEnter: ["$state", function($state) {
-      // $(document).on("keyup", function(e) {
-      //   if(e.keyCode == 27) {
-      //     $(document).off("keyup");
-      //     $state.go("members.dashboard");
-      //   }
-      // });
-      // $(document).on("click", ".Modal-backdrop, .Modal-holder", function() {
-      //   $state.go("members.dashboard");
-      // });
       $(document).on("click", ".Modal-box, .Modal-box *", function(e) {
         e.stopPropagation();
       });
@@ -245,9 +237,19 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
   //   controller: 'ApiCtrl'
   //   // , resolve: { skipIfAuthenticated: skipIfAuthenticated }
   // });
-  
 
 
+  // set the current config based on state params
+  function setCurrentConfig($stateParams, ContextService){
+    // console.log('setting')
+    if(!$stateParams || (!$stateParams.config_id) || $stateParams.config_id === '0') {
+      return null;
+    }
+    return ContextService.setCurrentConfig($stateParams.config_id)
+    .then(function(data){
+      return ContextService.currentConfig = data;
+    });
+  };
   
   // set the current show based on state params
   function setCurrentShow($stateParams, ContextService){

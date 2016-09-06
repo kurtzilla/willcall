@@ -1,8 +1,8 @@
 angular.module('MyApp')
 .controller('MembersFormsController',
-  ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Show', 'ShowDate', 'ShowTicket',
+  ['$scope', '$stateParams', '$http', 'ContextService', '$state', 'Config', 'Show', 'ShowDate', 'ShowTicket',
   
-    function ($scope, $stateParams, $http, ContextService, $state, Show, ShowDate, ShowTicket) {
+    function ($scope, $stateParams, $http, ContextService, $state, Config, Show, ShowDate, ShowTicket) {
     
       $scope.view = {};
       $scope.view.ContextService = ContextService;
@@ -17,6 +17,7 @@ angular.module('MyApp')
       };
       
       var cleanupFormAndReturn = function(form){
+        $scope.view.ContextService.currentConfig = null;
         $scope.view.ContextService.currentShow = null;
         $scope.view.ContextService.currentShowDate = null;
         $scope.view.ContextService.currentShowTicket = null;
@@ -25,11 +26,6 @@ angular.module('MyApp')
         form.entity = {};
         form.$setPristine();
         form.$setUntouched();
-
-        // TODO context will dictate what to refresh??
-        // refresh member config collection and return
-        // $scope.$parent.view.showList = null;
-        // $scope.$parent.populateShowList();
         
         redirectToPreviousState();
       };
@@ -42,6 +38,7 @@ angular.module('MyApp')
         if(currentState.indexOf('members.configs') !== -1){
           var goto = 'members.configs';
         }
+        // console.log('GOTO', goto)
         $state.go(goto);
       };
       
@@ -52,7 +49,7 @@ angular.module('MyApp')
       //  due to the form using strings vs boolean
       $scope.submitForm = function(form, context) {
         $scope.view.errors = null;
-        // console.log('FORM',form)
+        // console.log('FORM',context, form)
         
         if(form.$valid && form.entity) {
           var _entity = angular.copy(form.entity);
@@ -61,7 +58,13 @@ angular.module('MyApp')
           var refreshMethod = null;
   
           // select form submission by model
-          if(context === 'show') {
+          if(context === 'config') {
+            _entity.member_id = $scope.view.ContextService.currentMember.id;
+            formSubmit = Config.processForm(form, _entity,
+              $scope.view.ContextService.currentConfig);
+            listToRefresh = $scope.$parent.view.configList;
+            refreshMethod = $scope.$parent.populateConfig;
+          } else if(context === 'show') {
             _entity.member_id = $scope.view.ContextService.currentMember.id;
             formSubmit = Show.processForm(form, _entity,
               $scope.view.ContextService.currentShow);
@@ -83,9 +86,10 @@ angular.module('MyApp')
           
           return formSubmit
           .then(function(data){
-  
+            // console.log('TO REFRESH', listToRefresh)
             listToRefresh = null;
             refreshMethod();
+            // console.log('TO REFRESH', listToRefresh)
             cleanupFormAndReturn(form);
           })
           .catch(function(err){

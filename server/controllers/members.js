@@ -64,13 +64,13 @@ exports.getMemberConfigs = function(req, res){
 };
 
 // app.post('/members/:member_id/configs/:config_id',  apiController.updateMemberConfig);
-exports.updateMemberConfig = function(req, res){
-  configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
-  .then(function(data){
-    // console.log('member data')
-    res.json(data);
-  });
-};
+// exports.updateMemberConfig = function(req, res){
+//   configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
+//   .then(function(data){
+//     // console.log('member data')
+//     res.json(data);
+//   });
+// };
 
 
 
@@ -162,13 +162,10 @@ exports.stripeAuthCallback = function(req, res) {
 // Determine if member row exists the update
 //   with new stripe token info
 function ensureMembersTableEntry(body){
-  console.log('*ensureMembersTableEntry')
   var _stripeid     = body.stripe_user_id;
   var _accessToken  = body.access_token;
   var _refreshToken = body.refresh_token;
   var _publishKey   = body.stripe_publishable_key;
-  
-  // console.log('*ensureMembersTableEntry - BODY?', body)
   
   return members.getMember_ByStripeUserId(_stripeid)
   .then(function (_member) {

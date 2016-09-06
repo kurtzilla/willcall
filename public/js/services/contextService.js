@@ -1,11 +1,31 @@
 
 angular.module('MyApp')
-  .service('ContextService', ['$http', '$q', '$stateParams', '$rootScope', '$window', 'jwtHelper', 'Show', 'ShowDate', 'ShowTicket',
-    function($http, $q, $stateParams, $rootScope, $window, jwtHelper, Show, ShowDate, ShowTicket){
+  .service('ContextService', ['$http', '$q', '$stateParams', '$rootScope', '$window', 'jwtHelper', 'Config', 'Show', 'ShowDate', 'ShowTicket',
+    function($http, $q, $stateParams, $rootScope, $window, jwtHelper, Config, Show, ShowDate, ShowTicket){
 
       var _self = this;
       // console.log('CTX')
-   
+  
+      ////////////////////////////////////////////////
+      // CONFIG Funcs
+      ////////////////////////////////////////////////
+      this.currentConfig = null;
+      this.setCurrentConfig = function(idx) {
+        // console.log('IDX',idx)
+        if(idx && idx !== '0'){
+          return $http.get('/api/configs/' + idx)
+          .then(function (data) {
+            // console.log('HEY WATCH', data)
+            var configs = Config.buildConfigFromRow(data.data);
+            this.currentConfig = (configs.length) ? configs[0] : null;
+            // console.log('MY CUR CFG', this.currentConfig)
+            return this.currentConfig;
+          });
+        } else {
+          return this.currentConfig = null;
+        }
+      };
+      
       ////////////////////////////////////////////////
       // SHOW Funcs
       ////////////////////////////////////////////////
@@ -15,8 +35,6 @@ angular.module('MyApp')
         if(idx && idx !== '0'){
           return $http.get('/api/shows/' + idx)
           .then(function (data) {
-            // console.log('HEY WATCH', data)
-            // !!! api call returns response data - so get data at data.data
             var memberShowData = data.data;
             var shows = Show.buildShowCollection(
               memberShowData.shows,
@@ -39,7 +57,6 @@ angular.module('MyApp')
         if(idx && idx !== '0'){
           return $http.get('/api/showdates/' + idx)
           .then(function (data) {
-            // !!! api call returns response data - so get data at data.data
             var memberShowData = data.data;
             var showdates = ShowDate.buildShowDateCollection(
               memberShowData.showdates, memberShowData.showtickets);
@@ -123,35 +140,4 @@ angular.module('MyApp')
       }
       
   }]);
-
-
-
-
-
-
-
-// The following is Presumed Obsolete
-
-// this.getCurrentShow = function() {
-//   console.log('HEY', $stateParams)
-//   console.log('HEY', $stateParams['show_id'])
-//   if ($stateParams.show_id) {
-//     console.log('HEY WE GOTTA STATE')
-//     return $http.get('/api/shows/' + $stateParams.show_id)
-//     .then(function (data) {
-//       console.log('HEY WATCH', $stateParams)
-//       // !!! api call returns response data - so get data at data.data
-//       var memberShowData = data.data;
-//       var shows = Show.buildShowCollection(
-//         memberShowData.shows,
-//         ShowDate.buildShowDateCollection(memberShowData.showdates, memberShowData.showtickets));
-//       this.currentShow = (shows.length) ? shows[0] : null;
-//       console.log('MY CUR',this.currentShow)
-//       return this.currentShow;
-//     });
-//   } else {
-//     return this.currentShow = null;
-//   }
-// };
-//this.currentShow = this.getCurrentShow();
       
