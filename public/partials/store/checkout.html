@@ -4,7 +4,8 @@
     
     <!--isit {{view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0}}-->
     <!--TTL {{view.CartService.getCartTotal()}}-->
-    <form ng-submit="doit();" ng-hide="view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0" action="" method="POST">
+    <form ng-hide="view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0"
+          action="" method="POST">
       <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="{{view.stripe_publish_key}}"
@@ -12,7 +13,7 @@
         data-name="WillCallTickets, Inc"
         data-zip-code="false"
         data-description="My Demo Cart"
-        data-image="/img/documentation/checkout/marketplace.png"
+        data-image="images/wct_logo_200.png"
         data-locale="auto">
       </script>
     </form>

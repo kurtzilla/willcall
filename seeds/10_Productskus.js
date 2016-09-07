@@ -24,27 +24,13 @@ exports.seed = function(knex, Promise) {
 
     knex('productskus').insert({id: 9, product_id: 5, price: 323.99,
       allotted: 23}),
-
-    knex.raw('ALTER SEQUENCE productskus_id_seq RESTART WITH 10;')
+  
+    knex('productskus').insert({id: 10, product_id: 6, price: 5.00,
+      allotted: 125}),
+    knex('productskus').insert({id: 11, product_id: 7, price: 25.00,
+      allotted: 25}),
+  
+    knex.raw('ALTER SEQUENCE productskus_id_seq RESTART WITH 12;')
 
   ]);
 };
-
-// table.string('name', 512);
-// table.json('attribs').comment('size, color, etc');
-// table.decimal('price').comment('allow for a different price than parent');
-//
-// table.boolean('active').defaultsTo(true);
-// table.string('status').notNullable().defaultTo('');
-//
-// table.integer('maxperorder').defaultsTo(10);
-// table.integer('allotted');
-// table.integer('sold');
-// table.integer('refunded');
-// table.integer('available').comment('Alloted - Sold + Refunded. This should essentially be a formula column. Updated with each access.');
-
-
-
-
-
-

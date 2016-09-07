@@ -27,23 +27,17 @@ exports.createOrUpdateConfig = function(req,res){
     res.status(200).json(data);
   })
   .catch(function(err){
-    console.log(err)
     res.status(400).json(err.message);
   });
 };
 
-
-
 // TODO authenticate
 exports.getEnvKey = function(req, res){
-  console.log('HACAH', req.params)
   var key = process.env[req.params.keyname];
-  console.log('HACAH KEY', key)
   res.json(key);
 };
 
 exports.getBrochures = function(req, res){
-  console.log('requesting api brochures');
   knex('brochures').select('*')
   .orderBy('id')
   .then(function(data){
@@ -52,17 +46,14 @@ exports.getBrochures = function(req, res){
 };
 
 exports.getBrochure = function(req, res) {
-  // console.log('getting brochure', req.params);
   return knex.select().table('brochures').where('id', req.params.id)
   .first()
   .then(function(brochure){
-    // console.log('git someting', brochure);
     res.status(200).json(brochure);
   });
 };
 
 exports.updateBrochure = function(req, res){
-
   return knex('brochures')
   .where({id:req.params.id})
   .update(req.body.brochure)

@@ -1,10 +1,8 @@
-// config/passport.js
 
 var knex = require('../config/db/knex')
 var StripeStrategy  = require('passport-stripe').Strategy;
 
 // load the auth variables
-// var configAuth = require('./auth');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -28,16 +26,6 @@ module.exports = function(passport) {
     });
   });
 
-  // app.get('/auth/stripe',
-  //   passport.authenticate('stripe'));
-  //
-  // app.get('/stripe/callback',
-  //   passport.authenticate('stripe', { failureRedirect: '/login' }),
-  //   function(req, res) {
-  //     // Successful authentication, redirect home.
-  //     res.redirect('/');
-  //   });
-
   // =========================================================================
   // GOOGLE ==================================================================
   // =========================================================================
@@ -47,20 +35,7 @@ module.exports = function(passport) {
       callbackURL: process.env.HOST + "/stripe/callback"
     },
     function(accessToken, refreshToken, stripe_properties, done) {
-
-      // process.nextTick(function() {
-
-        // try to find the user based on their stripe id
-        //create new if not exist otherwise find existing user
-        console.log('PROFILE', profile);
-        // knex('users')
-
-        return done();//null, user
-      // }
-
-      // User.findOrCreate({ stripeId: stripe_properties.stripe_user_id }, function (err, user) {
-      //   return done(err, user);
-      // });
+        return done();
     }
   ));
 };

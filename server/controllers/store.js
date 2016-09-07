@@ -4,6 +4,7 @@ var products = require('../../lib/dbops/products');
 var shows = require('../../lib/dbops/shows');
 
 
+// https://stripe.com/docs/recipes/variable-amount-checkout
 
 exports.stripeVerifyCallback = function(req, res) {
   console.log('debug VERIFY CALLBACK STRIPE', req.params, req.body);
@@ -14,7 +15,7 @@ exports.stripeVerifyCallback = function(req, res) {
   var token = req.body.stripeToken;
   var eml = req.body.stripeEmail;
   var stripe = require("stripe")(process.env.STRIPE_SECRET);
-  console.log('STRIPE', stripe)
+  // console.log('STRIPE', stripe)
   
   // Create a charge: this will charge the user's card
   var _charge = null;

@@ -83,7 +83,7 @@ exports.getMemberConfigs = function(req, res){
 
 // application account events
 exports.stripeAccountWebhook = function(req, res){
-  console.log('ACCOUNT WEBHOOK')
+  // console.log('ACCOUNT WEBHOOK')
   events.recordWebhook(req.body)
   .then(function(data){
     response.send(200);
@@ -92,7 +92,7 @@ exports.stripeAccountWebhook = function(req, res){
 
 // member events
 exports.stripeConnectWebhook = function(req, res){
-  console.log('CONNECT WEBHOOK', req.body)
+  // console.log('CONNECT WEBHOOK', req.body)
   events.recordWebhook(req.body)
   .then(function(data){
     res.sendStatus(200);
