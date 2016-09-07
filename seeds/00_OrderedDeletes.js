@@ -1,25 +1,28 @@
 
 exports.seed = function(knex, Promise) {
   
-  return knex('showtickets').del()
+  return knex('shows_products').del()
   .then(function () {
-    return knex('showdates').del()
+    return knex('showtickets').del()
     .then(function () {
-      return knex('shows').del()
+      return knex('showdates').del()
       .then(function () {
-        return knex('brochures').del()
+        return knex('shows').del()
         .then(function () {
-          return knex('eventqs').del()
-          .then(function(){
-            return knex('configs').del()
-            .then(function(){
-              return knex('productskus').del()
+          return knex('brochures').del()
+          .then(function () {
+            return knex('eventqs').del()
+            .then(function () {
+              return knex('configs').del()
               .then(function () {
-                return knex('products').del()
+                return knex('productskus').del()
                 .then(function () {
-                  return knex('members').del()
+                  return knex('products').del()
                   .then(function () {
-    
+                    return knex('members').del()
+                    .then(function () {
+            
+                    });
                   });
                 });
               });

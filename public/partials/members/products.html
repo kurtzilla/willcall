@@ -71,7 +71,7 @@
             <button ng-repeat="productsku in product.productskus"
                     type="button"
                     title="edit sku"
-                    class="width-350 btn-left btn-rpt btn-sku"
+                    class="width-350 btn-left btn-rpt btn-sku btn-clr{{($index%8)}}"
                     ng-click="rowEdit('productsku', productsku, product);">
               
               <div class="col-xs-3">
