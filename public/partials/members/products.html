@@ -18,7 +18,7 @@
     </theader>
     <tbody>
     <tr class="product-item" ng-repeat="product in view.productList">
-      <td style="width:50%;">
+      <td style="width:55%;">
         <div class="show-command">
           <button
             type="button"
@@ -62,7 +62,7 @@
           <span class="item-description"><small>{{product.description}}</small></span>
         </div>
       </td>
-      <td style="width:35%;">
+      <td style="width:45%;">
         <!--SKUs {{product.productskus}}-->
         
         <div class="pull-left" style="width:100%;padding:5px 5px 2px 5px;margin-bottom:5px;" >
@@ -71,12 +71,12 @@
             <button ng-repeat="productsku in product.productskus"
                     type="button"
                     title="edit sku"
-                    class="width-300 btn-left btn-rpt btn-tkt"
+                    class="width-350 btn-left btn-rpt btn-sku"
                     ng-click="rowEdit('productsku', productsku, product);">
               
-              <div class="col-xs-4">
+              <div class="col-xs-3">
                 <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                  <span class="pull-right text-right">
+                <span class="pull-right text-right">
                   {{productsku.price | currency}}<br>
                   <span class="tkt-btn-inv">
                     {{productsku.sold - productsku.refunded }}/
@@ -85,7 +85,7 @@
                   </span>
                 </span>
               </div>
-              <div class="col-xs-8 text-right" style="padding-right:5px;">
+              <div class="col-xs-9 text-right sku-desc" style="padding-right:5px;">
                 {{productsku.name}}
               </div>
               

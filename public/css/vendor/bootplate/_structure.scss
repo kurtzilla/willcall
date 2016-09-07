@@ -402,11 +402,20 @@ body{
 .width-200 {
   width:200px;
 }
+.width-225 {
+  width:225px;
+}
 .width-250 {
   width:250px;
 }
 .width-300 {
   width:300px;
+}
+.width-325 {
+  width:325px;
+}
+.width-350 {
+  width:350px;
 }
 .btn-left {
   text-align: left;
@@ -454,9 +463,24 @@ span.inventory-name{
   .glyphicon{
     position:absolute;
     top:5px;
-    left:5px;
+    left:7px;
   }
 }
+.btn-sku {
+  //border:solid blue 1px;
+  position:relative;
+  .glyphicon{
+    position:absolute;
+    top:5px;
+    left:0px;
+  }
+}
+
+.sku-desc {
+  color:#999;
+  font-size:.8em;
+}
+
 
 .tkt-btn-inv {
   position:relative;
@@ -490,4 +514,47 @@ span.inventory-name{
 .badge-default {
   background-color: #e6e6e6;
   color:$brand-primary;
+}
+
+
+.catalog-item.show-catalog {
+  h3 {
+    margin:0;
+    padding:0;
+    line-height:1em;
+  }
+}
+
+.catalog-show-container{
+  position:relative;
+}
+.soldout-showdate {
+  position:absolute;
+  padding-left:2em;
+  img {
+    width: 170px;
+    opacity: .7;
+  }
+}
+
+.catalog-ticket-container {
+  //width:50%;
+  float:left;
+  font-size:1em;
+  padding:.5em;
+  margin-right:1em;
+  margin-bottom:1em;
+  
+  .tkt-price {
+    
+  }
+}
+
+.no-lr-pad {
+  padding-right:0;
+  padding-left:0;
+}
+
+.btn-add-cart {
+  //letter-spacing:-1px;
 }

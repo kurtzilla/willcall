@@ -4,9 +4,9 @@ angular.module('MyApp')
     'ContextService', 'MembersService', '$http', '$state',
     function ($scope, $location, $window, $stateParams, ContextService, MembersService, $http, $state) {
 
-      console.log('MEMBERS CONTROLLER', $stateParams);
-      console.log('MEMBERS LOCATION', $location);
-      console.log('MEMBERS STATE', $stateParams);
+      // console.log('MEMBERS CONTROLLER', $stateParams);
+      // console.log('MEMBERS LOCATION', $location);
+      // console.log('MEMBERS STATE', $stateParams);
       // an alt method with ui-bootstrap https://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
       // http://www.dwmkerr.com/the-only-angularjs-modal-service-youll-ever-need/
 
@@ -126,13 +126,10 @@ angular.module('MyApp')
       
       
       // init methods
-      // if($scope.view.MembersService.currentMember) {
-      
-        $scope.populateConfig();
-        $scope.populateShowList();
-        $scope.populateEventQs();
-        $scope.populateProductList();
-      // }
-      
+      $scope.populateConfig();
+      $scope.populateShowList();
+      $scope.populateEventQs();
+      $scope.populateProductList();
+    
       // console.log('MEM LIST',$scope.view.configList )
 }]);

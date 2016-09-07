@@ -15,7 +15,6 @@ var sass                = require('node-sass-middleware');
 var cookieSession       = require('cookie-session');
 var jwt                 = require('jsonwebtoken');
 var moment              = require('moment');
-// var bearerToken         = require('express-bearer-token');
 
 
 // Controllers
@@ -25,6 +24,7 @@ var showsController     = require('./server/controllers/shows');
 var resourceController  = require('./server/controllers/resource');
 var membersController   = require('./server/controllers/members');
 var ordersController    = require('./server/controllers/orders');
+var storeController     = require('./server/controllers/store');
 
 
 // Declare app and configure
@@ -52,45 +52,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 
-// app.set('views', './server/views');
+
 app.set('views', path.join(__dirname, '/server/views'));
 app.set('view engine', 'jade');
-
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-// app.use(bearerToken());
-
-
-
-// app.use(function (req,res,next) {
-//
-//   req.isMemberAuthenticated = function() {
-//
-//     var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
-//
-//     // console.log('TOKEN',token);
-//     try {
-//       var payload = jwt.verify(token, process.env.TOKEN_SECRET);
-//       // console.log(payload);
-//       return payload;
-//     } catch (err) {
-//       return false;
-//     }
-//   }; // END isAuthenticated
-//
-//   // call the auth method!
-//   if (req.isMemberAuthenticated()) {
-//     var payload = req.isMemberAuthenticated();
-//     // console.log('PAYLOAD', payload)
-//     // req.memberApproved = payload.member.wctapproved;
-//     req.member = payload.member;
-//     next();
-//   } else {
-//     next();
-//   }
-// });
 
 
 
@@ -100,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /////////////////////////
 // Stripe
+/////////////////////////
 app.get('/stripe/login',              membersController.stripeLogin);
 app.get('/stripe/callback',           membersController.stripeAuthCallback);
 app.post('/stripe/webhook/account/',  membersController.stripeAccountWebhook);
@@ -108,6 +74,7 @@ app.post('/stripe/webhook/connect/',  membersController.stripeConnectWebhook);
 
 /////////////////////////
 // api routes
+/////////////////////////
 app.get('/api/configs/:config_id',                      apiController.getConfigById);
 app.post('/api/configs',                                apiController.createOrUpdateConfig);
 app.get('/api/products/:product_id',                    productsController.getProductById);
@@ -122,6 +89,10 @@ app.get('/api/showtickets/:showticket_id',              showsController.getShowT
 app.post('/api/showtickets',                            showsController.createOrUpdateShowTicket);
 
 
+// store routes
+app.get('/api/store/shows/catalog',                     storeController.getShowCatalog);
+app.get('/api/store/products/catalog',                  storeController.getProductCatalog);
+
 
 /////////////////////////
 // member routes
@@ -129,7 +100,6 @@ app.post('/api/showtickets',                            showsController.createOr
 
 // member configs
 app.get('/api/members/:member_id/configs',              membersController.getMemberConfigs);
-// app.post('/api/members/:member_id/configs/:config_id',  membersController.updateMemberConfig);
 app.get('/api/members/:member_id/events',               membersController.getMemberEvents);
 // member products
 app.get('/api/members/:member_id/products',             membersController.getMemberProductListing);
@@ -137,25 +107,13 @@ app.get('/api/members/:member_id/products',             membersController.getMem
 app.get('/api/members/:member_id/shows',                membersController.getMemberShowListing);
 
 
-
-
-
-// app.get('/members/:member_id/shows/:show_id',  apiController.updateMemberConfig);
-// app.get('/members/:member_id/shows/:show_id/showdates/:showdate_id',  apiController.updateMemberConfig);
-// app.get('/members/:member_id/shows/:show_id/showdates/:showdate_id/showtickets',  apiController.updateMemberConfig);
-// app.get('/members/:member_id/shows/:show_id/showdates/:showdate_id/showtickets/:showticket_id',  apiController.updateMemberConfig);
-
-
-
-
-
-
-
 // orders
-app.post('/orders/verify',          ordersController.stripeVerifyCallback);
+app.post('/store/checkout',                             storeController.stripeVerifyCallback);
+
+// app.post('/orders/verify',          ordersController.stripeVerifyCallback);
 
 
-// Api
+// Api borchures and env keys
 app.get('/api/brochures',           apiController.getBrochures);
 app.post('/api/brochures',          apiController.addBrochure);
 app.get('/api/brochures/:id',       apiController.getBrochure);

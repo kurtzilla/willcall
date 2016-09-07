@@ -6,6 +6,12 @@ angular.module('MyApp')
              Config, Show, ShowDate, ShowTicket, Product, ProductSku){
 
       var _self = this;
+      
+      // console.log('CONTEXT SERVICE LOADED')
+      
+      this.STRIPE_PUBLISH_KEY = function(){
+        return $http.get('/api/envkey/STRIPE_PUBLISH');
+      }
   
       ////////////////////////////////////////////////
       // PRODUCT Funcs

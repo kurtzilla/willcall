@@ -1,0 +1,55 @@
+<div class="panel panel-area item-catalog show-catalog">
+  <!--Catalog {{view.productCatalog}}-->
+  
+  <table class="table table-bordered table-striped table-condensed table-listing">
+    <theader>
+      <tr>
+        <th>products</th>
+        <th>skus</th>
+      </tr>
+    </theader>
+    
+    <tbody>
+    <tr class="catalog-item show-catalog" ng-repeat="product in view.productCatalog">
+      <td style="width:60%;">
+        <div class="catalog-product-container">
+          <span ng-if="product.status==='sold out'" class="soldout-showdate soldout-product">
+            <!--{{showdate.status}}-->
+            <img ng-src="/images/soldout.png" />
+          </span>
+          <div class="product-division">
+            <button class="width-150 text-left" style="margin-bottom:5px;" disabled>
+              <span class="glyphicon glyphicon-tag"></span>
+              <span ng-if="product.division==='art'">Artwork</span>
+              <span ng-if="product.division==='apparel'">Apparel</span>
+              <span ng-if="product.division==='media'">Media</span>
+              <span ng-if="product.division==='posters'">Posters</span>
+              <span ng-if="product.division==='downloads'">Downloads</span>
+            </button>
+          </div>
+          <h3>{{product.name}}</h3>
+          <h6>{{product.description}}</h6>
+        </div>
+      </td>
+      <td width="40%">
+        <div class="width-225 catalog-ticket-container btn-clr{{$index}}" ng-repeat="productsku in product.productskus">
+          <div style="white-space: nowrap">{{productsku.name}}</div>
+          <div style="position:relative">
+            <div class="col-xs-4 no-lr-pad">
+              <h3 class="tkt-price">{{productsku.price | currency}}</h3>
+            </div>
+            <div class="col-xs-8 no-lr-pad text-right">
+              <button type="button"
+                      class="btn-add-cart"
+                      ng-click="view.CartService.addProductToCart(productsku)">
+                <span class="glyphicon glyphicon-plus"></span>
+                Add To Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
