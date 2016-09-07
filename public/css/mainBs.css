@@ -5974,6 +5974,27 @@ textarea {
   letter-spacing: 0.2em;
   text-transform: uppercase; }
 
+.no-lr-pad {
+  padding-right: 0;
+  padding-left: 0; }
+
+/* generic button styling */
+.btn-add {
+  font-weight: bold;
+  text-align: left;
+  padding-left: 8px;
+  color: #777; }
+
+.btn-left {
+  text-align: left; }
+
+.btn-rpt {
+  margin-right: 10px;
+  margin-bottom: 3px; }
+
+.glyphicon-primary {
+  color: #2b3b94; }
+
 .panel-primary .panel-heading {
   border-left: solid #2a3990 1px;
   border-right: solid #2a3990 1px;
@@ -6172,6 +6193,7 @@ textarea {
   background-color: #e6e6e6;
   color: #2a3990; }
 
+/* main nav header customizations */
 .navbar-default .navbar-nav > li > a {
   color: #eee;
   font-weight: bold; }
@@ -6190,6 +6212,11 @@ textarea {
 .stripe-power {
   margin-top: 1em; }
 
+/* ui.bootstrap fix for empty href */
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer; }
+
+/* Main body */
 html {
   background: url(../images/crowd-shot-for-posters-purple.jpg);
   background-size: cover; }
@@ -6199,9 +6226,9 @@ body {
   color: #666;
   min-width: 768px; }
 
-/* ui.bootstrap fix for empty href */
-.nav, .pagination, .carousel, .panel-title a {
-  cursor: pointer; }
+.well-no-color {
+  border: none;
+  background: rgba(255, 255, 255, 0.1); }
 
 .todo {
   font-weight: bold;
@@ -6227,31 +6254,32 @@ body {
   font-size: .8em;
   margin-top: .5em; }
 
-.well-no-color {
-  border: none;
-  background: rgba(255, 255, 255, 0.1); }
-
+/* Brochures */
 wct-brochure-display {
   width: 85%; }
   wct-brochure-display .panel {
-    max-width: 250px; }
-  .well {
-    margin: 0 auto;
-    max-width: 1000px; }
+    max-width: 260px; }
 
-.home-panel .panel-body {
-  background-color: rgba(42, 57, 144, 0.9);
-  color: #f6f6f6;
-  opacity: 1;
-  border-radius: 5px; }
-  .home-panel .panel-body h3 {
-    font-size: 1.3em;
-    height: 35px; }
-  .home-panel .panel-body p {
-    font-size: .9em;
-    height: 115px; }
-  .home-panel .panel-body a.btn {
-    margin: 10px auto 0 auto; }
+.home-panel {
+  max-width: 1000px; }
+  .home-panel .panel-body {
+    background-color: rgba(42, 57, 144, 0.9);
+    color: #f6f6f6;
+    opacity: 1;
+    border-radius: 5px; }
+    .home-panel .panel-body h3 {
+      font-size: 1.3em;
+      height: 35px;
+      margin-bottom: 1em; }
+    .home-panel .panel-body p {
+      font-size: .9em;
+      height: 115px; }
+    .home-panel .panel-body a.btn {
+      margin: 10px auto 0 auto; }
+
+/* shared panel styles - panel is loaded with child templates */
+.panel-container {
+  background: rgba(255, 255, 255, 0.8); }
 
 .panel-container {
   margin: 0 2em;
@@ -6264,6 +6292,7 @@ wct-brochure-display {
 .btn-signin {
   font-size: 2em; }
 
+/* Modal styling */
 .Modal-backdrop {
   position: fixed;
   top: 0px;
@@ -6296,40 +6325,32 @@ wct-brochure-display {
   margin: 0 auto;
   padding: 1em 2em 2em 2em;
   overflow: scroll; }
+  .panel-modal .panel-heading {
+    padding-bottom: 3em; }
 
-.glyphicon-primary {
-  color: #2b3b94; }
-
+/* override bootstrap hover tables */
 .table-hover > tbody > tr:hover {
   background-color: #3649b7;
   color: white;
   cursor: pointer; }
 
+/* sub navigation in contexts */
 .nav.nav-sub-nav {
+  font-size: 20px;
+  font-weight: bold;
   margin-bottom: 1em; }
+  .nav.nav-sub-nav li > a {
+    color: #777; }
+  .nav.nav-sub-nav li.active > a {
+    color: white; }
 
+/* member styling */
 .show-item .item-description {
   color: #999; }
 
 .show-item .btn-icon {
   width: 2em;
   margin-right: 2px; }
-
-.btn-add {
-  font-weight: bold;
-  text-align: left;
-  padding-left: 8px;
-  color: #777; }
-
-.btn-left {
-  text-align: left; }
-
-.btn-rpt {
-  margin-right: 10px;
-  margin-bottom: 3px; }
-
-.panel-modal .panel-heading {
-  padding-bottom: 3em; }
 
 .show-date-repeater {
   padding: 5px 5px 4px 5px;
@@ -6399,10 +6420,3 @@ span.inventory-name {
   padding: .5em;
   margin-right: 1em;
   margin-bottom: 1em; }
-
-.no-lr-pad {
-  padding-right: 0;
-  padding-left: 0; }
-
-.stripe-button-el {
-  color: red; }

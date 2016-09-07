@@ -20,18 +20,12 @@ angular.module('MyApp')
       .then(function (data) {
         $scope.view.stripe_publish_key = data.data;
       });
-      
-      $scope.doit = function(){
-        console.log('DOES IT')
-      }
-  
             
       // Navigation helper
       $scope.isRouteActive = function(route) {
         return $location.path().indexOf(route) !== -1;
       };
       
-  
       $scope.view.showCatalog = null;
       $scope.populateShowCatalog = function(){
         // console.log('fetch')

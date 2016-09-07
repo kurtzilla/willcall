@@ -64,7 +64,6 @@ angular.module('MyApp')
             BrochureService.setAddMode(false);
           })
           .catch(function(err){
-            console.log('caught', err);
             $scope.view.errors.push(err);
           });
         }

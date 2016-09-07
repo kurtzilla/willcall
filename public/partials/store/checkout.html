@@ -4,7 +4,7 @@
     
     <!--isit {{view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0}}-->
     <!--TTL {{view.CartService.getCartTotal()}}-->
-    <form ng-submit="doit();" ng-hide="view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0"
+    <form ng-hide="view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0"
           action="" method="POST">
       <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
