@@ -1,0 +1,13 @@
+<div class="panel panel-container">
+    <div ui-view="navigation"></div>
+    <div class="row">
+        <div class="col-xs-8">
+            <div ui-view></div>
+        </div>
+        <div class="col-xs-4">
+            <div ui-view="cart"></div>
+            <div ui-view="upsell"></div>
+        </div>
+    </div>
+</div>
+<div ui-view="modal" autoscroll="false"></div>

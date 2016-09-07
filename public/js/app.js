@@ -25,6 +25,58 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     url: '/admin/users/:user_id',
     templateUrl: 'partials/admin/users/edit.html'
   })
+  .state('store', {
+    abstract: true,
+    url: '/store',
+    views: {
+      '@': {
+        templateUrl: 'partials/store/index.html',
+        controller: 'StoreController',
+      },
+      'navigation@store': {
+        templateUrl: 'partials/store/navigation.html',
+      },
+      'cart@store': {
+        templateUrl: 'partials/store/cart.html',
+        
+      }
+    }
+  })
+  .state('store.shows', {
+    url: '/shows',
+    templateUrl: 'partials/store/shows.html',
+  })
+  .state('store.products', {
+    url: '/products',
+    templateUrl: 'partials/store/products.html',
+  })
+  .state('store.checkout', {
+    url: '/checkout',
+    views: {
+      '': {
+        templateUrl: 'partials/store/checkout.html',
+      },
+      'cart@store': {
+        templateUrl: 'partials/store/upsell.html',
+        }
+      }
+    }
+  )
+  .state('store.checkout.success', {
+    url: '/success',
+    views: {
+      '@': {
+        templateUrl: 'partials/store/success.html',
+      },
+    }
+  })
+    
+    
+    
+    
+    
+    
+    
   /*
     MEMBERS AREA
    */

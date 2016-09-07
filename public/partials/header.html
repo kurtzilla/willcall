@@ -17,35 +17,15 @@
         <!--<li ng-class="{ active: isActive('/admin')}"><a ui-sref="admin">Admin</a></li>-->
         <!--<li ng-class="{ active: isActive('/admin/brochures')}"><a ui-sref="brochures">Brochures</a></li>-->
         <!--<li ng-class="{ active: isActive('/orders/verify')}"><a ui-sref="orders_verify">Order</a></li>-->
+  
+        <li ng-class="{ active: isActive('/store/shows')}"><a ui-sref="store.shows">Store</a></li>
 
         <li ng-show="!view.ContextService.currentMember"
             ng-class="{ active: isActive('/members/signin')}">
           <a ui-sref="members.signin">Join Us</a></li>
         <li ng-show="view.ContextService.currentMember"
-            ng-class="{ active: isActive('/members/configs')}">
-          <a ui-sref="members.configs">Config</a></li>
-        <!--<li ng-class="{ active: isActive('/members/profile')}"><a ui-sref="members.profile">Profile</a></li>-->
-        <!--<li ng-class="{ active: isActive('/members/dashboard')}"><a ui-sref="members.dashboard">Dash</a></li>-->
-        <!--<li><a href="#" ng-click="memberLogout()">Logout</a></li>-->
-
-        <!--<li ng-class="{ active: isActive('/admin/users')}"><a ui-sref="users">Users</a></li>-->
+            ng-class="{ active: isActive('/members/shows')}">
+          <a ui-sref="members.shows">Members Area</a></li>
       </ul>
-      <!--<ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">-->
-        <!--<li class="dropdown">-->
-          <!--<a href="#" data-toggle="dropdown" class="navbar-avatar dropdown-toggle">-->
-            <!--<img ng-src="{{currentUser.picture || currentUser.gravatar}}"> {{currentUser.name || currentUser.email || currentUser.id}} <i class="caret"></i>-->
-          <!--</a>-->
-          <!--<ul class="dropdown-menu">-->
-            <!--<li><a ui-sref="account">My Account</a></li>-->
-            <!--<li class="divider"></li>-->
-            <!--<li><a href="#" ng-click="logout()"}>Logout</a></li>-->
-          <!--</ul>-->
-        <!--</li>-->
-      <!--</ul>-->
-      <!--<ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">-->
-        <!--<li ng-class="{ active: isActive('/login')}"><a ui-sref="login">Log in</a></li>-->
-        <!--<li ng-class="{ active: isActive('/signup')}"><a ui-sref="signup">Sign up</a></li>-->
-      <!--</ul>-->
-    <!--</div>-->
   </div>
 </nav>

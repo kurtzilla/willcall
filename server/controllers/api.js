@@ -34,19 +34,11 @@ exports.createOrUpdateConfig = function(req,res){
 
 
 
-// exports.updateMemberConfig = function(req, res){
-//   configs.updateMemberConfig(req.params.member_id, req.params.config_id, req.body.newValue)
-//   .then(function(data){
-//     // console.log('member data')
-//     res.json(data);
-//   });
-// };
-
-
-
 // TODO authenticate
 exports.getEnvKey = function(req, res){
+  console.log('HACAH', req.params)
   var key = process.env[req.params.keyname];
+  console.log('HACAH KEY', key)
   res.json(key);
 };
 
