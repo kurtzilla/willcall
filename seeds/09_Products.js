@@ -11,7 +11,7 @@ exports.seed = function(knex, Promise) {
     knex('products').insert({id: 3, member_id: 1, division: 'apparel', category:'t-shirts, womens',
       name: 'Women\'s T-shirt', description: 'A woman\'s t-shirt'}),
     knex('products').insert({id: 4, member_id: 1, division: 'apparel', category:'hats',
-      name: 'Crazy Truckstop Hat', description: 'Make your inner trucker proud'}),
+      name: 'Crazy Hat', description: 'Cover your head!'}),
     knex('products').insert({id: 5, member_id: 1, division: 'art', category:'posters',
       name: 'Poster in a frame', description: 'Show poster for a past event'}),
   

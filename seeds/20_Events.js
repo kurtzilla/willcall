@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
 
     knex('eventqs').insert({id: 1, dtprocessed: null, status: 'success',
       creatortype: 'seed', affectedtype: 'member',affectedname: 'rob', affectedid: 1,
-      context:'testing', name: 'any old thang', oldvalue:'blank', newvalue: 'some data',
+      context:'testing', name: 'relevant transaction', oldvalue:'blank', newvalue: 'some great data',
       origination:'some web page', ipaddress:'127.0.0.1'}),
     knex('eventqs').insert({id: 2, dtprocessed: null, status: 'success',
       creatortype: 'seed', affectedtype: 'member',affectedname: 'rob', affectedid: 1,
