@@ -5,6 +5,8 @@ var shows = require('../../lib/dbops/shows');
 
 
 // https://stripe.com/docs/recipes/variable-amount-checkout
+// http://code.tutsplus.com/tutorials/how-to-accept-payments-with-stripe--pre-80957
+// some sort of hack for price info??? https://www.masteringmodernpayments.com/blog/using-stripe-checkout-for-subscriptions
 
 exports.stripeVerifyCallback = function(req, res) {
   console.log('debug VERIFY CALLBACK STRIPE', req.params, req.body);

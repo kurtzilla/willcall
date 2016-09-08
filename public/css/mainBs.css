@@ -6340,7 +6340,8 @@ wct-brochure-display {
   font-weight: bold;
   margin-bottom: 1em; }
   .nav.nav-sub-nav li > a {
-    color: #777; }
+    color: #444;
+    text-shadow: 0 0 1px #222; }
   .nav.nav-sub-nav li.active > a {
     color: white; }
 
