@@ -123,7 +123,7 @@ angular.module('MyApp')
                 $scope.view.setSuccessMessage('');
               });
               // console.log('klkl', $scope.view.getSuccessMessage());
-            }, 3000);
+            }, 2500);
             
             
           })
