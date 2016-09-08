@@ -53,6 +53,14 @@
                   class="">
             <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
           </button>
+          <button ng-if="product.skuWarningIfEmpty().length === 0"
+                  disabled
+                  type="button"
+                  title="ticket warning"
+                  style="width:26px;height:26px;padding:0;"
+                  class="btn btn-sm btn-danger">
+            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+          </button>
         
         </div>
         <div><h4>{{product.name}}</h4></div>
@@ -75,11 +83,14 @@
                     ng-click="rowEdit('productsku', productsku, product);">
               
               <div class="col-xs-3">
-                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                
+                <span ng-if="productsku.displayWarning()" class="glyphicon glyphicon-warning-sign text-danger" aria-hidden="true"></span>
+                <span ng-if="!productsku.displayWarning()" class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                
                 <span class="pull-right text-right">
                   {{productsku.price | currency}}<br>
                   <span class="tkt-btn-inv">
-                    {{productsku.sold - productsku.refunded }}/
+                    {{productsku.allotted - (productsku.sold + productsku.refunded) }}/
                     {{productsku.allotted}}/
                     {{((productsku.sold - productsku.refunded) * productsku.price) | currency}}
                   </span>

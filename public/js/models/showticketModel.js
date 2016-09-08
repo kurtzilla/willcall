@@ -30,6 +30,25 @@ angular.module('MyApp')
     }
   };
   
+  ShowTicket.prototype.available = function(){
+    return (this.allotted - this.sold + this.refunded);
+  };
+  ShowTicket.prototype.priceWarning = function() {
+    return !this.price || this.price.toString().trim().length === 0 || this.price == 0;
+  };
+  ShowTicket.prototype.allotmentWarning = function() {
+    return !this.allotted || this.allotted.toString().trim().length === 0 || this.allotted == 0;
+  };
+  ShowTicket.prototype.availableWarning = function() {
+    return !this.allotmentWarning() && this.available() <= 0;
+  };
+  ShowTicket.prototype.activeWarning = function() {
+    return !this.active;
+  };
+  ShowTicket.prototype.displayWarning = function(){
+    return this.priceWarning() || this.allotmentWarning() || this.availableWarning() || this.activeWarning();
+  };
+  
   ////////////////////////////////////////////
   // STATIC methods
   ////////////////////////////////////////////
@@ -47,7 +66,6 @@ angular.module('MyApp')
   
     input.showdate_id = (currentShowTicket) ?
       currentShowTicket.showdate_id : (currentShowDate) ? currentShowDate.id : -1;
-    input.deliveryoptions = JSON.stringify([input.deliveryoptions])
       
     $http.post('/api/showtickets', {
       input: input,

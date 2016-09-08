@@ -9,6 +9,13 @@ angular.module('MyApp')
     
       $scope.view = {};
       $scope.view.ContextService = ContextService;
+      var _successMsg = '';
+      $scope.view.getSuccessMessage = function(){
+       return _successMsg;
+      };
+      $scope.view.setSuccessMessage = function(msg){
+        return _successMsg = msg;
+      };
             
       $scope.cancelForm = function(form){
         cleanupFormAndReturn(form);
@@ -107,7 +114,18 @@ angular.module('MyApp')
             listToRefresh = null;
             refreshMethod();
             // console.log('TO REFRESH', listToRefresh)
-            cleanupFormAndReturn(form);
+            // cleanupFormAndReturn(form);
+            
+            $scope.view.setSuccessMessage('changes saved.');
+            setTimeout(function(){
+              // console.log('klkl',$scope.view.getSuccessMessage())
+              $scope.$apply(function(){
+                $scope.view.setSuccessMessage('');
+              });
+              // console.log('klkl', $scope.view.getSuccessMessage());
+            }, 3000);
+            
+            
           })
           .catch(function(err){
             // console.log('ERROR', err)

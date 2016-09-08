@@ -23,17 +23,19 @@ angular.module('MyApp').factory('Product',
       });
     }
   };
+    
+  Product.prototype = {
+    
+    // only issue a warning if it will cause a show not to display tickets
+    skuWarningIfEmpty: function(){
+      return this.productskus.filter(function (itm) {
+        // console.log('AVAIL',itm.available())
+        // console.log('ACT',itm.active)
+        return itm.active && itm.available() > 0 && itm.price > 0;
+      });
+    }
+  };
   
-  
-  
-  // Product.prototype = {
-  //   firstDate: function(){
-  //     return moment(this.showDates.map(e => e)
-  //       .sort((a,b) => a.dateofshow - b.dateofshow)[0].dateofshow)
-  //       .format('YYYY/MM/DD hh:mm a');
-  //   },
-  //
-  // };
   
   ////////////////////////////////////////////
   // STATIC methods
@@ -48,9 +50,7 @@ angular.module('MyApp').factory('Product',
     // console.log('CURRENT', currentProduct)
       
     var errors = [];
-  
-    input.deliveryoptions = JSON.stringify([input.deliveryoptions]);
-    
+      
     $http.post('/api/products', {
       input: input,
       current: currentProduct
