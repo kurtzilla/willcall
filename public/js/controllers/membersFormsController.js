@@ -142,7 +142,19 @@ angular.module('MyApp')
               // console.log('SETTING CURRENT', setCurrent)
               setCurrent(idx).then(function(data){
                 // console.log('THE DATA',data)
+                if(context === 'config') {
+                  $scope.view.ContextService.currentConfig = data;
+                } else if(context === 'product') {
+                $scope.view.ContextService.currentProduct = data;
+                } else if(context === 'productsku') {
+                $scope.view.ContextService.currentProductSku = data;
+                } else if(context === 'show') {
+                $scope.view.ContextService.currentShow = data;
+                } else if(context === 'showdate') {
                 $scope.view.ContextService.currentShowDate = data;
+                } else if(context === 'showticket') {
+                  $scope.view.ContextService.currentShowTicket = data;
+                }
               });
             }
           })
