@@ -68,6 +68,7 @@ angular.module('MyApp')
           var formSubmit = null;
           var listToRefresh = null;
           var refreshMethod = null;
+          var setCurrent = null;
   
           // select form submission by model
           if(context === 'config') {
@@ -76,41 +77,51 @@ angular.module('MyApp')
               $scope.view.ContextService.currentConfig);
             listToRefresh = $scope.$parent.view.configList;
             refreshMethod = $scope.$parent.populateConfig;
+            setCurrent = $scope.view.ContextService.setCurrentConfig;
           } else if(context === 'show') {
             _entity.member_id = $scope.view.ContextService.currentMember.id;
             formSubmit = Show.processForm(form, _entity,
               $scope.view.ContextService.currentShow);
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
+            setCurrent = $scope.view.ContextService.setCurrentShow;
           } else if (context === 'showdate') {
+            // console.log('SHOWDate',$scope.view.ContextService.currentShowDate)
             formSubmit = ShowDate.processForm(form, _entity,
               $scope.view.ContextService.currentShowDate,
               $scope.view.ContextService.currentShow);
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
+            setCurrent = $scope.view.ContextService.setCurrentShowDate;
+            // console.log('SHOWDate',setCurrent)
           }  else if (context === 'showticket') {
             formSubmit = ShowTicket.processForm(form, _entity,
               $scope.view.ContextService.currentShowTicket,
               $scope.view.ContextService.currentShowDate);
             listToRefresh = $scope.$parent.view.showList;
             refreshMethod = $scope.$parent.populateShowList;
+            setCurrent = $scope.view.ContextService.setCurrentShowTicket;
           } else if (context === 'product') {
             _entity.member_id = $scope.view.ContextService.currentMember.id;
             formSubmit = Product.processForm(form, _entity,
               $scope.view.ContextService.currentProduct);
             listToRefresh = $scope.$parent.view.productList;
             refreshMethod = $scope.$parent.populateProductList;
+            setCurrent = $scope.view.ContextService.setCurrentProduct;
           } else if (context === 'productsku') {
             formSubmit = ProductSku.processForm(form, _entity,
               $scope.view.ContextService.currentProductSku,
               $scope.view.ContextService.currentProduct);
             listToRefresh = $scope.$parent.view.productList;
             refreshMethod = $scope.$parent.populateProductList;
+            setCurrent = $scope.view.ContextService.setCurrentProductSku;
           }
           
           return formSubmit
           .then(function(data){
-            // console.log('TO REFRESH', listToRefresh)
+            
+            var idx = (Array.isArray(data)) ? data[0] : data;
+            
             listToRefresh = null;
             refreshMethod();
             // console.log('TO REFRESH', listToRefresh)
@@ -124,8 +135,16 @@ angular.module('MyApp')
               });
               // console.log('klkl', $scope.view.getSuccessMessage());
             }, 2500);
-            
-            
+  
+  
+            // console.log('SETTING CURRENT', setCurrent)
+            if(setCurrent){
+              // console.log('SETTING CURRENT', setCurrent)
+              setCurrent(idx).then(function(data){
+                // console.log('THE DATA',data)
+                $scope.view.ContextService.currentShowDate = data;
+              });
+            }
           })
           .catch(function(err){
             // console.log('ERROR', err)
