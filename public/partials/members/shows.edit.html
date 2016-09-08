@@ -122,19 +122,26 @@
         </div>
         
       </div><!-- end panel-body -->
-      <div class="panel-footer form-command">
-        <button ng-disabled="_form.$invalid"
-                type="submit"
-                class="btn btn-sm btn-primary">Save</button>
-        <button ng-click="cancelForm(_form)"
-                type="button"
-                class="btn btn-sm btn-primary">Cancel</button>
-        <button ng-click="resetForm(_form);"
-                type="reset"
-                class="btn btn-sm btn-primary">Reset</button>
-        <button ng-disabled="true"
-                type="button"
-                class="btn btn-sm btn-primary pull-right">Sync to Stripe</button>
+      <div class="panel-footer form-command row">
+        <div class="col col-xs-5">
+          <button ng-disabled="_form.$invalid"
+                  type="submit"
+                  class="btn btn-sm btn-primary">Save</button>
+          <button ng-click="cancelForm(_form)"
+                  type="button"
+                  class="btn btn-sm btn-primary">Cancel/Close</button>
+          <button ng-click="resetForm(_form);"
+                  type="reset"
+                  class="btn btn-sm btn-primary">Reset</button>
+        </div>
+        <div class=" col-xs-5">
+          <div style="height:30px;line-height:30px;" ng-show="view.getSuccessMessage().trim().length > 0" class="text-success"><strong>{{view.getSuccessMessage()}}</strong></div>
+        </div>
+        <div class="col col-xs-2 text-right">
+          <button ng-disabled="true"
+                  type="button"
+                  class="btn btn-sm btn-primary pull-right">Sync to Stripe</button>
+        </div>
       </div>
     </div>
   </form>

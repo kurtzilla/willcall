@@ -116,7 +116,7 @@ wct-brochure-display {
 
 /* shared panel styles - panel is loaded with child templates */
 .panel-container{
-background: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.8);
 }
 
 .panel-container {
@@ -197,20 +197,17 @@ background: rgba(255,255,255,.5);
 
 /* sub navigation in contexts */
 .nav.nav-sub-nav {
-  
-    li > a {
-      color:#777;
-    }
-  
+  li > a {
+    color:#444;
+    text-shadow: 0 0 1px #222;
+  }
   li.active > a {
     color:white;
   }
-    
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom: 1em;
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom: 1em;
 }
-
 
 
 /* member styling */
@@ -248,6 +245,13 @@ background: rgba(255,255,255,.5);
 span.inventory-name{
   height:26px;
   display:inline-block;
+}
+
+.form-command.row {
+  //border:solid red 1px;
+  //float:none;
+  margin:0;
+  //padding:0;
 }
 
 

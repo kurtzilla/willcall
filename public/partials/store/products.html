@@ -20,11 +20,12 @@
           <div class="product-division">
             <button class="width-150 text-left" style="margin-bottom:5px;" disabled>
               <span class="glyphicon glyphicon-tag"></span>
-              <span ng-if="product.division==='art'">Artwork</span>
-              <span ng-if="product.division==='apparel'">Apparel</span>
-              <span ng-if="product.division==='media'">Media</span>
-              <span ng-if="product.division==='posters'">Posters</span>
-              <span ng-if="product.division==='downloads'">Downloads</span>
+                {{product.division}}
+              <!--<span ng-if="product.division==='art'">Artwork</span>-->
+              <!--<span ng-if="product.division==='apparel'">Apparel</span>-->
+              <!--<span ng-if="product.division==='media'">Media</span>-->
+              <!--<span ng-if="product.division==='posters'">Posters</span>-->
+              <!--<span ng-if="product.division==='downloads'">Downloads</span>-->
             </button>
           </div>
           <h3>{{product.name}}</h3>

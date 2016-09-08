@@ -43,11 +43,18 @@ angular.module('MyApp').factory('Show',
       return this.firstDate() + ' - ' + this.lastDate();
     },
     showtickets: function(){
-      return this.showdates.reduce(function(prev,cur,idx){
+      return this.showdates.reduce(function(prev,cur){
         return prev = prev.concat(cur.showtickets);
       },[]);
+    },
+    // only issue a warning if it will cause a show not to display tickets
+    ticketWarningIfEmpty: function(){
+      return this.showtickets().filter(function (itm) {
+        // console.log('AVAIL',itm.available())
+        // console.log('ACT',itm.active)
+        return itm.active && itm.available() > 0 && itm.price > 0;
+      });
     }
-    
   };
   
   ////////////////////////////////////////////

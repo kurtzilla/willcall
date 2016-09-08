@@ -25,6 +25,25 @@ angular.module('MyApp')
     }
   };
   
+  ProductSku.prototype.available = function(){
+    return (this.allotted - this.sold + this.refunded);
+  };
+  ProductSku.prototype.priceWarning = function() {
+    return !this.price || this.price.toString().trim().length === 0 || this.price == 0;
+  };
+  ProductSku.prototype.allotmentWarning = function() {
+    return !this.allotted || this.allotted.toString().trim().length === 0 || this.allotted == 0;
+  };
+  ProductSku.prototype.availableWarning = function() {
+    return !this.allotmentWarning() && this.available() <= 0;
+  };
+  ProductSku.prototype.activeWarning = function() {
+    return !this.active;
+  };
+  ProductSku.prototype.displayWarning = function(){
+    return this.priceWarning() || this.allotmentWarning() || this.availableWarning() || this.activeWarning();
+  };
+  
   ////////////////////////////////////////////
   // STATIC methods
   ////////////////////////////////////////////
