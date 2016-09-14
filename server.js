@@ -92,6 +92,7 @@ app.post('/api/showtickets',                            showsController.createOr
 // store routes
 app.get('/api/store/shows/catalog',                     storeController.getShowCatalog);
 app.get('/api/store/products/catalog',                  storeController.getProductCatalog);
+app.post('/api/store/cartrecord',                       storeController.saveStoreCart);
 
 
 /////////////////////////

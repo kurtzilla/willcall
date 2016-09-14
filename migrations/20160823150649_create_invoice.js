@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.timestamps(true,true);
 
-      table.integer('member_id').references('id').inTable('members').notNullable();
+      table.integer('member_id').references('id').inTable('members').nullable();
 
       table.string('uniqueid', 50).unique().notNullable();
       table.string('purchaseemail', 512).notNullable();
@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
 
       // TODO research invoice states - Paid/NotPaid
       table.string('status').notNullable().defaultsTo('')
-        .comment('2 states - InProcess and Complete');
+        .comment('2 states - inprocess and complete');
       table.decimal('balancedue').defaultsTo(0);
       table.decimal('totalpaid').defaultsTo(0);
       table.decimal('totalrefunds').defaultsTo(0);
