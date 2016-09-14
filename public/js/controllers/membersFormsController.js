@@ -124,24 +124,17 @@ angular.module('MyApp')
             
             listToRefresh = null;
             refreshMethod();
-            // console.log('TO REFRESH', listToRefresh)
-            // cleanupFormAndReturn(form);
             
+            // enable a delay for success msg to show  and then hide
             $scope.view.setSuccessMessage('changes saved.');
             setTimeout(function(){
-              // console.log('klkl',$scope.view.getSuccessMessage())
               $scope.$apply(function(){
                 $scope.view.setSuccessMessage('');
               });
-              // console.log('klkl', $scope.view.getSuccessMessage());
             }, 2500);
-  
-  
-            // console.log('SETTING CURRENT', setCurrent)
+            
             if(setCurrent){
-              // console.log('SETTING CURRENT', setCurrent)
               setCurrent(idx).then(function(data){
-                // console.log('THE DATA',data)
                 if(context === 'config') {
                   $scope.view.ContextService.currentConfig = data;
                 } else if(context === 'product') {
@@ -159,7 +152,6 @@ angular.module('MyApp')
             }
           })
           .catch(function(err){
-            // console.log('ERROR', err)
             $scope.view.errors = err;
           });
         }

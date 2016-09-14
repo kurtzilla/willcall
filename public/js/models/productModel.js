@@ -29,8 +29,6 @@ angular.module('MyApp').factory('Product',
     // only issue a warning if it will cause a show not to display tickets
     skuWarningIfEmpty: function(){
       return this.productskus.filter(function (itm) {
-        // console.log('AVAIL',itm.available())
-        // console.log('ACT',itm.active)
         return itm.active && itm.available() > 0 && itm.price > 0;
       });
     }

@@ -12,17 +12,14 @@
         data-amount="{{(view.CartService.getCartTotal()*100)}}"
         data-name="WillCallTickets, Inc"
         data-zip-code="false"
-        data-description="My Demo Cart"
-        data-image="images/wct_logo_200.png"
+        data-label="Buy Securely With Stripe!"
+        data-description="{{view.CartService.cartId}}"
+        data-image="/images/wct_logo_200.png"
         data-locale="auto">
       </script>
+      <input type="hidden" name="f_amount" id="f_amount" value="{{(view.CartService.getCartTotal()*100)}}"/>
+      <input type="hidden" name="f_cartid" id="f_cartid" value="{{view.CartService.cartId}}"/>
     </form>
-    
-    <!--TTl {{view.CartService.getCartTotal()}}-->
-    <!--<button ng-disabled="view.CartService.cartBasket.length === 0 || view.CartService.getCartTotal() === 0"-->
-            <!--class="btn btn-success btn-lg" style="width:100%;margin-bottom:1em;"-->
-      <!--&gt;Purchase</button>-->
-    
     
     <div>
       <span><small>{{view.CartService.cartBasket.length}} items</small></span>

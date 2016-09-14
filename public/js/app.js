@@ -55,6 +55,7 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     views: {
       '': {
         templateUrl: 'partials/store/checkout.html',
+        resolve: { storeCart: storeCart }
       },
       'cart@store': {
         templateUrl: 'partials/store/upsell.html',
@@ -67,6 +68,7 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
     views: {
       '@': {
         templateUrl: 'partials/store/success.html',
+        resolve: { clearCart: clearCart }
       },
     }
   })
@@ -328,7 +330,25 @@ var app = angular.module('MyApp', ['ui.router', 'satellizer','angular-jwt',
   //   controller: 'ApiCtrl'
   //   // , resolve: { skipIfAuthenticated: skipIfAuthenticated }
   // });
-
+  
+  
+  function storeCart($stateParams, CartService){
+    // console.log('storing cart')
+    
+    return CartService.saveCartToDb()
+    .then(function(data){
+      // TODO handle success and failure
+      // console.log('RETURN DATA', data)
+    });
+  };
+  
+  function clearCart(){
+    // console.log('clearing cart')
+    localStorage.removeItem('wctCartId');
+    localStorage.removeItem('wctCart');
+  };
+  
+  
 
   // set the current config based on state params
   function setCurrentConfig($stateParams, ContextService){

@@ -1,52 +1,117 @@
 require('dotenv').config({silent:true});
+var knex = require('../../config/db/knex');
 
 var products = require('../../lib/dbops/products');
 var shows = require('../../lib/dbops/shows');
+var invoices = require('../../lib/dbops/invoices');
 
 
 // https://stripe.com/docs/recipes/variable-amount-checkout
 // http://code.tutsplus.com/tutorials/how-to-accept-payments-with-stripe--pre-80957
-// some sort of hack for price info??? https://www.masteringmodernpayments.com/blog/using-stripe-checkout-for-subscriptions
+// some sort of hack for price info???
+// https://www.masteringmodernpayments.com/blog/using-stripe-checkout-for-subscriptions
 
 exports.stripeVerifyCallback = function(req, res) {
+  // console.log('/////////////////', res);
+  // console.log('/////////////////');
+  
   console.log('debug VERIFY CALLBACK STRIPE', req.params, req.body);
+  var token = req.body.stripeToken;
+  var eml = req.body.stripeEmail;
+  var amount = req.body.f_amount;
+  var cartid = req.body.f_cartid;
+  
+  
+  knex('invoices').where({uniqueid:cartid}).first()
+  .then(function(data){
+    var amountToCharge = data.balancedue;
+    
+    // TODO validate amount against db - look for tampering
+  
+    // Get the credit card details submitted by the form
+    
+    var stripe = require("stripe")(process.env.STRIPE_SECRET);
+  
+    stripe.charges.create({
+      amount: amountToCharge * 100, // Amount in cents
+      currency: "usd",
+      source: token,
+      receipt_email: eml,
+      description: "TODO: list invoice items here"
+    })
+    .then(function(charge){
+      console.log('CHARGE',charge)
+      
+      //update invoice and items
+      knex('invoices').update({
+        totalpaid: amountToCharge * 100,
+        balancedue: 0,
+        netpaid: amountToCharge * 100,
+        status: 'complete'
+      }).where({uniqueid:cartid}).returning('id')
+      .then(function(invoiceid){
+        //update status of invoice items
+        return knex('invoiceitems').update({status:'complete'}).where({invoice_id:parseInt(invoiceid)});
+      })
+      .then(function(data){
+        res.redirect('/store/checkout/success');
+      });
+      
+    })
+    .catch(function(err){
+      console.log('THE CARD HAS BEEN DECLINED', err)
+      // TODO save the error in session? for display in verify page
+      // redirect to verify
+      res.redirect('/store/checkout');
+    });
+    
+  })
   
   //TODO verify matching amounts - correct amount
   
-  // Get the credit card details submitted by the form
-  var token = req.body.stripeToken;
-  var eml = req.body.stripeEmail;
-  var stripe = require("stripe")(process.env.STRIPE_SECRET);
-  // console.log('STRIPE', stripe)
-  
-  // Create a charge: this will charge the user's card
-  var _charge = null;
-  stripe.charges.create({
-    amount: 999, // Amount in cents
-    currency: "usd",
-    source: token,
-    receipt_email: eml,
-    description: "TODO: list invoice items here"
-  })
-  .then(function(charge){
-    _charge = charge;
-    
-    // _charge.id,.amount,.created,.failure_code, .failure_message
-    // .livemode:true, paid:true, receipt_email
-    // status:'succeeded'
-    
-    // console.log('CHARGES', _charge);
-    res.redirect('/store/checkout/success');
-  })
-  .catch(function(err){
-    console.log('THE CARD HAS BEEN DECLINED', err)
-    // TODO save the error in session? for display in verify page
-    // redirect to verify
-    res.redirect('/store/checkout/success');
-  })
+  //
+  // // console.log('STRIPE', stripe)
+  //
+  // // Create a charge: this will charge the user's card
+  // var _charge = null;
+  // stripe.charges.create({
+  //   amount: 999, // Amount in cents
+  //   currency: "usd",
+  //   source: token,
+  //   receipt_email: eml,
+  //   description: "TODO: list invoice items here"
+  // })
+  // .then(function(charge){
+  //   _charge = charge;
+  //
+  //   // _charge.id,.amount,.created,.failure_code, .failure_message
+  //   // .livemode:true, paid:true, receipt_email
+  //   // status:'succeeded'
+  //
+  //   // console.log('CHARGES', _charge);
+  //   res.redirect('/store/checkout/success');
+  // })
+  // .catch(function(err){
+  //   console.log('THE CARD HAS BEEN DECLINED', err)
+  //   // TODO save the error in session? for display in verify page
+  //   // redirect to verify
+  //   res.redirect('/store/checkout/success');
+  // })
 };
 
+//////////////////////////////////////////////////////////////////////
+// CART
+//////////////////////////////////////////////////////////////////////
 
+// retrieve active shows/dates/etc to be built by client
+exports.saveStoreCart = function(req,res){
+  // console.log('SVR CTRL SaveStoreCart')
+  invoices.saveCart(req.body)
+  .then(function(data){
+    console.log('WE HAVE RETURNED TO API', data)
+    res.json(data);
+  });
+};
 
 //////////////////////////////////////////////////////////////////////
 // SHOW CATALOGS
